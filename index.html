@@ -220,7 +220,12 @@
             <span style="font-size: 16px; line-height: 1.6; color: #c6ccd3;">Október 24-én küldöm a linket. <span id="picked-note"></span></span>
           </div>
           <form id="waitlist-form" style="display: grid; gap: 18px;">
+            <div id="picked-chip" style="display: none; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid #1c4fa1; background: rgba(28,79,161,0.18); padding: 12px 16px;">
+              <span id="picked-chip-text" style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; letter-spacing: 0.02em; color: #f7f5f0;"></span>
+              <button type="button" id="picked-chip-clear" style="background: none; border: none; color: #7fa8e8; font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; padding: 0;">Törlés</button>
+            </div>
             <p style="font-family: 'Space Grotesk', sans-serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0; color: #7fa8e8;" id="picked-label"></p>
+            <input type="hidden" id="picked-input" name="pelda_szam" value="">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 18px;">
               <input required name="nev" placeholder="Név" class="field-line" style="font-family: 'Space Grotesk', sans-serif; font-size: 14px; padding: 13px 0; background: transparent; border: none; border-bottom: 1px solid #3b444e; color: #f7f5f0; border-radius: 0; min-width: 0;">
               <input required type="email" name="email" placeholder="E-mail" class="field-line" style="font-family: 'Space Grotesk', sans-serif; font-size: 14px; padding: 13px 0; background: transparent; border: none; border-bottom: 1px solid #3b444e; color: #f7f5f0; border-radius: 0; min-width: 0;">
@@ -277,7 +282,7 @@
   var foundCount = 0;
 
   var titleUnmasked = false;
-  var picked = null;
+  var pickedList = [];
   var takenCount = 7;
   var sent = false;
   var hoverPhase = null;
@@ -446,7 +451,7 @@
     for (var i = 1; i <= 20; i++) {
       (function (i) {
         var isTaken = i <= takenCount;
-        var isPicked = picked === i;
+        var isPicked = pickedList.indexOf(i) !== -1;
         var num = String(i).padStart(3, "0");
 
         var btn = document.createElement("button");
@@ -472,7 +477,9 @@
 
         if (!isTaken) {
           btn.addEventListener("click", function () {
-            picked = isPicked ? null : i;
+            var idx = pickedList.indexOf(i);
+            if (idx === -1) pickedList.push(i); else pickedList.splice(idx, 1);
+            pickedList.sort(function (a, b) { return a - b; });
             renderShelf();
             renderPickState();
           });
@@ -485,16 +492,34 @@
   }
 
   function renderPickState() {
-    if (picked) {
-      var num = String(picked).padStart(3, "0");
+    var chip = document.getElementById("picked-chip");
+    var chipText = document.getElementById("picked-chip-text");
+    var hiddenInput = document.getElementById("picked-input");
+    var qtyInput = form.querySelector('input[name="db"]');
+
+    if (pickedList.length > 0) {
+      var nums = pickedList.map(function (n) { return String(n).padStart(3, "0"); });
+      var isOne = nums.length === 1;
       pickBanner.classList.add("show");
-      pickBannerText.textContent = num + "-as példány kiválasztva — a jelentkezésnél már szerepel.";
-      pickedLabelEl.textContent = "Kiválasztott példány: " + num;
+      pickBannerText.textContent = (isOne ? nums[0] + "-as példány" : nums.join(", ") + " számú példányok") + " kiválasztva — a jelentkezésnél már szerepel.";
+      chip.style.display = "flex";
+      chipText.textContent = (isOne ? "Kiválasztott példány: " + nums[0] + "." : "Kiválasztott példányok: " + nums.join(", ") + ".");
+      pickedLabelEl.textContent = "";
+      hiddenInput.value = nums.join(",");
+      if (qtyInput) qtyInput.value = pickedList.length;
     } else {
       pickBanner.classList.remove("show");
+      chip.style.display = "none";
       pickedLabelEl.textContent = "Példányszám kiválasztása opcionális (jegyzék fent)";
+      hiddenInput.value = "";
     }
   }
+
+  document.getElementById("picked-chip-clear").addEventListener("click", function () {
+    pickedList = [];
+    renderShelf();
+    renderPickState();
+  });
 
   /* ---------- várólista űrlap ---------- */
   var form = document.getElementById("waitlist-form");
@@ -504,8 +529,10 @@
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     sent = true;
-    pickedNoteEl.textContent = picked
-      ? "A " + String(picked).padStart(3, "0") + " számú példányt fenntartom neked a nyitásig."
+    pickedNoteEl.textContent = pickedList.length
+      ? (pickedList.length === 1
+        ? "A " + String(pickedList[0]).padStart(3, "0") + " számú példányt fenntartom neked a nyitásig."
+        : "A " + pickedList.map(function (n) { return String(n).padStart(3, "0"); }).join(", ") + " számú példányokat fenntartom neked a nyitásig.")
       : "";
     form.style.display = "none";
     doneEl.style.display = "grid";

@@ -707,6 +707,7 @@
                   <div class="field-wrap">
                     <label class="field-label" for="f-db">Hány példányt kér</label>
                     <input id="f-db" name="db" type="number" min="1" max="20" value="1" class="field-line">
+                    <span class="cta-note" id="db-lock-note" style="display: none; margin-top: 2px;">Dedikáltból egyszerre egyet foglalhatsz — egy kézírásos ajánlás egy könyvhöz tartozik. Ha többet szeretnél, küldd el az űrlapot mégegyszer.</span>
                   </div>
                 </div>
               </div>
@@ -1279,9 +1280,12 @@
 
         if (!isTaken) {
           btn.addEventListener("click", function () {
-            var idx = pickedList.indexOf(i);
-            if (idx === -1) pickedList.push(i); else pickedList.splice(idx, 1);
-            pickedList.sort(function (a, b) { return a - b; });
+            /* Egyszerre csak egy sorszám választható: a dedikálás (név +
+               üzenet) egyetlen szövegpár, ami egyetlen könyvhöz tartozik.
+               Ha ez több számhoz is bekerülne, a jelentkezésből nem
+               derülne ki, melyik ajánlás melyik könyvbe kerüljön. */
+            var wasPicked = pickedList.indexOf(i) !== -1;
+            pickedList = wasPicked ? [] : [i];
             renderShelf();
             renderPickState();
             /* sorszámot csak a dedikált változathoz lehet kérni */
@@ -1384,6 +1388,8 @@
   var dedikBlock = document.getElementById("dedik-block");
   var dedikInput = document.getElementById("f-ded");
   var variantOpts = Array.prototype.slice.call(document.querySelectorAll("[data-vopt]"));
+  var dbInput = document.getElementById("f-db");
+  var dbLockNote = document.getElementById("db-lock-note");
 
   function currentPrice() {
     return variant === "dedikalt" ? CONFIG.PRICE_SIGNED : normalPrice;
@@ -1416,6 +1422,22 @@
       pickedList = [];
       renderShelf();
     }
+
+    /* Dedikáltból a "hány példányt kér" mező nem szabadon állítható: egy
+       ajánlás-szöveg (dedikalas + dedikalas_uzenet) csak egyetlen könyvhöz
+       tartozhat, különben az űrlapból nem derülne ki, kinek melyik jár. */
+    if (dbInput) {
+      if (variant === "dedikalt") {
+        dbInput.value = "1";
+        dbInput.readOnly = true;
+        dbInput.setAttribute("aria-readonly", "true");
+      } else {
+        dbInput.readOnly = false;
+        dbInput.removeAttribute("aria-readonly");
+      }
+    }
+    if (dbLockNote) dbLockNote.style.display = variant === "dedikalt" ? "block" : "none";
+
     renderPickState();
 
     updateSubmitLabel();

@@ -824,7 +824,12 @@
       /* "igen", ha úgy jelentkezett dedikáltra, hogy akkor pillanatnyilag
          egy szám sem volt szabad — csak foglalva. Erre külön kell figyelni:
          nem azonnal rendelhető, hanem egy lejáró foglalásra vár. */
-      sorszam_varolista: "sorszam_varolista"
+      sorszam_varolista: "sorszam_varolista",
+      /* Kiszámolt végösszeg (pl. "7 900 Ft"), az automata díjbekérő
+         e-mailhez. ÚJ MEZŐ — hozd létre a MailerLite-ban ugyanígy
+         (Text típus, "osszesen" kulccsal), a dijbekero-*.html sablonok
+         ezt a mezőt hívják be {$fields:osszesen} címkével. */
+      osszesen:   "osszesen"
     },
 
     /* AJÁNLOTT: ha az űrlap bármiért hibázna, a látogató erre a címre tud
@@ -964,6 +969,13 @@
   }
 
   function pad3(n) { return String(n).padStart(3, "0"); }
+
+  /* "5 400 Ft" -> 5400 és vissza — a fizetendő összeg kiszámításához.
+     A díjbekérő e-mailnek pontos, forintra kiszámolt végösszeg kell, nem
+     "egységár × darabszám" képlet, amit a MailerLite sablonja nem tud
+     kiszámolni. Ez itt fut le, ahol a mennyiség és az ár ismert. */
+  function parseHuf(s) { return parseInt(String(s).replace(/[^\d]/g, ""), 10) || 0; }
+  function formatHuf(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " Ft"; }
 
   /* Előnézet — csak neked. A látogatók soha nem látják, mert külön
      paraméterrel kell hívni az oldalt:
@@ -1723,6 +1735,12 @@
     data.append("peldanyok", pickedList.map(pad3).join(", "));
     data.append("_subject", (preorderOpen ? "Új előrendelés — " : "Új várólista-feliratkozó — ")
       + (variant === "dedikalt" ? "DEDIKÁLT példány — " : "") + "Báránybőrbe bújt pásztor");
+
+    /* A díjbekérő automatához kiszámolt végösszeg. Dedikáltnál a
+       mennyiség mindig 1 (lásd a "db" mező zárolását), normálnál a
+       ténylegesen beírt darabszám. */
+    var orderQty = variant === "dedikalt" ? 1 : (parseInt(form.querySelector('input[name="db"]').value, 10) || 1);
+    data.append("osszesen", formatHuf(parseHuf(currentPrice()) * orderQty));
 
     var summaryLines = [];
     data.forEach(function (v, k) { if (k.charAt(0) !== "_" && v) summaryLines.push(k + ": " + v); });

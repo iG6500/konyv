@@ -317,6 +317,7 @@
   .bonus-meter.show { display: grid; gap: 9px; align-content: start; }
   /* a bónusz számlálója szándékosan halkabb, mint a dedikált kártyáé:
      a szűkösséget ott kell látni, ez csak tájékoztat */
+  .bonus-meter-cap { font-family: var(--sans); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); }
   .bonus-meter .tier-meter-count { color: var(--ink); font-size: clamp(17px, 1.6vw, 21px); }
   .bonus-meter .tier-meter-fill { background: var(--ink-soft); }
   @media (max-width: 720px) {
@@ -535,6 +536,7 @@
             <li>Nincs darabszám-korlát — ebből a változatból nem fogyhat el.</li>
             <li>Szállítás december elejétől, az előrendelés sorrendjében.</li>
             <li>Fizetés banki átutalással, a díjbekérő megérkezése után.</li>
+            <li id="tier-normal-bonus"></li>
           </ul>
           <a href="#varolista" class="pill-btn pill-btn-primary tier-cta" data-tier-cta="normal">Ezt kérem</a>
           <p class="tier-foot" id="tier-normal-foot"></p>
@@ -551,6 +553,7 @@
             <li>Kézzel írt, személyre szóló ajánlás — a te nevedre, vagy akinek ajándékozod.</li>
             <li>A kötetbe írt sorszám, 001-től 020-ig — a jegyzékből te választod ki, melyiket kéred.</li>
             <li>Minden, ami a normál példányban benne van.</li>
+            <li id="tier-signed-bonus"></li>
           </ul>
 
           <div class="tier-meter">
@@ -573,12 +576,13 @@
 
       <div class="bonus-card">
         <div class="bonus-main">
-          <p class="tier-eyebrow">Mindkét változathoz jár</p>
+          <p class="tier-eyebrow">Előrendelői bónusz</p>
           <h3 class="tier-name">Zárt körű online felolvasóest</h3>
           <p class="bonus-lead" id="bonus-lead"></p>
           <ul class="tier-list bonus-list" id="bonus-list"></ul>
         </div>
         <div class="bonus-meter" id="bonus-meter">
+          <span class="bonus-meter-cap" id="bonus-meter-cap"></span>
           <span class="tier-meter-count" id="bonus-meter-count"></span>
           <span class="tier-meter-left" id="bonus-meter-left"></span>
           <div class="tier-meter-bar"><i class="tier-meter-fill" id="bonus-meter-fill"></i></div>
@@ -818,14 +822,16 @@
        Ez a külön tier — nem a normál példány felára, hanem önálló változat. */
     PRICE_SIGNED: "7 900 Ft",
 
-    /* Felolvasóest. Meghívót az első SEATS_TOTAL megrendelő kap, DE csak
-       addig, amíg az eladott példányszám el nem éri a SEATS_COPY_CAP-et,
-       és csak akkor, ha a könyv ára az est előtti határidőig megérkezik.
-       Egy megrendelés egy meghívó — akárhány példányról szól. */
-    SEATS_TOTAL: 50,
-    SEATS_COPY_CAP: 70,
-    /* Hány meghívó kelt el eddig. Hagyd null-on, amíg nincs valódi szám:
-       akkor a számláló egyszerűen nem jelenik meg. CSAK VALÓS SZÁMOT írj ide. */
+    /* Felolvasóest. A meghívók KÉT külön kvótából állnak össze:
+         1) minden dedikált példány vásárlója kap egyet (COPIES_TOTAL),
+         2) plusz az első SEATS_NORMAL normál előrendelő.
+       A kettő összege a felső korlát — alapértékekkel 20 + 50 = 70 fő.
+       Nem példányszám-küszöb: ha csak 18 dedikált kel el, 18 + 50 = 68 lesz.
+       Egy megrendelés egy meghívó, akárhány példányról szól, és feltétel,
+       hogy a könyv ára az est előtti határidőig megérkezzen. */
+    SEATS_NORMAL: 50,
+    /* Hány normál hely kelt el az 50-ből. Hagyd null-on, amíg nincs valódi
+       szám: akkor a számláló nem jelenik meg. CSAK VALÓS SZÁMOT írj ide. */
     SEATS_TAKEN: null,
 
     COPIES_TOTAL: 20,
@@ -903,7 +909,7 @@
   var phaseDefs = [
     { date: "Most", title: "Érdeklődők gyűjtése", note: "Feliratkozol e-mailre — fizetés és kötelezettség nélkül. A lista dönti el, ki kapja elsőként a linket." },
     { date: "2026. okt. 25.", title: "Előrendelés nyit — " + CONFIG.PRICE_EARLY, note: "Normál példány early bird áron, mellette a húsz dedikált, számozott kötet " + CONFIG.PRICE_SIGNED + "-ért. A várólistások egy nappal előbb vásárolhatnak." },
-    { date: "Nyitás után", title: "Felolvasóest", note: "Az első " + CONFIG.SEATS_TOTAL + " megrendelő meghívót kap a zárt körű online estre — előre fizetés mellett, legfeljebb a " + CONFIG.SEATS_COPY_CAP + ". eladott példányig." },
+    { date: "Nyitás után", title: "Felolvasóest", note: "Meghívó a zárt körű online estre: minden dedikált példány vásárlójának, plusz az első " + CONFIG.SEATS_NORMAL + " normál előrendelőnek — előre fizetés mellett." },
     { date: "Black Friday után", title: "Early bird zárul", note: "A normál ár " + CONFIG.PRICE_LATER + "-ra vált. A dedikált példány ára marad " + CONFIG.PRICE_SIGNED + ". Szállítás december elejétől." }
   ];
 
@@ -988,8 +994,10 @@
 
     var faqEst = document.getElementById("faq-est");
     if (faqEst) {
-      faqEst.textContent = "Az első " + CONFIG.SEATS_TOTAL + " megrendelő, aki a könyv árát az est előtti határidőig kifizeti — de legfeljebb a "
-        + CONFIG.SEATS_COPY_CAP + ". eladott példányig. Egy megrendelés egy meghívó, akárhány példányról szól, és mindkét változatra érvényes.";
+      faqEst.textContent = "Minden dedikált példány vásárlója, plusz az első " + CONFIG.SEATS_NORMAL
+        + " normál előrendelő — vagyis legfeljebb " + (CONFIG.COPIES_TOTAL + CONFIG.SEATS_NORMAL)
+        + " ember. Ez felső korlát, nem kvóta: ha például csak " + (CONFIG.COPIES_TOTAL - 2) + " dedikált példány kel el, "
+        + ((CONFIG.COPIES_TOTAL - 2) + CONFIG.SEATS_NORMAL) + " meghívó megy ki. Egy megrendelés egy meghívó, akárhány példányról szól, és mindenkinél feltétel, hogy a könyv ára az est előtti határidőig megérkezzen.";
     }
 
     var footer = document.getElementById("footer-meta");
@@ -1264,6 +1272,11 @@
         : "Az előrendelői ár a Black Friday-ig él, utána " + CONFIG.PRICE_LATER + ".";
     }
 
+    var normalBonus = document.getElementById("tier-normal-bonus");
+    if (normalBonus) normalBonus.textContent = "Az első " + CONFIG.SEATS_NORMAL + " előrendelő meghívót kap a zárt körű online felolvasóestre.";
+    var signedBonus = document.getElementById("tier-signed-bonus");
+    if (signedBonus) signedBonus.textContent = "Meghívó a felolvasóestre — minden dedikált példányhoz jár, sorban állás nélkül.";
+
     var signedFoot = document.getElementById("tier-signed-foot");
     if (signedFoot) {
       signedFoot.textContent = sold
@@ -1310,40 +1323,44 @@
     if (sold && variant === "dedikalt") setVariant("normal", true);
   }
 
-  /* A felolvasóest mindkét változathoz jár, de három feltétele van, és a
-     kettős korlát (megrendelők száma / eladott példányszám) csak együtt
-     igaz — ezért egy helyen, a CONFIG-ból építjük a szöveget. */
+  /* A felolvasóest meghívói két külön kvótából állnak össze: minden
+     dedikált példány vásárlója kap egyet, plusz az első SEATS_NORMAL
+     normál előrendelő. A kettő összege a felső korlát — nem példányszám-
+     küszöb. Egy helyen, a CONFIG-ból építjük, hogy ne csússzon szét. */
   function renderBonus() {
-    var seats = CONFIG.SEATS_TOTAL;
-    var cap = CONFIG.SEATS_COPY_CAP;
+    var normalSeats = CONFIG.SEATS_NORMAL;
+    var maxSeats = CONFIG.COPIES_TOTAL + normalSeats;
+
+    function li(head, tail) {
+      var el = document.createElement("li");
+      var b = document.createElement("b");
+      b.textContent = head;
+      el.appendChild(b);
+      el.appendChild(document.createTextNode(tail));
+      return el;
+    }
 
     var lead = document.getElementById("bonus-lead");
     if (lead) {
-      lead.textContent = "";
-      lead.appendChild(document.createTextNode("Élő, online írói est, kizárólag előrendelőknek. Meghívót az első "));
-      var b = document.createElement("b");
-      b.textContent = seats + " megrendelő";
-      lead.appendChild(b);
-      lead.appendChild(document.createTextNode(" kap — három feltétellel:"));
+      lead.textContent = "Élő, online írói est, kizárólag előrendelőknek — összesen legfeljebb "
+        + maxSeats + " meghívóval. Két helyről gyűlik össze:";
     }
 
     var list = document.getElementById("bonus-list");
     if (list) {
       list.textContent = "";
-      [ ["Egy megrendelés egy meghívó", ". Akárhány példányt kérsz, egy helyet foglal."],
-        ["A könyv árának az est előtti határidőig meg kell érkeznie", " — utólag már nem pótolható."],
-        ["Legfeljebb a " + cap + ". eladott példányig", " élnek a meghívók, akkor is, ha addig nem gyűlt össze " + seats + " megrendelő."]
-      ].forEach(function (parts) {
-        var li = document.createElement("li");
-        var strong = document.createElement("b");
-        strong.textContent = parts[0];
-        li.appendChild(strong);
-        li.appendChild(document.createTextNode(parts[1]));
-        list.appendChild(li);
-      });
+      list.appendChild(li("Minden dedikált példány vásárlója meghívót kap",
+        " — mind a " + CONFIG.COPIES_TOTAL + " kötet gazdája, külön feltétel nélkül."));
+      list.appendChild(li("Plusz az első " + normalSeats + " normál előrendelő",
+        " — itt érdemes az elsők között lenni."));
+      list.appendChild(li("Egy megrendelés egy meghívó",
+        ". Akárhány példányt kérsz, egy helyet foglal."));
+      list.appendChild(li("A könyv árának az est előtti határidőig meg kell érkeznie",
+        " — utólag már nem pótolható."));
     }
 
-    /* A helyszámláló csak akkor jelenik meg, ha valódi szám van a CONFIG-ban. */
+    /* A számláló a szűkös oldalt mutatja: az 50 normál helyet. A dedikált
+       meghívók nem fogyhatnak el külön, azok a kötethez járnak. */
     var meter = document.getElementById("bonus-meter");
     var taken = CONFIG.SEATS_TAKEN;
     var hasReal = typeof taken === "number" && isFinite(taken) && taken >= 0;
@@ -1351,19 +1368,21 @@
     meter.classList.toggle("show", hasReal);
     if (!hasReal) return;
 
-    taken = Math.max(0, Math.min(taken, seats));
+    taken = Math.max(0, Math.min(taken, normalSeats));
+    var capEl = document.getElementById("bonus-meter-cap");
+    if (capEl) capEl.textContent = "Normál előrendelői helyek";
     var countEl = document.getElementById("bonus-meter-count");
     if (countEl) {
       countEl.textContent = "";
-      var strong2 = document.createElement("b");
-      strong2.textContent = String(taken);
-      countEl.appendChild(strong2);
-      countEl.appendChild(document.createTextNode("/" + seats + " meghívó elkelt"));
+      var strong = document.createElement("b");
+      strong.textContent = String(taken);
+      countEl.appendChild(strong);
+      countEl.appendChild(document.createTextNode("/" + normalSeats + " elkelt"));
     }
     var leftEl = document.getElementById("bonus-meter-left");
-    if (leftEl) leftEl.textContent = taken >= seats ? "A helyek beteltek" : "Még " + (seats - taken) + " hely";
+    if (leftEl) leftEl.textContent = taken >= normalSeats ? "Az 50 hely betelt" : "Még " + (normalSeats - taken) + " hely";
     var fillEl = document.getElementById("bonus-meter-fill");
-    if (fillEl) fillEl.style.width = Math.round((taken / seats) * 100) + "%";
+    if (fillEl) fillEl.style.width = Math.round((taken / normalSeats) * 100) + "%";
   }
 
   variantOpts.forEach(function (lab) {

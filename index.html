@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Báránybőrbe bújt pásztor — előrendelés | 20 dedikált példány, 2026</title>
-<meta name="description" content="Könyv a nárcisztikus működésről és a lelki bántalmazásról keresztény közösségekben: felismerés, hatások, felépülés. Az első 20 kézzel dedikált, számozott példány október 25-én nyit — a várólistások egy nappal előbb vásárolhatnak.">
+<meta name="description" content="Könyv a nárcisztikus működésről és a lelki bántalmazásról keresztény közösségekben: felismerés, hatások, felépülés. Az első 20 kézzel dedikált, számozott példány október 25-én nyit — a várólistások egy nappal előbb rendelhetnek, és ők választanak először sorszámot.">
 <meta name="theme-color" content="#15120e">
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="book">
 <meta property="og:locale" content="hu_HU">
 <meta property="og:title" content="Báránybőrbe bújt pásztor — 20 dedikált példány">
-<meta property="og:description" content="Nárcisztikus működés és lelki bántalmazás keresztény közösségekben. Az előrendelés október 25-én nyit, a várólistások egy nappal előbb vásárolhatnak.">
+<meta property="og:description" content="Nárcisztikus működés és lelki bántalmazás keresztény közösségekben. Az előrendelés október 25-én nyit, a várólistások egy nappal előbb rendelhetnek és választanak először sorszámot.">
 <!-- OG-KÉP: amint van valódi borítófotó, töltsd fel (pl. "og-borito.jpg", 1200x630) és vedd ki a kommentet.
      Addig szándékosan nincs kép: a Facebook/Messenger inkább ne mutasson semmit, mint egy placeholdert.
 <meta property="og:image" content="og-borito.jpg">
@@ -59,8 +59,11 @@
   }
   .copy-btn[disabled] { background: var(--bg-alt); color: var(--ink-faint); border-color: var(--line); cursor: not-allowed; }
   .copy-btn.picked { background: var(--coral); border-color: var(--coral); color: var(--ink); transform: translateY(-16px); }
+  /* foglalva: a fizetésre vár, nem végleges — halk okker jelzés, szaggatott
+     keret, NEM áthúzott felirat (az csak a véglegesen elkelt köteteké) */
+  .copy-btn.reserved[disabled] { background: rgba(215,168,84,0.08); color: var(--gold-soft); border-color: rgba(215,168,84,0.4); border-style: dashed; }
   .copy-btn .lbl { writing-mode: vertical-rl; text-orientation: mixed; display: flex; align-items: center; gap: 10px; }
-  .copy-btn[disabled] .lbl { text-decoration: line-through; }
+  .copy-btn[disabled]:not(.reserved) .lbl { text-decoration: line-through; }
   .copy-btn .st { font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.85; }
 
   .pick-banner {
@@ -284,8 +287,11 @@
   .tier-meter-count { font-family: var(--serif); font-size: clamp(20px, 2vw, 26px); color: var(--gold-soft); line-height: 1; }
   .tier-meter-count b { font-weight: 500; }
   .tier-meter-left { font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); }
-  .tier-meter-bar { height: 6px; border-radius: 999px; background: rgba(255,246,232,0.09); overflow: hidden; }
-  .tier-meter-fill { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--gold); transition: width 700ms cubic-bezier(.3,.9,.3,1); }
+  .tier-meter-bar { height: 6px; border-radius: 999px; background: rgba(255,246,232,0.09); overflow: hidden; display: flex; }
+  .tier-meter-fill { display: block; flex: none; height: 100%; width: 0; background: var(--gold); transition: width 700ms cubic-bezier(.3,.9,.3,1); }
+  /* a foglalt (fizetésre váró) sorszámok halványabb, szaggatott jellegű
+     szegmense — látszik, hogy ez a rész még visszafordulhat */
+  .tier-meter-fill-reserved { display: block; flex: none; height: 100%; width: 0; background: repeating-linear-gradient(135deg, rgba(215,168,84,0.55) 0 4px, rgba(215,168,84,0.22) 4px 8px); transition: width 700ms cubic-bezier(.3,.9,.3,1); }
   .tier-cta { justify-self: start; margin-top: 4px; }
   .tier-foot { font-family: var(--sans); font-size: 11.5px; line-height: 1.7; color: var(--ink-faint); margin: 0; }
 
@@ -299,6 +305,10 @@
   .tier-sold-note a { color: var(--gold); }
   .tier-signed.is-sold .tier-sold-note { display: block; }
   .tier-signed.is-sold .tier-cta { display: none; }
+  /* "pillanatnyilag nincs szabad szám" — gyengébb, mint az elfogyott: a
+     CTA nem tűnik el, mert a jelentkezés még mindig felkerül egy sorba */
+  .tier-full-note { display: none; border: 1px solid rgba(215,168,84,0.4); border-radius: var(--r-md); padding: 16px 18px; font-family: var(--sans); font-size: 13px; line-height: 1.7; color: var(--ink-soft); background: rgba(215,168,84,0.06); }
+  .tier-full-note.show { display: block; }
 
   /* közös bónusz-blokk a két kártya alatt — szándékosan a leghalkabb elem */
   .bonus-card {
@@ -385,7 +395,7 @@
 
           <p style="font-size: clamp(17px, 1.4vw, 20px); line-height: 1.55; color: var(--ink); margin: 0; max-width: 40ch;">Könyv a nárcisztikus működésről és a lelki bántalmazásról keresztény közösségekben — a felismerésről, a következményeiről és a gyógyulás útjáról.</p>
 
-          <p style="font-size: clamp(15px, 1.2vw, 17px); line-height: 1.6; color: var(--ink-soft); margin: 0; max-width: 46ch;">A könyvből húsz kézzel dedikált, számozott példány is készül — a többi normál kiadás. Az előrendelés október 25-én nyit — <strong style="font-weight: 500; color: var(--ink);">a listán lévők már 24-én vásárolhatnak</strong>, egy nappal mindenki más előtt.</p>
+          <p style="font-size: clamp(15px, 1.2vw, 17px); line-height: 1.6; color: var(--ink-soft); margin: 0; max-width: 46ch;">A könyvből húsz kézzel dedikált, számozott példány is készül — a többi normál kiadás. Az előrendelés október 25-én nyit — <strong style="font-weight: 500; color: var(--ink);">a listán lévők már 24-én rendelhetnek, és ők választanak először sorszámot</strong>, egy nappal mindenki más előtt.</p>
 
           <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px;">
             <a href="#varolista" class="pill-btn pill-btn-primary" data-cta="1">Felkerülök a listára</a>
@@ -513,7 +523,7 @@
         <a href="#varolista">Ugrás a jelentkezéshez ↓</a>
       </div>
 
-      <p style="font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 14px 0 0;">A polcon minden kötet a saját száma. A megbillent, áthúzott gerincek már elkeltek.</p>
+      <p style="font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 14px 0 0;">A polcon minden kötet a saját száma. A megbillent, áthúzott gerincek már elkeltek — a szaggatott keretűek egyelőre csak foglalva vannak, és felszabadulhatnak.</p>
     </section>
 
     <section data-sec="rendeles" id="rendeles" style="border-top: 1px solid var(--line); padding: clamp(40px, 5vw, 64px) 0;">
@@ -552,6 +562,7 @@
           <ul class="tier-list">
             <li>Kézzel írt, személyre szóló ajánlás — a te nevedre, vagy akinek ajándékozod.</li>
             <li>A kötetbe írt sorszám, 001-től 020-ig — a jegyzékből te választod ki, melyiket kéred.</li>
+            <li id="tier-signed-deadline"></li>
             <li>Minden, ami a normál példányban benne van.</li>
             <li id="tier-signed-bonus"></li>
           </ul>
@@ -561,13 +572,14 @@
               <span class="tier-meter-count" id="tier-meter-count"></span>
               <span class="tier-meter-left" id="tier-meter-left"></span>
             </div>
-            <div class="tier-meter-bar"><i class="tier-meter-fill" id="tier-meter-fill"></i></div>
+            <div class="tier-meter-bar"><i class="tier-meter-fill" id="tier-meter-fill"></i><i class="tier-meter-fill-reserved" id="tier-meter-fill-reserved"></i></div>
           </div>
 
           <div class="tier-cta-row">
             <a href="#varolista" class="pill-btn pill-btn-gold tier-cta" data-tier-cta="dedikalt">Dedikált példányt kérek</a>
             <a href="#jegyzek" class="tier-link" id="tier-shelf-link">Sorszám a példányjegyzékből ↑</a>
           </div>
+          <p class="tier-full-note" id="tier-full-note"></p>
           <p class="tier-sold-note" id="tier-sold-note"></p>
           <p class="tier-foot" id="tier-signed-foot">Utánnyomás nincs. Ha a húsz elfogy, ez a változat végleg lezárul.</p>
         </article>
@@ -628,7 +640,7 @@
       <div style="border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--panel); padding: clamp(28px, 5vw, 56px); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(30px, 5vw, 68px); align-items: start;">
         <div style="min-width: 0;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin: 0 0 22px; color: var(--gold);">Az egyetlen, ami nincs kifedve</p>
-          <h2 style="font-size: clamp(28px, 3.4vw, 48px); font-weight: 500; line-height: 1.05; margin: 0 0 20px;">Egy nappal a nyitás előtt te már megveheted, így bizonyosan nem maradsz le.</h2>
+          <h2 style="font-size: clamp(28px, 3.4vw, 48px); font-weight: 500; line-height: 1.05; margin: 0 0 20px;">Egy nappal a nyitás előtt te már választhatsz sorszámot, így bizonyosan nem maradsz le.</h2>
           <p style="font-size: 17px; line-height: 1.65; max-width: 40ch; margin: 0 0 24px; color: var(--ink-soft);">A dedikált húsz példány jó eséllyel a listáról fogy el. Most csak az e-mail címed kell — fizetés nincs, és a feliratkozás nem kötelez semmire.</p>
           <div class="trust-row" style="margin: 0 0 6px;">
             <span>Október 24-én kapod a linket</span>
@@ -701,7 +713,8 @@
             </details>
 
             <div id="dedik-block">
-              <p class="cta-note" style="margin: 0;">A húsz dedikált kötet mindegyikébe kézzel írom bele az ajánlást. Írd le, kinek szóljon.</p>
+              <p class="cta-note" id="dedik-lead" style="margin: 0;">A húsz dedikált kötet mindegyikébe kézzel írom bele az ajánlást. Írd le, kinek szóljon.</p>
+              <input type="hidden" name="sorszam_varolista" id="sorszam-varolista-input" value="">
               <div class="field-wrap">
                 <label class="field-label" for="f-ded">Kinek szóljon az ajánlás?</label>
                 <input id="f-ded" name="dedikalas" placeholder="Név, ahogy a kötetbe kerül" class="field-line">
@@ -752,7 +765,11 @@
         </div>
         <div style="min-width: 0;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink);">Hogyan fizetek majd?</p>
-          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">Banki átutalással. Az előrendelés után e-mailben küldöm a díjbekérőt minden adattal — online kártyaadatot sehol nem kell megadnod.</p>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);" id="faq-fizetes"></p>
+        </div>
+        <div style="min-width: 0;">
+          <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink);">Mi van, ha nem fizetek időben a dedikált példányért?</p>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);" id="faq-foglalas"></p>
         </div>
         <div style="min-width: 0;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink);">Mi lesz az e-mail címemmel?</p>
@@ -801,7 +818,11 @@
       /* a választott változat: "normal" vagy "dedikalt" */
       valtozat:   "valtozat",
       /* a dedikált változatnál megadott pár szavas instrukció */
-      dedikalas_uzenet: "dedikalas_uzenet"
+      dedikalas_uzenet: "dedikalas_uzenet",
+      /* "igen", ha úgy jelentkezett dedikáltra, hogy akkor pillanatnyilag
+         egy szám sem volt szabad — csak foglalva. Erre külön kell figyelni:
+         nem azonnal rendelhető, hanem egy lejáró foglalásra vár. */
+      sorszam_varolista: "sorszam_varolista"
     },
 
     /* AJÁNLOTT: ha az űrlap bármiért hibázna, a látogató erre a címre tud
@@ -830,14 +851,30 @@
        Egy megrendelés egy meghívó, akárhány példányról szól, és feltétel,
        hogy a könyv ára az est előtti határidőig megérkezzen. */
     SEATS_NORMAL: 50,
-    /* Hány normál hely kelt el az 50-ből. Hagyd null-on, amíg nincs valódi
-       szám: akkor a számláló nem jelenik meg. CSAK VALÓS SZÁMOT írj ide. */
+    /* Hány normál hely kelt el az 50-ből. CSAK OLYAN RENDELÉST SZÁMOLJ IDE,
+       aminek az ára ténylegesen megérkezett — egy fizetetlen foglalás nem
+       foglal helyet az esten. Hagyd null-on, amíg nincs valódi szám: akkor
+       a számláló nem jelenik meg. */
     SEATS_TAKEN: null,
 
     COPIES_TOTAL: 20,
-    /* CSAK VALÓS SZÁMOT írj ide. A kitalált szűkösség visszaüt: ha valaki
-       látja, hogy hetek óta ugyanannyi "kelt el", elveszíted a bizalmát. */
-    COPIES_TAKEN: 7,
+
+    /* Hány napja van valakinek utalni, MIUTÁN elküldted a díjbekérőt (nem a
+       rendeléstől számítva — a te átfutási időd nem mehet a vevő rovására).
+       Ha nem érkezik meg időben az összeg, a sorszám visszakerül szabadra. */
+    PAYMENT_DEADLINE_DAYS: 5,
+
+    /* Melyik sorszámok keltek el VÉGLEGESEN — az utalás megérkezett.
+       Formátum: [1, 2, 3, ...]. CSAK VALÓS SORSZÁMOT írj ide: a kitalált
+       szűkösség visszaüt, ha valaki látja, hogy hetek óta ugyanaz áll itt. */
+    COPIES_SOLD: [1, 2, 3, 4, 5, 6, 7],
+
+    /* Melyik sorszámokat FOGLALTÁK LE, de a fizetés még nem érkezett meg.
+       Formátum: { sorszám: "díjbekérő kiküldésének dátuma, ÉÉÉÉ-HH-NN" } —
+       ebből számolja ki az oldal a határidőt (+ PAYMENT_DEADLINE_DAYS nap).
+       Ha lejár és nem fizet be, TÖRÖLD innen a sort — a szám ettől magától
+       visszakerül a szabadok közé, nem kell külön semmit "felszabadítani". */
+    COPIES_RESERVED: {},
 
     /* Amíg üres a tömb, az "Ajánlók" szekció nem jelenik meg. Kitalált vagy
        "[Ajánló neve]" jellegű placeholder ajánlás többet árt, mint használ.
@@ -900,15 +937,41 @@
 
   /* ---------- állapot ---------- */
   var pickedList = [];
-  var takenCount = Math.max(0, Math.min(CONFIG.COPIES_TAKEN, CONFIG.COPIES_TOTAL));
   var sending = false;
   var hoverPhase = null;
   /* melyik változat aktív az űrlapon: "normal" vagy "dedikalt" */
   var variant = "normal";
 
+  /* Egy sorszám három állapotban lehet: végleg elkelt (kifizetve), foglalva
+     (a díjbekérőre vár, határidővel), vagy szabad. A "foglalva" állapot
+     azért kell külön a "elkelt"-től, mert a foglalás lejárhat — ilyenkor
+     a szám magától visszakerül szabadra, amint kikerül a COPIES_RESERVED-ből. */
+  var soldSet = {};
+  (CONFIG.COPIES_SOLD || []).forEach(function (n) {
+    if (n >= 1 && n <= CONFIG.COPIES_TOTAL) soldSet[n] = true;
+  });
+  var takenCount = Object.keys(soldSet).length;
+
+  var reservedMap = {};
+  Object.keys(CONFIG.COPIES_RESERVED || {}).forEach(function (k) {
+    var n = parseInt(k, 10);
+    /* ha egy szám tévedésből mindkét listában szerepel, az "elkelt" nyer */
+    if (n >= 1 && n <= CONFIG.COPIES_TOTAL && !soldSet[n]) reservedMap[n] = CONFIG.COPIES_RESERVED[k];
+  });
+  var reservedCount = Object.keys(reservedMap).length;
+  var freeCount = Math.max(0, CONFIG.COPIES_TOTAL - takenCount - reservedCount);
+
+  var HU_HONAP = ["jan.", "febr.", "márc.", "ápr.", "máj.", "jún.", "júl.", "aug.", "szept.", "okt.", "nov.", "dec."];
+  /* pont nélkül, mert mindig "-ig" vagy hasonló toldalék követi */
+  function fmtHu(d) { return HU_HONAP[d.getMonth()] + " " + d.getDate(); }
+  function reservedDeadline(dateStr) {
+    var start = new Date(dateStr + "T00:00:00");
+    return new Date(start.getTime() + CONFIG.PAYMENT_DEADLINE_DAYS * 86400000);
+  }
+
   var phaseDefs = [
     { date: "Most", title: "Érdeklődők gyűjtése", note: "Feliratkozol e-mailre — fizetés és kötelezettség nélkül. A lista dönti el, ki kapja elsőként a linket." },
-    { date: "2026. okt. 25.", title: "Előrendelés nyit — " + CONFIG.PRICE_EARLY, note: "Normál példány early bird áron, mellette a húsz dedikált, számozott kötet " + CONFIG.PRICE_SIGNED + "-ért. A várólistások egy nappal előbb vásárolhatnak." },
+    { date: "2026. okt. 25.", title: "Előrendelés nyit — " + CONFIG.PRICE_EARLY, note: "Normál példány early bird áron, mellette a húsz dedikált, számozott kötet " + CONFIG.PRICE_SIGNED + "-ért. A várólistások egy nappal előbb rendelhetnek, és ők választanak először sorszámot." },
     { date: "Nyitás után", title: "Felolvasóest", note: "Meghívó a zárt körű online estre: minden dedikált példány vásárlójának, plusz az első " + CONFIG.SEATS_NORMAL + " normál előrendelőnek — előre fizetés mellett." },
     { date: "Black Friday után", title: "Early bird zárul", note: "A normál ár " + CONFIG.PRICE_LATER + "-ra vált. A dedikált példány ára marad " + CONFIG.PRICE_SIGNED + ". Szállítás december elejétől." }
   ];
@@ -924,7 +987,12 @@
   /* A normál példány aktuális ára (Black Friday után az emelt ár).
      A dedikált változat ára ettől függetlenül fix. */
   var normalPrice = curPhase >= 3 ? CONFIG.PRICE_LATER : CONFIG.PRICE_EARLY;
+  /* "Elfogyott" = véglegesen, visszavonhatatlanul nincs több — csak akkor,
+     ha mind a 20 kifizetve. Ez tereli a normál példány felé, és ez zárja
+     véglegesen a tiert. A "foglalva tele" ennél gyengébb: pillanatnyilag
+     nincs szabad szám, de egy lejáró foglalás bármikor felszabadíthat egyet. */
   function isSoldOut() { return takenCount >= CONFIG.COPIES_TOTAL; }
+  function isFullyReserved() { return !isSoldOut() && freeCount <= 0; }
 
   /* ---------- visszaszámláló + üzemmód (várólista / előrendelés) ---------- */
   var daysToOpen = Math.ceil((CONFIG.PREORDER_OPEN - new Date()) / 86400000);
@@ -938,7 +1006,9 @@
     if (attnBar && preorderOpen) {
       attnBar.lastElementChild.textContent = isSoldOut()
         ? "Mind a " + CONFIG.COPIES_TOTAL + " dedikált példány elkelt — a normál előrendelés nyitva, " + normalPrice + "."
-        : "Az előrendelés nyitva — " + (CONFIG.COPIES_TOTAL - takenCount) + " dedikált példány maradt (" + CONFIG.PRICE_SIGNED + "), a normál példány " + normalPrice + ".";
+        : isFullyReserved()
+          ? "A dedikált példányok pillanatnyilag mind foglalva — egy lejáró foglalás bármikor felszabadíthat egyet. Normál példány nyitva, " + normalPrice + "."
+          : "Az előrendelés nyitva — " + freeCount + " dedikált példány szabad (" + CONFIG.PRICE_SIGNED + "), a normál példány " + normalPrice + ".";
     }
 
     var stickyEl = document.getElementById("sticky-text");
@@ -1002,6 +1072,16 @@
         + " normál előrendelő — vagyis legfeljebb " + (CONFIG.COPIES_TOTAL + CONFIG.SEATS_NORMAL)
         + " ember. Ez felső korlát, nem kvóta: ha például csak " + (CONFIG.COPIES_TOTAL - 2) + " dedikált példány kel el, "
         + ((CONFIG.COPIES_TOTAL - 2) + CONFIG.SEATS_NORMAL) + " meghívó megy ki. Egy megrendelés egy meghívó, akárhány példányról szól, és mindenkinél feltétel, hogy a könyv ára az est előtti határidőig megérkezzen.";
+    }
+
+    var faqFizetes = document.getElementById("faq-fizetes");
+    if (faqFizetes) {
+      faqFizetes.textContent = "Banki átutalással. A rendelés után e-mailben küldöm a díjbekérőt minden adattal — attól a naptól " + CONFIG.PAYMENT_DEADLINE_DAYS + " napod van utalni. Online kártyaadatot sehol nem kell megadnod.";
+    }
+
+    var faqFoglalas = document.getElementById("faq-foglalas");
+    if (faqFoglalas) {
+      faqFoglalas.textContent = "A sorszámodat a díjbekérő kiküldésétől számított " + CONFIG.PAYMENT_DEADLINE_DAYS + " napig tartom fenn. Ha nem érkezik meg addig az utalás, a szám visszakerül a szabadok közé, és a normál példány marad számodra elérhető — a dedikálás és a sorszám nélkül.";
     }
 
     var footer = document.getElementById("footer-meta");
@@ -1087,19 +1167,30 @@
     shelfEl.innerHTML = "";
     for (var i = 1; i <= CONFIG.COPIES_TOTAL; i++) {
       (function (i) {
-        var isTaken = i <= takenCount;
+        var isSold = !!soldSet[i];
+        var isReserved = !isSold && !!reservedMap[i];
+        var isTaken = isSold || isReserved;
         var isPicked = pickedList.indexOf(i) !== -1;
         var num = String(i).padStart(3, "0");
 
         var btn = document.createElement("button");
         btn.type = "button";
-        btn.className = "copy-btn" + (isPicked ? " picked" : "");
-        btn.title = isTaken ? num + " — már elkelt" : num + " — szabad, kattints";
+        btn.className = "copy-btn" + (isPicked ? " picked" : isReserved ? " reserved" : "");
+
+        if (isSold) {
+          btn.title = num + " — már elkelt";
+        } else if (isReserved) {
+          btn.title = num + " — foglalva, " + fmtHu(reservedDeadline(reservedMap[i])) + "-ig. Ha nem érkezik meg időben az utalás, felszabadul.";
+        } else {
+          btn.title = num + " — szabad, kattints";
+        }
         if (isTaken) btn.disabled = true;
 
         var height = isPicked ? 216 : isTaken ? 168 : (176 + ((i * 7) % 5) * 8);
         btn.style.height = height + "px";
-        if (isTaken) btn.style.transform = "translateY(0) rotate(" + (i % 2 === 0 ? "3.5deg" : "-3.5deg") + ")";
+        /* csak a véglegesen elkelt kötetek "dőlnek ki" a polcról — a
+           foglaltak még egyenesen állnak, hogy látszódjon: nincs végleg vége */
+        if (isSold) btn.style.transform = "translateY(0) rotate(" + (i % 2 === 0 ? "3.5deg" : "-3.5deg") + ")";
 
         var lbl = document.createElement("span");
         lbl.className = "lbl";
@@ -1107,7 +1198,7 @@
         numSpan.textContent = num;
         var stSpan = document.createElement("span");
         stSpan.className = "st";
-        stSpan.textContent = isTaken ? "elkelt" : isPicked ? "tiéd" : "szabad";
+        stSpan.textContent = isSold ? "elkelt" : isReserved ? "foglalva" : isPicked ? "tiéd" : "szabad";
         lbl.appendChild(numSpan);
         lbl.appendChild(stSpan);
         btn.appendChild(lbl);
@@ -1131,7 +1222,9 @@
     if (claimEl) {
       claimEl.textContent = isSoldOut()
         ? "Mind a " + CONFIG.COPIES_TOTAL + " elkelt"
-        : takenCount + "/" + CONFIG.COPIES_TOTAL + " elkelt · " + (CONFIG.COPIES_TOTAL - takenCount) + " szabad";
+        : takenCount + "/" + CONFIG.COPIES_TOTAL + " elkelt"
+          + (reservedCount ? " · " + reservedCount + " foglalva" : "")
+          + " · " + freeCount + " szabad";
     }
     var leadEl = document.getElementById("jegyzek-lead");
     if (leadEl) {
@@ -1139,14 +1232,18 @@
         + "): mindegyikbe kézzel írom bele a nevet és egy pár soros ajánlást, a sorszámmal együtt. "
         + (isSoldOut()
           ? "Mind elkelt — a normál példány viszont korlátlan darabszámban rendelhető."
-          : "Válaszd ki, melyik számot kéred — az igényléshez csatolom.");
+          : isFullyReserved()
+            ? "Pillanatnyilag nincs szabad szám — a megbillenetlen, szaggatott keretű gerincek foglalva állnak, a fizetési határidejük lejártával felszabadulhatnak."
+            : "Válaszd ki, melyik számot kéred — az igényléshez csatolom.");
     }
     var heroTrust = document.getElementById("hero-trust");
     if (heroTrust) {
       heroTrust.innerHTML = "";
       [ isSoldOut()
           ? "Mind a " + CONFIG.COPIES_TOTAL + " dedikált példány elkelt"
-          : (CONFIG.COPIES_TOTAL - takenCount) + " / " + CONFIG.COPIES_TOTAL + " dedikált példány szabad",
+          : isFullyReserved()
+            ? "Pillanatnyilag nincs szabad dedikált sorszám"
+            : freeCount + " / " + CONFIG.COPIES_TOTAL + " dedikált példány szabad",
         "Dedikált, számozott — " + CONFIG.PRICE_SIGNED,
         "Normál példány — " + CONFIG.PRICE_EARLY ].forEach(function (t) {
         var sp = document.createElement("span");
@@ -1176,10 +1273,24 @@
       pickBanner.classList.remove("show");
       chip.style.display = "none";
       pickedLabelEl.textContent = variant === "dedikalt"
-        ? "Sorszámot a fenti jegyzékből választhatsz — ha nem választasz, a következő szabad szám lesz a tiéd."
+        ? (isFullyReserved()
+          ? "Pillanatnyilag nincs kattintható szám — mind foglalva vagy elkelt."
+          : "Sorszámot a fenti jegyzékből választhatsz — ha nem választasz, a következő szabad szám lesz a tiéd.")
         : "Dedikált, számozott példányt a fenti jegyzékből választhatsz — attól a változat is átvált.";
       hiddenInput.value = "";
     }
+
+    /* Az űrlap dedikált blokkjának bevezetője és egy rejtett jelző mutatja,
+       hogy ez most azonnali rendelés-e, vagy egy lejáró foglalásra várás. */
+    var dedikLead = document.getElementById("dedik-lead");
+    var queueInput = document.getElementById("sorszam-varolista-input");
+    var isQueue = variant === "dedikalt" && pickedList.length === 0 && isFullyReserved();
+    if (dedikLead) {
+      dedikLead.textContent = isQueue
+        ? "Pillanatnyilag nincs szabad sorszám — mind foglalva vagy elkelt. Jelentkezz mégis: a jelentkezés sorrendjében szólok, mihelyt egy foglalás lejár és felszabadul egy szám."
+        : "A húsz dedikált kötet mindegyikébe kézzel írom bele az ajánlást. Írd le, kinek szóljon.";
+    }
+    if (queueInput) queueInput.value = isQueue ? "igen" : "";
   }
 
   document.getElementById("picked-chip-clear").addEventListener("click", function () {
@@ -1236,28 +1347,44 @@
 
   function renderTiers() {
     var total = CONFIG.COPIES_TOTAL;
-    var left = total - takenCount;
     var sold = isSoldOut();
+    var fullyReserved = isFullyReserved();
 
-    /* készletszámláló — ez adja a bizonyítható szűkösséget */
+    /* készletszámláló — ez adja a bizonyítható szűkösséget. A "foglalva"
+       rész külön szegmens: az még visszafordulhat, ha lejár a határidő. */
     var countEl = document.getElementById("tier-meter-count");
     if (countEl) {
       countEl.textContent = "";
       var strong = document.createElement("b");
       strong.textContent = String(takenCount);
       countEl.appendChild(strong);
-      countEl.appendChild(document.createTextNode("/" + total + " elkelt"));
+      countEl.appendChild(document.createTextNode("/" + total + " elkelt"
+        + (reservedCount ? " · " + reservedCount + " foglalva" : "")));
     }
     var leftEl = document.getElementById("tier-meter-left");
-    if (leftEl) leftEl.textContent = sold ? "Elfogyott" : left === 1 ? "Az utolsó szabad" : "Még " + left + " szabad";
+    if (leftEl) {
+      leftEl.textContent = sold ? "Elfogyott"
+        : fullyReserved ? "Nincs szabad — csak foglalva"
+        : freeCount === 1 ? "Az utolsó szabad" : "Még " + freeCount + " szabad";
+    }
     var fillEl = document.getElementById("tier-meter-fill");
     if (fillEl) fillEl.style.width = Math.round((takenCount / total) * 100) + "%";
+    var fillResEl = document.getElementById("tier-meter-fill-reserved");
+    if (fillResEl) fillResEl.style.width = Math.round((reservedCount / total) * 100) + "%";
 
     var noteEl = document.getElementById("tier-note");
-    if (noteEl) noteEl.textContent = sold ? "A dedikált példányok elfogytak" : takenCount + "/" + total + " dedikált példány elkelt";
+    if (noteEl) {
+      noteEl.textContent = sold ? "A dedikált példányok elfogytak"
+        : fullyReserved ? "Pillanatnyilag nincs szabad dedikált sorszám"
+        : takenCount + "/" + total + " dedikált példány elkelt";
+    }
 
     var chipEl = document.getElementById("tier-signed-chip");
-    if (chipEl) chipEl.textContent = sold ? total + " / " + total + " elkelt" : total + " példány · sorszámozva";
+    if (chipEl) {
+      chipEl.textContent = sold ? total + " / " + total + " elkelt"
+        : fullyReserved ? "mind foglalva"
+        : total + " példány · sorszámozva";
+    }
 
     var signedPrice = document.getElementById("tier-signed-price");
     if (signedPrice) signedPrice.textContent = CONFIG.PRICE_SIGNED;
@@ -1275,6 +1402,9 @@
         ? "Dedikálás és sorszám nélkül, korlátlan darabszámban."
         : "Az előrendelői ár a Black Friday-ig él, utána " + CONFIG.PRICE_LATER + ".";
     }
+
+    var signedDeadline = document.getElementById("tier-signed-deadline");
+    if (signedDeadline) signedDeadline.textContent = "A kiválasztott számot a díjbekérő kiküldésétől számított " + CONFIG.PAYMENT_DEADLINE_DAYS + " napig tartjuk fenn — utána, ha nem érkezik meg az utalás, visszakerül a szabadok közé.";
 
     var normalBonus = document.getElementById("tier-normal-bonus");
     if (normalBonus) normalBonus.textContent = "Az első " + CONFIG.SEATS_NORMAL + " előrendelő meghívót kap a zárt körű online felolvasóestre.";
@@ -1302,6 +1432,17 @@
         a.textContent = "Normál példányt kérek →";
         a.addEventListener("click", function () { setVariant("normal"); });
         soldNote.appendChild(a);
+      }
+    }
+
+    /* pillanatnyilag nincs szabad szám, de nem végleges: a foglalások
+       lejárhatnak. A CTA marad — a jelentkezés a jegyzék elejére kerül,
+       és mihelyt felszabadul egy szám, ő kapja először. */
+    var fullNote = document.getElementById("tier-full-note");
+    if (fullNote) {
+      fullNote.classList.toggle("show", fullyReserved);
+      if (fullyReserved) {
+        fullNote.textContent = "Pillanatnyilag mind a " + total + " sorszám foglalva vagy elkelt — de a foglalások fizetési határideje lejárhat. Jelentkezz mégis: a jelentkezés sorrendjében e-mailben szólok, mihelyt felszabadul egy szám, mielőtt újra nyilvánosan felkerülne.";
       }
     }
 
@@ -1450,12 +1591,15 @@
     var nums = pickedList.map(pad3);
     document.getElementById("done-title").textContent = preorderOpen ? "Előrendelés rögzítve" : "Felvéve a listára";
     document.getElementById("done-text").textContent = preorderOpen
-      ? "Köszönöm. 24 órán belül küldöm e-mailben a díjbekérőt banki átutaláshoz — amint megérkezik az összeg, a példányod le van foglalva."
-      : "Október 24-én küldöm neked a vásárlási linket, egy nappal a nyilvános nyitás előtt.";
+      ? "Köszönöm. Hamarosan e-mailben küldöm a díjbekérőt banki átutaláshoz."
+      : "Október 24-én küldöm neked a rendelési linket, egy nappal a nyilvános nyitás előtt — a listásoké az elsőbbség, ők választanak először sorszámot.";
+    /* A sorszám nem a rendeléstől foglalt, hanem a díjbekérő kiküldésétől
+       számított határidőig — ezt itt kell világossá tenni, mert ez az az
+       ígéret, amit be is tudunk tartani. */
     pickedNoteEl.textContent = nums.length
       ? (nums.length === 1
-        ? "A " + nums[0] + " számú dedikált példányt fenntartom neked a nyitásig."
-        : "A " + nums.join(", ") + " számú dedikált példányokat fenntartom neked a nyitásig.")
+        ? "A " + nums[0] + " számú dedikált példányt a díjbekérő kiküldésétől számított " + CONFIG.PAYMENT_DEADLINE_DAYS + " napig tartom fenn neked — eddig kell megérkeznie az utalásnak, különben a szám visszakerül a szabadok közé."
+        : "A " + nums.join(", ") + " számú dedikált példányokat a díjbekérő kiküldésétől számított " + CONFIG.PAYMENT_DEADLINE_DAYS + " napig tartom fenn neked — eddig kell megérkeznie az utalásnak, különben visszakerülnek a szabadok közé.")
       : variant === "dedikalt"
         ? "Dedikált, számozott példányt jelöltél be (" + CONFIG.PRICE_SIGNED + ") — a sorszámot a jegyzékből együtt választjuk ki."
         : "";

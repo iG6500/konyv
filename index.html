@@ -9,12 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#13141d; --bg-alt:#191b28; --panel:#1e2032; --panel-2:#262943;
-    --line: rgba(255,255,255,0.08);
-    --ink:#f3efe4; --ink-soft:#9a9fb2; --ink-faint:#6b7080;
+    --bg:#15120e; --bg-alt:#1b1712; --panel:#211b14; --panel-2:#2a2217;
+    --line: rgba(255,246,232,0.08);
+    --ink:#f3efe4; --ink-soft:#a89d8c; --ink-faint:#7a715f;
     --gold:#d7a854; --gold-soft:#e8c98a;
-    --coral:#e2585a; --coral-hover:#c94547;
-    --paper:#f3efe4; --paper-ink:#1c1d26;
+    --coral:#d1483a; --coral-hover:#b93a2e;
+    --paper:#f3efe4; --paper-ink:#1f1911;
     --r-lg: 20px; --r-md: 14px; --r-sm: 8px;
     --serif: 'Newsreader', Georgia, serif;
     --sans: 'Space Grotesk', sans-serif;
@@ -126,8 +126,8 @@
 
   /* cover face (3 nézetes bemutató) */
   .cover-face {
-    background-image: repeating-linear-gradient(135deg, #2a3a63 0 10px, #223154 10px 20px);
-    border: 1px solid rgba(255,255,255,0.12);
+    background-image: repeating-linear-gradient(135deg, var(--panel-2) 0 10px, var(--panel) 10px 20px);
+    border: 1px solid rgba(255,246,232,0.12);
     display: grid; place-items: center; padding: 14px;
   }
 
@@ -530,32 +530,32 @@
 
       var seg = document.createElement("div");
       seg.style.cssText = "flex:1 1 0;min-width:0;height:6px;border-radius:999px;transition:background 300ms ease;background:" +
-        (done ? "#6b7080" : isCur ? "#d7a854" : "rgba(255,255,255,0.08)");
+        (done ? "#7a715f" : isCur ? "#d7a854" : "rgba(255,246,232,0.08)");
       trackEl.appendChild(seg);
 
       var card = document.createElement("div");
       card.className = "phase-card";
       card.tabIndex = 0;
-      card.style.background = isCur ? "rgba(215,168,84,0.14)" : done ? "#1e2032" : isFocus ? "#191b28" : "transparent";
+      card.style.background = isCur ? "rgba(215,168,84,0.14)" : done ? "#211b14" : isFocus ? "#1b1712" : "transparent";
       card.style.color = "#f3efe4";
-      card.style.borderColor = isCur ? "#d7a854" : done ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.08)";
+      card.style.borderColor = isCur ? "#d7a854" : done ? "rgba(255,246,232,0.14)" : "rgba(255,246,232,0.08)";
 
       var stamp = document.createElement("span");
       stamp.className = "phase-stamp";
       stamp.textContent = done ? "Lezárt" : isCur ? "Most itt" : "Hátravan";
-      var stampColor = isCur ? "#d7a854" : done ? "#9a9fb2" : "#6b7080";
+      var stampColor = isCur ? "#d7a854" : done ? "#a89d8c" : "#7a715f";
       stamp.style.color = stampColor;
       stamp.style.borderColor = stampColor;
 
       var num = document.createElement("span");
       num.className = "phase-num";
       num.textContent = String(i + 1).padStart(2, "0");
-      num.style.color = isCur ? "#e8c98a" : "#6b7080";
+      num.style.color = isCur ? "#e8c98a" : "#7a715f";
 
       var date = document.createElement("span");
       date.className = "phase-date";
       date.textContent = p.date;
-      date.style.color = isCur ? "#e8c98a" : "#9a9fb2";
+      date.style.color = isCur ? "#e8c98a" : "#a89d8c";
 
       var title = document.createElement("span");
       title.className = "phase-title";
@@ -564,7 +564,7 @@
       var note = document.createElement("span");
       note.className = "phase-note";
       note.textContent = p.note;
-      note.style.color = "#9a9fb2";
+      note.style.color = "#a89d8c";
 
       card.appendChild(stamp);
       card.appendChild(num);
@@ -716,8 +716,8 @@
     railDefs.forEach(function (r) {
       var on = r.id === activeSec;
       var refs = railLinks[r.id];
-      refs.a.style.color = on ? "#f3efe4" : "#9a9fb2";
-      refs.a.style.background = on ? "#262943" : "transparent";
+      refs.a.style.color = on ? "#f3efe4" : "#a89d8c";
+      refs.a.style.background = on ? "#2a2217" : "transparent";
       refs.bar.style.background = on ? "#d7a854" : "transparent";
     });
   }
@@ -729,12 +729,12 @@
     var CHAPTERS = 14;
     for (var c = 1; c <= CHAPTERS; c++) {
       var row = document.createElement("div");
-      row.style.cssText = "display:grid;grid-template-columns:auto 1fr;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.08);min-width:0;";
+      row.style.cssText = "display:grid;grid-template-columns:auto 1fr;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid rgba(255,246,232,0.08);min-width:0;";
       var n = document.createElement("span");
       n.style.cssText = "font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:0.1em;color:#d7a854;";
       n.textContent = String(c).padStart(2, "0");
       var bar = document.createElement("span");
-      bar.style.cssText = "height:10px;border-radius:999px;background:#262943;width:" + (44 + ((c * 37) % 46)) + "%;min-width:100px;";
+      bar.style.cssText = "height:10px;border-radius:999px;background:#2a2217;width:" + (44 + ((c * 37) % 46)) + "%;min-width:100px;";
       row.appendChild(n);
       row.appendChild(bar);
       tocEl.appendChild(row);

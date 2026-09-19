@@ -1198,7 +1198,10 @@
         numSpan.textContent = num;
         var stSpan = document.createElement("span");
         stSpan.className = "st";
-        stSpan.textContent = isSold ? "elkelt" : isReserved ? "foglalva" : isPicked ? "tiéd" : "szabad";
+        /* Nyitás előtt a saját választás csak jelölés: más látogató ugyanezt
+           a számot ugyanígy bejelölheti, tehát nem ígérhetjük "tiéd"-nek. */
+        stSpan.textContent = isSold ? "elkelt" : isReserved ? "foglalva"
+          : isPicked ? (preorderOpen ? "tiéd" : "jelölve") : "szabad";
         lbl.appendChild(numSpan);
         lbl.appendChild(stSpan);
         btn.appendChild(lbl);
@@ -1263,7 +1266,10 @@
       var nums = pickedList.map(function (n) { return String(n).padStart(3, "0"); });
       var isOne = nums.length === 1;
       pickBanner.classList.add("show");
-      pickBannerText.textContent = (isOne ? nums[0] + "-as példány" : nums.join(", ") + " számú példányok") + " kiválasztva — a jelentkezésnél már szerepel.";
+      pickBannerText.textContent = (isOne ? nums[0] + "-as példány" : nums.join(", ") + " számú példányok")
+        + (preorderOpen
+          ? " kiválasztva — a rendelésnél már szerepel."
+          : " bejelölve — a jelentkezésnél szerepel. Foglalni csak a nyitás után lehet.");
       chip.style.display = "flex";
       chipText.textContent = (isOne ? "Kiválasztott példány: " + nums[0] + "." : "Kiválasztott példányok: " + nums.join(", ") + ".");
       pickedLabelEl.textContent = "";
@@ -1593,13 +1599,17 @@
     document.getElementById("done-text").textContent = preorderOpen
       ? "Köszönöm. Hamarosan e-mailben küldöm a díjbekérőt banki átutaláshoz."
       : "Október 24-én küldöm neked a rendelési linket, egy nappal a nyilvános nyitás előtt — a listásoké az elsőbbség, ők választanak először sorszámot.";
-    /* A sorszám nem a rendeléstől foglalt, hanem a díjbekérő kiküldésétől
-       számított határidőig — ezt itt kell világossá tenni, mert ez az az
-       ígéret, amit be is tudunk tartani. */
+    /* FONTOS: várólista-módban még nincs rendelés és nincs díjbekérő, tehát
+       nem is tartunk fenn semmit — ilyenkor a szám csak jelölés. Foglalásról
+       és határidőről csak akkor szabad beszélni, ha az előrendelés már nyit. */
     pickedNoteEl.textContent = nums.length
-      ? (nums.length === 1
-        ? "A " + nums[0] + " számú dedikált példányt a díjbekérő kiküldésétől számított " + CONFIG.PAYMENT_DEADLINE_DAYS + " napig tartom fenn neked — eddig kell megérkeznie az utalásnak, különben a szám visszakerül a szabadok közé."
-        : "A " + nums.join(", ") + " számú dedikált példányokat a díjbekérő kiküldésétől számított " + CONFIG.PAYMENT_DEADLINE_DAYS + " napig tartom fenn neked — eddig kell megérkeznie az utalásnak, különben visszakerülnek a szabadok közé.")
+      ? (preorderOpen
+        ? (nums.length === 1
+          ? "A " + nums[0] + " számú dedikált példányt a díjbekérő kiküldésétől számított " + CONFIG.PAYMENT_DEADLINE_DAYS + " napig tartom fenn neked — eddig kell megérkeznie az utalásnak, különben a szám visszakerül a szabadok közé."
+          : "A " + nums.join(", ") + " számú dedikált példányokat a díjbekérő kiküldésétől számított " + CONFIG.PAYMENT_DEADLINE_DAYS + " napig tartom fenn neked — eddig kell megérkeznie az utalásnak, különben visszakerülnek a szabadok közé.")
+        : (nums.length === 1
+          ? "A " + nums[0] + " számú példányt feljegyzem melletted. Ez még nem foglalás — a sorszám akkor lesz biztosan a tiéd, ha a nyitás után befut az utalás. A listásoké az elsőbbség."
+          : "A " + nums.join(", ") + " számú példányokat feljegyzem melletted. Ez még nem foglalás — a sorszámok akkor lesznek biztosan a tieid, ha a nyitás után befut az utalás. A listásoké az elsőbbség."))
       : variant === "dedikalt"
         ? "Dedikált, számozott példányt jelöltél be (" + CONFIG.PRICE_SIGNED + ") — a sorszámot a jegyzékből együtt választjuk ki."
         : "";

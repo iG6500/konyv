@@ -27,6 +27,7 @@
     --gold:#d7a854; --gold-soft:#e8c98a;
     --coral:#d1483a; --coral-hover:#b93a2e;
     --paper:#f3efe4; --paper-ink:#1f1911;
+    --gold-deep:#8f6414;
     --r-lg: 20px; --r-md: 14px; --r-sm: 8px;
     --serif: 'Newsreader', Georgia, serif;
     --sans: 'Space Grotesk', sans-serif;
@@ -194,6 +195,61 @@
   details.more[open] > summary::before { content: "–"; }
   details.more > summary:hover { color: var(--gold); }
 
+  /* idézet a könyvből — a könyv saját papírján */
+  .quote-wrap { position: relative; max-width: 820px; margin: 0 auto; }
+  .quote-wrap::before,
+  .quote-wrap::after {
+    content: ""; position: absolute; left: 14px; right: 14px; bottom: 0; height: 100%;
+    border-radius: 3px 8px 8px 3px; background: #d9d3c4; z-index: 0;
+  }
+  .quote-wrap::before { transform: translate(0, 12px) rotate(-0.5deg); opacity: 0.35; }
+  .quote-wrap::after { transform: translate(0, 6px) rotate(0.35deg); opacity: 0.6; }
+
+  .quote-paper {
+    position: relative; z-index: 1; overflow: hidden;
+    margin: 0;   /* a blockquote alapértelmezett 40px-es oldalmargója kilátszatta a lapokat */
+    background: var(--paper); color: var(--paper-ink);
+    border-radius: 3px 10px 10px 3px;
+    padding: clamp(34px, 5.5vw, 68px) clamp(26px, 5.5vw, 70px) clamp(28px, 4vw, 48px);
+    box-shadow: 0 60px 90px -44px rgba(0,0,0,0.95);
+    font-family: var(--serif);
+  }
+  /* finom papírszerkezet + a gerinc felőli árnyék */
+  .quote-paper::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(31,25,17,0.16), rgba(31,25,17,0) 5%),
+      repeating-linear-gradient(101deg, rgba(31,25,17,0.014) 0 2px, rgba(31,25,17,0) 2px 7px);
+  }
+  .quote-paper > * { position: relative; }
+
+  .quote-eyebrow {
+    font-family: var(--sans); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold-deep); margin: 0 0 clamp(22px, 3vw, 32px); display: flex; align-items: center; gap: 14px;
+  }
+  .quote-eyebrow::after { content: ""; flex: 1 1 auto; height: 1px; background: rgba(31,25,17,0.18); }
+
+  .quote-body { display: grid; gap: clamp(16px, 2vw, 22px); font-size: clamp(16.5px, 1.45vw, 19px); line-height: 1.78; }
+  .quote-body p { margin: 0; text-wrap: pretty; }
+  .quote-body p:first-child::first-letter {
+    float: left; font-size: 3.45em; line-height: 0.82; margin: 5px 14px 0 0;
+    color: var(--gold-deep); font-weight: 500;
+  }
+  .quote-body p:not(:first-child) { color: rgba(31,25,17,0.82); }
+  .quote-body em { font-style: italic; }
+  .quote-hi { background: linear-gradient(transparent 14%, rgba(143,100,20,0.17) 14% 92%, transparent 92%); }
+
+  .quote-foot {
+    margin-top: clamp(26px, 3.5vw, 40px); padding-top: 18px; border-top: 1px solid rgba(31,25,17,0.16);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 18px;
+    font-family: var(--sans); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(31,25,17,0.5);
+  }
+  .quote-foot .seal { border: 1px solid rgba(31,25,17,0.22); border-radius: 999px; padding: 6px 12px; color: var(--gold-deep); }
+
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 760ms ease, transform 760ms cubic-bezier(.2,.8,.3,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
   /* "neked szól, ha" lista */
   .fit-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
   .fit-list li { display: grid; grid-template-columns: auto 1fr; gap: 12px; font-size: 16px; line-height: 1.55; color: var(--ink-soft); }
@@ -360,12 +416,23 @@
         </div>
       </div>
 
-      <div style="max-width: 680px; margin: 0 auto clamp(40px, 6vw, 64px); border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--panel); padding: clamp(28px, 4vw, 44px);">
-        <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0 0 18px;">Idézet a könyvből</p>
-        <blockquote style="margin: 0; display: grid; gap: 16px; font-size: clamp(16px, 1.5vw, 18px); line-height: 1.7; color: var(--ink);">
-          <p style="margin: 0;">„Egy vezető lehet kiváló igehirdető, miközben egészségtelen kapcsolati mintákat alakít ki maga körül. Egy gyülekezetben történhetnek őszinte megtérések és valódi lelki növekedések, miközben a vezetési kultúra mégis torzult. Jelen lehet Isten munkája, miközben emberi gyengeségek és súlyos elcsúszások is ott lehetnek. Ez a kettősség különösen megnehezíti a helyzet felismerését. Az ember látását elhomályosíthatják a látványos külsőségek, és talán éppen ezért nem akarja elhinni a rosszat.</p>
-          <p style="margin: 0;">Sok sérült keresztény éveken át él ebben a bizonytalanságban. Nem tudja pontosan megfogalmazni, mi a baj, csak azt érzi, hogy valami fáj. Valami nyomasztja. Valami lassan elszívja az örömét, és eltávolítja attól a szabadságtól, amelyre Krisztus meghívta.</p>
-          <p style="margin: 0;">Ha magadra ismersz ebben, szeretnélek valamire bátorítani. Ne szégyelld, ha még nem tudod pontosan megfogalmazni, mi a probléma. A felismerés gyakran hosszú folyamat. Sokszor előbb érezzük a bajt, mint ahogy megértjük. Előbb tapasztaljuk a következményeket, mint ahogy felismerjük az okokat. Ez az emberi működés természetes része lehet.”</p>
+      <div style="text-align: center; max-width: 620px; margin: 0 auto clamp(30px, 4vw, 44px);">
+        <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0 0 14px;">Részlet a könyvből</p>
+        <h2 style="font-size: clamp(26px, 3vw, 42px); font-weight: 500; margin: 0; letter-spacing: -0.02em; line-height: 1.08;">Egy oldal, ami <em style="font-style: italic; color: var(--gold-soft);">nincs</em> kifedve.</h2>
+      </div>
+
+      <div class="quote-wrap" style="margin-bottom: clamp(44px, 6vw, 72px);">
+        <blockquote class="quote-paper">
+          <p class="quote-eyebrow">A kéziratból</p>
+          <div class="quote-body">
+            <p>Egy vezető lehet kiváló igehirdető, miközben egészségtelen kapcsolati mintákat alakít ki maga körül. Egy gyülekezetben történhetnek őszinte megtérések és valódi lelki növekedések, miközben a vezetési kultúra mégis torzult. Jelen lehet Isten munkája, miközben emberi gyengeségek és súlyos elcsúszások is ott lehetnek. Ez a kettősség különösen megnehezíti a helyzet felismerését. Az ember látását elhomályosíthatják a látványos külsőségek, és talán éppen ezért nem akarja elhinni a rosszat.</p>
+            <p>Sok sérült keresztény éveken át él ebben a bizonytalanságban. <span class="quote-hi">Nem tudja pontosan megfogalmazni, mi a baj, csak azt érzi, hogy valami fáj.</span> Valami nyomasztja. Valami lassan elszívja az örömét, és eltávolítja attól a szabadságtól, amelyre Krisztus meghívta.</p>
+            <p>Ha magadra ismersz ebben, szeretnélek valamire bátorítani. Ne szégyelld, ha még nem tudod pontosan megfogalmazni, mi a probléma. A felismerés gyakran hosszú folyamat. Sokszor előbb érezzük a bajt, mint ahogy megértjük. Előbb tapasztaljuk a következményeket, mint ahogy felismerjük az okokat. Ez az emberi működés természetes része lehet.</p>
+          </div>
+          <footer class="quote-foot">
+            <span>Báránybőrbe bújt pásztor · részlet a kéziratból</span>
+            <span class="seal">Első kiadás, 2026</span>
+          </footer>
         </blockquote>
       </div>
 
@@ -1181,6 +1248,20 @@
     });
   }, { rootMargin: "-45% 0px -45% 0px" });
   sections.forEach(function (el) { io.observe(el); });
+
+  /* ---------- idézet-lap finom megjelenése görgetésre ---------- */
+  (function () {
+    var el = document.querySelector(".quote-wrap");
+    if (!el) return;
+    if (!("IntersectionObserver" in window)) return;   /* támogatás nélkül egyszerűen látszik */
+    el.classList.add("reveal");
+    var qio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { el.classList.add("in"); qio.disconnect(); }
+      });
+    }, { threshold: 0.15 });
+    qio.observe(el);
+  })();
 
   /* ---------- teljes részlet feltárása egy kattintással ---------- */
   (function () {

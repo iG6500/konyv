@@ -47,13 +47,6 @@
   .field-line { outline: none; }
   .field-line:focus { border-bottom-color: var(--gold) !important; }
 
-  .redact {
-    background: var(--paper-ink); color: var(--paper-ink); box-shadow: 0 0 0 2px var(--paper-ink);
-    cursor: crosshair; transition: background 240ms ease, box-shadow 240ms ease;
-  }
-  .redact.open { background: transparent; box-shadow: none; }
-  .redact.plain { background: transparent; color: var(--paper-ink); box-shadow: none; cursor: default; }
-
   /* copy shelf buttons */
   .copy-btn {
     flex: 1 1 34px; min-width: 30px; max-width: 62px;
@@ -103,21 +96,6 @@
   .pill-btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
   .pill-btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
 
-  /* book-spread (kézirat) */
-  #book-spread .page { transition: transform 1100ms cubic-bezier(.22,.8,.24,1); backface-visibility: hidden; }
-  #book-spread .page-left { transform: rotateY(78deg); }
-  #book-spread .page-right { transform: rotateY(-78deg); }
-  #book-spread.open .page-left { transform: rotateY(9deg); }
-  #book-spread.open .page-right { transform: rotateY(-9deg); }
-  #book-spread .rd { opacity: 0; transition: opacity 420ms ease, background 240ms ease, box-shadow 240ms ease; }
-  #book-spread.open .rd { opacity: 1; }
-  @media (prefers-reduced-motion: reduce) {
-    #book-spread .page { transition: none; }
-    #book-spread .page-left { transform: rotateY(9deg); }
-    #book-spread .page-right { transform: rotateY(-9deg); }
-    #book-spread .rd { opacity: 1; }
-  }
-
   /* attn bar + sticky cta */
   #sticky-cta { transform: translateY(110%); transition: transform 360ms cubic-bezier(.2,.8,.3,1); }
   #sticky-cta.up { transform: translateY(0); }
@@ -137,26 +115,11 @@
   .stat-num { font-family: var(--serif); font-size: clamp(26px,3vw,36px); color: var(--ink); }
   .stat-label { font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); }
 
-  /* cover face (3 nézetes bemutató) */
-  .cover-face {
-    background-image: repeating-linear-gradient(135deg, var(--panel-2) 0 10px, var(--panel) 10px 20px);
-    border: 1px solid rgba(255,246,232,0.12);
-    display: grid; place-items: center; padding: 14px;
-  }
-
   /* konverziós elemek */
   .trust-row { display: flex; flex-wrap: wrap; gap: 9px 20px; font-family: var(--sans); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
   .trust-row span { display: inline-flex; align-items: center; gap: 8px; }
   .trust-row span::before { content: ""; width: 5px; height: 5px; border-radius: 999px; background: var(--gold); flex: none; }
   .cta-note { font-family: var(--sans); font-size: 11.5px; line-height: 1.7; letter-spacing: 0.02em; color: var(--ink-faint); margin: 0; }
-  .ghost-mini {
-    justify-self: start; background: transparent; color: var(--ink-soft); border: 1px solid var(--line);
-    border-radius: 999px; padding: 9px 16px; cursor: pointer;
-    font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-    transition: color 180ms ease, border-color 180ms ease;
-  }
-  .ghost-mini:hover { color: var(--gold); border-color: var(--gold); }
-
   /* űrlap */
   .field-wrap { display: grid; gap: 5px; min-width: 0; }
   .field-label { font-family: var(--sans); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
@@ -362,40 +325,6 @@
       <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 26px 0 0;">A fejezetcímek október 25-én kerülnek le a listáról.</p>
     </section>
 
-
-    <section data-sec="kezirat" style="border-top: 1px solid var(--line); padding: clamp(40px, 5vw, 64px) 0;">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(22px, 4vw, 48px); align-items: start; margin-bottom: clamp(28px, 4vw, 46px);">
-        <div style="min-width: 0; display: grid; gap: 16px; align-content: start;">
-          <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0;">27. oldal, részlet</p>
-          <h2 style="font-size: clamp(26px, 3.4vw, 46px); line-height: 1.1; font-weight: 500; margin: 0; letter-spacing: -0.02em;">A szöveg zárolva. Ami átszivárog, a tiéd.</h2>
-        </div>
-        <div style="min-width: 0; display: grid; gap: 16px; align-content: start;">
-          <p style="font-size: clamp(15px, 1.2vw, 17px); line-height: 1.6; margin: 0; max-width: 42ch; color: var(--ink-soft);">A kéziratból egyetlen oldal van kint, és annak is a nagyobb része le van fedve. Vidd rá a kurzort a lécekre, és annyit olvashatsz, amennyit kibontasz.</p>
-          <div style="border: 1px solid var(--line); background: var(--panel); border-radius: var(--r-md); padding: 16px 18px; display: grid; gap: 8px;">
-            <span style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);" id="reveal-label-box"></span>
-            <div style="height: 4px; background: var(--bg-alt); border-radius: 999px; position: relative; overflow: hidden;">
-              <div id="reveal-bar" style="position: absolute; left: 0; top: 0; bottom: 0; width: 0%; background: var(--gold); transition: width 300ms ease;"></div>
-            </div>
-            <span style="font-family: var(--sans); font-size: 11px; line-height: 1.6; color: var(--ink-soft);" id="found-label"></span>
-            <button type="button" id="reveal-all" class="ghost-mini" style="margin-top: 4px;">Mutasd az egész részletet</button>
-          </div>
-        </div>
-      </div>
-
-      <div style="perspective: 2000px; display: grid; justify-items: center; gap: 18px;">
-        <div id="book-spread" style="width: 100%; max-width: 960px; display: grid; grid-template-columns: 1fr 1fr; transform-style: preserve-3d; border-radius: var(--r-md); overflow: hidden; box-shadow: 0 50px 80px -34px rgba(0,0,0,0.85);">
-          <div class="page page-left" style="background: var(--paper); color: var(--paper-ink); padding: clamp(20px, 3vw, 40px); min-height: clamp(260px, 30vw, 420px); display: grid; align-content: space-between; gap: 18px; transform-origin: right center; background-image: linear-gradient(to left, rgba(0,0,0,0.16), rgba(0,0,0,0) 14%);">
-            <div id="page-left-text" style="font-size: clamp(13px, 1.1vw, 16px); line-height: 2.0; text-align: justify; hyphens: auto;"></div>
-            <span style="font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; color: #8a8672;">26</span>
-          </div>
-          <div class="page page-right" style="background: var(--paper); color: var(--paper-ink); padding: clamp(20px, 3vw, 40px); min-height: clamp(260px, 30vw, 420px); display: grid; align-content: space-between; gap: 18px; transform-origin: left center; background-image: linear-gradient(to right, rgba(0,0,0,0.16), rgba(0,0,0,0) 14%);">
-            <div id="page-right-text" style="font-size: clamp(13px, 1.1vw, 16px); line-height: 2.0; text-align: justify; hyphens: auto;"></div>
-            <span style="font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; color: #8a8672; justify-self: end;">27</span>
-          </div>
-        </div>
-        <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 0; text-align: center;">A könyv kinyílik, a lécek maradnak. Ami feltárul, azt te tártad fel.</p>
-      </div>
-    </section>
 
     <section data-sec="konyv" style="border-top: 1px solid var(--line); padding: clamp(40px, 5vw, 64px) 0;">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(30px, 5vw, 56px); align-items: center; margin-bottom: clamp(40px, 6vw, 64px);">
@@ -704,14 +633,6 @@
   function pad3(n) { return String(n).padStart(3, "0"); }
 
   /* ---------- állapot ---------- */
-  var TEXT = "Aki a nyájat őrzi, annak nem kell farkasnak lennie ahhoz, hogy vigyen belőle. Elég, ha ismeri a kaput, a kutyák nevét, és azt a hangot, amire a bárányok maguktól elindulnak. A falu tizennégy éven át nem kérdezett semmit, mert minden reggel megvolt a tej, és minden vasárnap megvolt a mise. Én sem kérdeztem. Csak számoltam, és a szám nem stimmelt, de ezt akkor még nem mondtam el senkinek, mert nem tudtam, kinek mondanám. Márton bácsi harminc éve vezette a legelőt, és harminc éve mondta ugyanazt: a nyáj nem tud számolni, de érzi, ha kevesebben vannak. Én akkor még azt hittem, ez a pásztorok szokásos beszéde, olyan, mint az időjárásról. Aztán jött az az ősz, amikor a szám kétszer sem stimmelt, és a kapu reggelre mindig nyitva volt, pedig este én magam zártam be. A rendőr azt kérdezte, kire gyanakszom. Mondtam, hogy senkire, mert ez volt az igazság: nem gyanakodtam, tudtam. A falu addig hitte el a történetemet, amíg a történet illett ahhoz, amit magukról gondoltak. Amikor már nem illett, egyetlen éjszaka alatt lettem idegen egy helyen, ahol negyven évig laktam. A báránybőr nem álruha. A báránybőr az, amit rád adnak, hogy ne kelljen megkérdezniük, mi van alatta.";
-
-  var all = TEXT.split(" ");
-  var mask = all.map(function (w, i) { return !(i % 4 === 1 || w.length <= 3); });
-  var hiddenTotal = mask.filter(Boolean).length;
-  var revealed = {};
-  var foundCount = 0;
-
   var pickedList = [];
   var takenCount = Math.max(0, Math.min(CONFIG.COPIES_TAKEN, CONFIG.COPIES_TOTAL));
   var sending = false;
@@ -732,62 +653,6 @@
     return 3;
   }
   var curPhase = currentPhase();
-
-  /* ---------- kézirat-feltárás (könyv-kinyitás) ---------- */
-  var pageLeftEl = document.getElementById("page-left-text");
-  var pageRightEl = document.getElementById("page-right-text");
-  var spans = [];
-
-  function renderRedacted() {
-    pageLeftEl.innerHTML = "";
-    pageRightEl.innerHTML = "";
-    spans = [];
-    var half = Math.ceil(all.length / 2);
-    all.forEach(function (w, i) {
-      var host = i < half ? pageLeftEl : pageRightEl;
-      var span = document.createElement("span");
-      span.textContent = w;
-      span.className = "rd " + (mask[i] ? "redact" + (revealed[i] ? " open" : "") : "redact plain");
-      if (mask[i]) {
-        span.addEventListener("mouseenter", function () { revealWord(i); });
-        span.addEventListener("touchstart", function () { revealWord(i); }, { passive: true });
-      }
-      spans[i] = span;
-      host.appendChild(span);
-      host.appendChild(document.createTextNode(" "));
-    });
-  }
-
-  function revealWord(i) {
-    if (revealed[i]) return;
-    revealed[i] = true;
-    foundCount++;
-    if (spans[i]) spans[i].classList.add("open");
-    updateRevealLabels();
-  }
-
-  function updateRevealLabels() {
-    var label = foundCount + " / " + hiddenTotal + " feltárva";
-    document.getElementById("reveal-label-box").textContent = label;
-    document.getElementById("reveal-bar").style.width = Math.round((foundCount / Math.max(hiddenTotal, 1)) * 100) + "%";
-    var found = document.getElementById("found-label");
-    found.textContent = foundCount === 0
-      ? "Semmi sincs feltárva."
-      : (foundCount >= hiddenTotal
-        ? "Az egész részlet a tiéd. A könyv többi része október 25-én."
-        : "Ennyi maradhat. A többi október 25-én.");
-  }
-
-  /* ---------- könyv-kinyitás (a redakció csak akkor jelenik meg, amikor begörgetsz) ---------- */
-  (function () {
-    var spread = document.getElementById("book-spread");
-    var bio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { spread.classList.add("open"); bio.disconnect(); }
-      });
-    }, { threshold: 0.2 });
-    bio.observe(spread);
-  })();
 
   /* ---------- visszaszámláló + üzemmód (várólista / előrendelés) ---------- */
   var daysToOpen = Math.ceil((CONFIG.PREORDER_OPEN - new Date()) / 86400000);
@@ -1115,7 +980,6 @@
   var railDefs = [
     { id: "hero", label: "Címlap", href: "#" },
     { id: "tartalom", label: "Tartalom", href: "#" },
-    { id: "kezirat", label: "Betekintő", href: "#" },
     { id: "konyv", label: "A könyvről", href: "#" },
     { id: "idovonal", label: "Folyamat", href: "#" },
     { id: "jegyzek", label: "Jegyzék", href: "#jegyzek" },
@@ -1263,18 +1127,8 @@
     qio.observe(el);
   })();
 
-  /* ---------- teljes részlet feltárása egy kattintással ---------- */
-  (function () {
-    var btn = document.getElementById("reveal-all");
-    if (!btn) return;
-    btn.addEventListener("click", function () {
-      all.forEach(function (_, i) { if (mask[i]) revealWord(i); });
-      btn.style.display = "none";
-      track("excerpt_reveal_all");
-    });
-  })();
-
-  /* A menüből kiesnek azok a pontok, amelyek szekciója nem került ki (pl. ajánlók). */
+  /* A menüből kiesnek azok a pontok, amelyek szekciója nem került ki (pl. ajánlók).
+     Ennek a szekciók eltávolítása UTÁN kell futnia, közvetlenül az indítás előtt. */
   railDefs = railDefs.filter(function (r) {
     if (document.querySelector('[data-sec="' + r.id + '"]')) return true;
     var refs = railLinks[r.id];
@@ -1284,8 +1138,6 @@
   });
 
   /* ---------- indítás ---------- */
-  renderRedacted();
-  updateRevealLabels();
   renderPhases();
   renderShelf();
   renderPickState();

@@ -3,7 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Báránybőrbe bújt pásztor</title>
+<title>Báránybőrbe bújt pásztor — előrendelés | 20 dedikált példány, 2026</title>
+<meta name="description" content="Könyv a nárcisztikus működésről és a lelki bántalmazásról keresztény közösségekben: felismerés, hatások, felépülés. Az első 20 kézzel dedikált, számozott példány október 25-én nyit — a várólistások egy nappal előbb vásárolhatnak.">
+<meta name="theme-color" content="#15120e">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="book">
+<meta property="og:locale" content="hu_HU">
+<meta property="og:title" content="Báránybőrbe bújt pásztor — 20 dedikált példány">
+<meta property="og:description" content="Nárcisztikus működés és lelki bántalmazás keresztény közösségekben. Az előrendelés október 25-én nyit, a várólistások egy nappal előbb vásárolhatnak.">
+<!-- OG-KÉP: amint van valódi borítófotó, töltsd fel (pl. "og-borito.jpg", 1200x630) és vedd ki a kommentet.
+     Addig szándékosan nincs kép: a Facebook/Messenger inkább ne mutasson semmit, mint egy placeholdert.
+<meta property="og:image" content="og-borito.jpg">
+<meta name="twitter:card" content="summary_large_image">
+-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
@@ -131,14 +143,86 @@
     display: grid; place-items: center; padding: 14px;
   }
 
+  /* konverziós elemek */
+  .trust-row { display: flex; flex-wrap: wrap; gap: 9px 20px; font-family: var(--sans); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+  .trust-row span { display: inline-flex; align-items: center; gap: 8px; }
+  .trust-row span::before { content: ""; width: 5px; height: 5px; border-radius: 999px; background: var(--gold); flex: none; }
+  .cta-note { font-family: var(--sans); font-size: 11.5px; line-height: 1.7; letter-spacing: 0.02em; color: var(--ink-faint); margin: 0; }
+  .ghost-mini {
+    justify-self: start; background: transparent; color: var(--ink-soft); border: 1px solid var(--line);
+    border-radius: 999px; padding: 9px 16px; cursor: pointer;
+    font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    transition: color 180ms ease, border-color 180ms ease;
+  }
+  .ghost-mini:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* űrlap */
+  .field-wrap { display: grid; gap: 5px; min-width: 0; }
+  .field-label { font-family: var(--sans); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
+  .field-line { font-family: var(--sans); font-size: 15px; padding: 12px 0; background: transparent; border: none; border-bottom: 1px solid var(--line); color: var(--ink); border-radius: 0; min-width: 0; width: 100%; }
+  .field-line::placeholder { color: var(--ink-faint); opacity: 0.7; }
+  .consent { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; cursor: pointer; font-family: var(--sans); font-size: 12px; line-height: 1.65; color: var(--ink-soft); }
+  .consent input {
+    -webkit-appearance: none; appearance: none; width: 20px; height: 20px; margin: 0; flex: none;
+    border: 1px solid var(--ink-faint); border-radius: 5px; background: transparent; cursor: pointer;
+    display: grid; place-content: center; transition: background 160ms ease, border-color 160ms ease;
+  }
+  .consent input::after { content: ""; width: 10px; height: 6px; border-left: 2px solid var(--bg); border-bottom: 2px solid var(--bg); transform: rotate(-45deg) scale(0); transition: transform 160ms ease; }
+  .consent input:checked { background: var(--gold); border-color: var(--gold); }
+  .consent input:checked::after { transform: rotate(-45deg) scale(1); }
+  .consent:hover input { border-color: var(--gold); }
+  .submit-btn {
+    font-family: var(--sans); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    background: var(--coral); color: #fff; border: 1px solid var(--coral);
+    padding: 18px 28px; min-height: 56px; cursor: pointer; border-radius: 999px; width: 100%;
+    transition: background 180ms ease, transform 180ms ease, opacity 180ms ease;
+  }
+  .submit-btn:hover:not([disabled]) { background: var(--coral-hover); border-color: var(--coral-hover); transform: translateY(-1px); }
+  .submit-btn[disabled] { opacity: 0.6; cursor: progress; }
+  .form-status { font-family: var(--sans); font-size: 13px; line-height: 1.6; margin: 0; display: none; }
+  .form-status.err { display: block; color: #ffb3a8; border-left: 2px solid var(--coral); padding-left: 14px; }
+  .form-status.err a { color: var(--gold-soft); }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  details.more { border-top: 1px solid var(--line); padding-top: 14px; }
+  details.more > summary {
+    cursor: pointer; list-style: none; font-family: var(--sans); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft);
+    display: flex; align-items: center; gap: 9px;
+  }
+  details.more > summary::-webkit-details-marker { display: none; }
+  details.more > summary::before { content: "+"; color: var(--gold); font-size: 15px; line-height: 1; }
+  details.more[open] > summary::before { content: "–"; }
+  details.more > summary:hover { color: var(--gold); }
+
+  /* "neked szól, ha" lista */
+  .fit-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+  .fit-list li { display: grid; grid-template-columns: auto 1fr; gap: 12px; font-size: 16px; line-height: 1.55; color: var(--ink-soft); }
+  .fit-list li::before { content: "—"; color: var(--gold); }
+
+  /* zárolt borító (a valódi borítófotó helyén) */
+  .cover-mock {
+    position: relative; width: min(100%, 370px); aspect-ratio: 5 / 7; overflow: hidden;
+    border-radius: 3px 14px 14px 3px; border: 1px solid rgba(255,246,232,0.14);
+    background: linear-gradient(150deg, #2e2517 0%, #1d1811 55%, #15120e 100%);
+    box-shadow: 0 50px 80px -34px rgba(0,0,0,0.9);
+    display: grid; align-content: space-between; gap: 18px; padding: clamp(24px, 4vw, 36px);
+  }
+  .cover-mock::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 18px; background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0,0)); }
+  .cover-mock::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 70% at 50% 115%, rgba(215,168,84,0.16), transparent 62%); pointer-events: none; }
+  .cover-mock > * { position: relative; }
+  .cover-eyebrow { font-family: var(--sans); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+  .cover-plate { background: var(--paper); border-radius: 4px; padding: 20px 18px 16px; display: grid; gap: 11px; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.8); }
+  .cover-bar { height: 21px; border-radius: 2px; background: var(--paper-ink); display: block; }
+  .cover-cap { font-family: var(--sans); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: rgba(31,25,17,0.55); display: block; margin-top: 3px; }
+  .cover-seal { justify-self: start; font-family: var(--sans); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 999px; padding: 7px 13px; }
+
   /* hero borítókép */
   .hero-grid { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: clamp(30px, 5vw, 60px); align-items: center; }
-  .hero-cover-wrap { justify-self: end; align-self: stretch; display: flex; align-items: center; min-width: 0; overflow: visible; }
-  .hero-cover-img { width: clamp(440px, 68vw, 1040px); max-width: none; height: auto; display: block; margin-left: auto; margin-right: calc(min(0px, (1180px - 100vw) / 2) - 34px); }
+  .hero-cover-wrap { justify-self: end; align-self: center; display: flex; align-items: center; justify-content: flex-end; min-width: 0; }
   @media (max-width: 860px) {
     .hero-grid { grid-template-columns: 1fr; }
-    .hero-cover-wrap { justify-self: stretch; }
-    .hero-cover-img { width: 100%; max-width: 480px; margin: 0 auto; }
+    .hero-cover-wrap { justify-self: stretch; justify-content: center; }
+    .cover-mock { width: min(100%, 230px); }
   }
 </style>
 </head>
@@ -155,7 +239,7 @@
 
   <div id="sticky-cta" style="position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; background: var(--panel); border-top: 1px solid var(--line); color: var(--ink); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 20px; padding: 12px clamp(14px, 3vw, 34px);">
     <span style="font-family: var(--sans); font-size: 12px; letter-spacing: 0.04em; color: var(--ink-soft);" id="sticky-text"></span>
-    <a href="#varolista" class="pill-btn pill-btn-primary" style="padding: 11px 20px;">Érdeklődő feliratkozás →</a>
+    <a href="#varolista" class="pill-btn pill-btn-primary" data-cta="1" style="padding: 12px 22px;">Felkerülök a listára →</a>
   </div>
 
   <div style="max-width: 1180px; margin: 0 auto; padding: 0 clamp(14px, 3vw, 34px) 90px;">
@@ -172,27 +256,43 @@
             Bárány<em style="font-style: italic; color: var(--gold-soft);">bőrbe</em> bújt pásztor
           </h1>
 
-          <p style="font-size: clamp(16px, 1.3vw, 18px); line-height: 1.6; color: var(--ink-soft); margin: 0; max-width: 46ch;">Egy éve írom ezt a könyvet, és most először engedem közel bárkit. Az előrendelés október 25-én nyit — addig csak érdeklődő feliratkozásokat gyűjtök, fizetés nélkül.</p>
+          <p style="font-size: clamp(17px, 1.4vw, 20px); line-height: 1.55; color: var(--ink); margin: 0; max-width: 40ch;">Könyv a nárcisztikus működésről és a lelki bántalmazásról keresztény közösségekben — a felismerésről, a következményeiről és a gyógyulás útjáról.</p>
+
+          <p style="font-size: clamp(15px, 1.2vw, 17px); line-height: 1.6; color: var(--ink-soft); margin: 0; max-width: 46ch;">Húsz kézzel dedikált, számozott példány készül. Az előrendelés október 25-én nyit — <strong style="font-weight: 500; color: var(--ink);">a listán lévők már 24-én vásárolhatnak</strong>, egy nappal mindenki más előtt.</p>
 
           <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px;">
-            <a href="#varolista" class="pill-btn pill-btn-primary">Érdeklődő feliratkozás</a>
+            <a href="#varolista" class="pill-btn pill-btn-primary" data-cta="1">Felkerülök a listára</a>
             <a href="#jegyzek" class="pill-btn pill-btn-ghost">Példányjegyzék ↓</a>
           </div>
 
-          <span id="claim-label-hero" style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-faint);"></span>
+          <p class="cta-note" style="margin: -8px 0 0;">Ingyenes, és nem kötelez semmire · legfeljebb három levél a megjelenésig · egy kattintással leiratkozhatsz</p>
+
+          <div class="trust-row" id="hero-trust">
+            <span id="claim-label-hero"></span>
+          </div>
         </div>
 
         <div class="hero-cover-wrap">
-          <img src="teszt.png" alt="Báránybőrbe bújt pásztor — borítóterv" class="hero-cover-img">
+          <!-- VALÓDI BORÍTÓ HELYE: amint kész a borítófotó, cseréld ki ezt a blokkot egy <img>-re.
+               Addig szándékosan egy "zárolt borító" áll itt — stock mockup helyett, ami elvinné a hitelességet. -->
+          <div class="cover-mock" role="img" aria-label="A borító október 25-ig zárolva">
+            <span class="cover-eyebrow">Első kiadás · 2026</span>
+            <div class="cover-plate">
+              <span class="cover-bar" style="width: 92%;"></span>
+              <span class="cover-bar" style="width: 58%;"></span>
+              <span class="cover-cap">A borító október 25-én kerül le a zárlatról</span>
+            </div>
+            <span class="cover-seal">001 – 020</span>
+          </div>
         </div>
 
       </div>
 
       <div style="margin-top: clamp(36px, 5vw, 60px); border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--panel); padding: clamp(22px, 3vw, 32px) clamp(24px, 4vw, 40px); display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 22px;">
-        <div class="stat-item"><span class="stat-num">[oldalszám]</span><span class="stat-label">Oldal</span></div>
-        <div class="stat-item"><span class="stat-num">[fejezetszám]</span><span class="stat-label">Fejezet</span></div>
         <div class="stat-item"><span class="stat-num">20</span><span class="stat-label">Dedikált példány</span></div>
-        <div class="stat-item"><span class="stat-num">2026</span><span class="stat-label">Első kiadás</span></div>
+        <div class="stat-item"><span class="stat-num" data-price-early>5 400 Ft</span><span class="stat-label">Előrendelői ár</span></div>
+        <div class="stat-item"><span class="stat-num">okt. 25.</span><span class="stat-label">Előrendelés nyit</span></div>
+        <div class="stat-item"><span class="stat-num">dec. eleje</span><span class="stat-label">Szállítás indul</span></div>
       </div>
     </section>
 
@@ -200,7 +300,7 @@
       <div style="display: flex; align-items: center; gap: 18px; margin-bottom: 30px;">
         <span style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); white-space: nowrap;">Tartalom</span>
         <span style="flex: 1 1 auto; height: 1px; background: var(--line);"></span>
-        <span style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap;">[fejezetszám] fejezet</span>
+        <span style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap;">14 fejezet</span>
       </div>
       <div id="toc-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2px 44px;"></div>
       <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 26px 0 0;">A fejezetcímek október 25-én kerülnek le a listáról.</p>
@@ -221,6 +321,7 @@
               <div id="reveal-bar" style="position: absolute; left: 0; top: 0; bottom: 0; width: 0%; background: var(--gold); transition: width 300ms ease;"></div>
             </div>
             <span style="font-family: var(--sans); font-size: 11px; line-height: 1.6; color: var(--ink-soft);" id="found-label"></span>
+            <button type="button" id="reveal-all" class="ghost-mini" style="margin-top: 4px;">Mutasd az egész részletet</button>
           </div>
         </div>
       </div>
@@ -245,14 +346,17 @@
         <div style="min-width: 0;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0 0 22px;">A könyvről</p>
           <p style="font-size: clamp(20px, 2vw, 28px); line-height: 1.4; font-style: italic; margin: 0 0 22px; max-width: 32ch; color: var(--ink);">A cím megvan, a kézirat kész. A többit október 25-én mondom el.</p>
-          <p style="font-family: var(--sans); font-size: 12px; line-height: 1.9; margin: 0; color: var(--ink-soft); border-left: 2px solid var(--gold); padding-left: 16px;">Ez a könyv személyes történetekkel, megfigyelésekkel, keresztény szempontokkal és gyakorlati tanulságokkal átszőtt ismeretterjesztő mű. Távolról sem klasszikus pszichológiai tankönyv, hanem olyan írás, amely a bibliai szempontokat, a pszichológiai ismereteket és a mindennapi élet tapasztalatait kapcsolja össze. Abban szeretne segítséget nyújtani, hogy felismerhetőbbé váljon a nárcisztikus működés és az ahhoz kapcsolódó lelki bántalmazás a keresztény közösségekben — bemutatja ennek hatásait, és foglalkozik a felépülés és a gyógyulás lehetőségeivel is.<br>[szerző neve, egy soros bemutatkozás]</p>
+          <p style="font-family: var(--sans); font-size: 12px; line-height: 1.9; margin: 0; color: var(--ink-soft); border-left: 2px solid var(--gold); padding-left: 16px;">Ez a könyv személyes történetekkel, megfigyelésekkel, keresztény szempontokkal és gyakorlati tanulságokkal átszőtt ismeretterjesztő mű. Távolról sem klasszikus pszichológiai tankönyv, hanem olyan írás, amely a bibliai szempontokat, a pszichológiai ismereteket és a mindennapi élet tapasztalatait kapcsolja össze. Abban szeretne segítséget nyújtani, hogy felismerhetőbbé váljon a nárcisztikus működés és az ahhoz kapcsolódó lelki bántalmazás a keresztény közösségekben — bemutatja ennek hatásait, és foglalkozik a felépülés és a gyógyulás lehetőségeivel is.</p>
         </div>
-        <div style="min-width: 0; display: flex; justify-content: center;">
-          <div style="width: 160px; aspect-ratio: 4/5; border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--line);">
-            <div class="cover-face" style="width: 100%; height: 100%;">
-              <span style="font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; text-align: center; color: var(--ink-faint); padding: 8px;">szerzői portré helye</span>
-            </div>
-          </div>
+        <div style="min-width: 0; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--panel); padding: clamp(24px, 3.5vw, 34px);">
+          <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0 0 18px;">Neked szól, ha</p>
+          <ul class="fit-list">
+            <li>évek óta érzed, hogy valami nincs rendben a közösségedben, de nem tudod megfogalmazni, mi</li>
+            <li>a vezető kívülről kifogástalan, a közelében mégis rendre te maradsz alul</li>
+            <li>szégyent érzel amiatt, hogy egyáltalán kérdezel</li>
+            <li>keresed a határt a hűség és a saját épséged feladása között</li>
+            <li>szeretnéd tudni, hol kezdődik a felépülés — és hogy egyáltalán lehetséges-e</li>
+          </ul>
         </div>
       </div>
 
@@ -265,15 +369,14 @@
         </blockquote>
       </div>
 
-      <div style="text-align: center; max-width: 560px; margin: 0 auto 34px;">
-        <h2 style="font-size: clamp(24px, 2.6vw, 34px); font-weight: 500; margin: 0 0 10px; letter-spacing: -0.02em;">Így fog kinézni a polcodon.</h2>
-        <p style="font-family: var(--sans); font-size: 13px; color: var(--ink-faint); margin: 0;">A végleges borítógrafika még készül — a forma és az arányok már ezek.</p>
-      </div>
-
-      <div style="max-width: 780px; margin: 0 auto;">
-        <!-- IDE KERÜL A HÁRMAS BORÍTÓFOTÓ (előlap+gerinc+hátoldal egy képen): töltsd fel "konyv-harmas-nezet.jpg" néven a HTML mellé, vagy írd át a fájlnevet a saját képedre -->
-        <img src="twoside.png" alt="Báránybőrbe bújt pásztor — a könyv teljes nézetből" style="width: 100%; height: auto; display: block; border-radius: var(--r-md);">
-      </div>
+      <!-- "ÍGY FOG KINÉZNI A POLCODON" SZEKCIÓ HELYE.
+           Kivettem, mert a korábbi kép egy Lorem ipsumos stock-mockup volt, ami rontotta a hitelességet.
+           Amint van valódi termékfotó (előlap+gerinc+hátoldal), illeszd be ide, és a szekció visszakerül:
+           <div style="text-align:center;max-width:560px;margin:0 auto 34px;">
+             <h2 style="font-size:clamp(24px,2.6vw,34px);font-weight:500;margin:0 0 10px;letter-spacing:-0.02em;">Így fog kinézni a polcodon.</h2>
+           </div>
+           <div style="max-width:780px;margin:0 auto;"><img src="konyv-harmas-nezet.jpg" alt="..." style="width:100%;height:auto;display:block;border-radius:var(--r-md);"></div>
+      -->
     </section>
 
     <section data-sec="idovonal" style="border-top: 1px solid var(--line); padding: clamp(40px, 5vw, 64px) 0;">
@@ -326,7 +429,12 @@
       </div>
     </section>
 
-    <section data-sec="ajanlok" style="border-top: 1px solid var(--line); padding: clamp(40px, 5vw, 64px) 0;">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 22px; padding: 0 0 clamp(36px, 5vw, 56px); text-align: center;">
+      <span style="font-family: var(--sans); font-size: 12px; letter-spacing: 0.04em; color: var(--ink-soft);" id="mid-cta-note"></span>
+      <a href="#varolista" class="pill-btn pill-btn-primary" data-cta="1">Felkerülök a listára</a>
+    </div>
+
+    <section data-sec="ajanlok" id="ajanlok" style="border-top: 1px solid var(--line); padding: clamp(40px, 5vw, 64px) 0;">
       <div style="text-align: center; max-width: 620px; margin: 0 auto 40px;">
         <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0 0 14px;">Korai olvasók</p>
         <h2 style="font-size: clamp(26px, 3vw, 42px); font-weight: 500; margin: 0; letter-spacing: -0.02em;">Amit eddig <em style="font-style: italic; color: var(--gold-soft);">mondtak</em> róla.</h2>
@@ -357,32 +465,75 @@
         <div style="min-width: 0;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin: 0 0 22px; color: var(--gold);">Az egyetlen, ami nincs kifedve</p>
           <h2 style="font-size: clamp(28px, 3.4vw, 48px); font-weight: 500; line-height: 1.05; margin: 0 0 20px;">Egy nappal a nyitás előtt te már megveheted, így bizonyosan nem maradsz le.</h2>
-          <p style="font-size: 17px; line-height: 1.65; max-width: 40ch; margin: 0 0 24px; color: var(--ink-soft);">A dedikált húsz példány jó eséllyel a listáról fogy el. Fizetés csak október 25-én, a feliratkozás nem kötelez semmire.</p>
-          <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0; color: var(--ink-faint);">Legfeljebb három levél a megjelenésig</p>
+          <p style="font-size: 17px; line-height: 1.65; max-width: 40ch; margin: 0 0 24px; color: var(--ink-soft);">A dedikált húsz példány jó eséllyel a listáról fogy el. Most csak az e-mail címed kell — fizetés nincs, és a feliratkozás nem kötelez semmire.</p>
+          <div class="trust-row" style="margin: 0 0 6px;">
+            <span>Október 24-én kapod a linket</span>
+            <span>Legfeljebb 3 levél a megjelenésig</span>
+            <span>Egy kattintással leiratkozol</span>
+            <span>Az adataidat nem adom tovább</span>
+          </div>
         </div>
         <div style="min-width: 0;">
-          <div id="waitlist-done" style="display: none; border: 1px solid var(--gold); border-radius: var(--r-md); padding: 24px; gap: 10px;">
-            <span style="font-size: 24px; color: var(--ink);">Felvéve</span>
-            <span style="font-size: 16px; line-height: 1.6; color: var(--ink-soft);">Október 24-én küldöm a linket. <span id="picked-note"></span></span>
+          <div id="waitlist-done" style="display: none; border: 1px solid var(--gold); border-radius: var(--r-md); padding: 26px; gap: 10px;">
+            <span id="done-title" style="font-size: 24px; color: var(--ink);">Felvéve a listára</span>
+            <span id="done-text" style="font-size: 16px; line-height: 1.6; color: var(--ink-soft);"></span>
+            <span id="picked-note" style="font-size: 16px; line-height: 1.6; color: var(--gold-soft);"></span>
           </div>
-          <form id="waitlist-form" style="display: grid; gap: 18px;">
+          <form id="waitlist-form" style="display: grid; gap: 20px;">
             <div id="picked-chip" style="display: none; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid var(--gold); border-radius: var(--r-sm); background: rgba(215,168,84,0.12); padding: 12px 16px;">
               <span id="picked-chip-text" style="font-family: var(--sans); font-size: 13px; letter-spacing: 0.02em; color: var(--ink);"></span>
               <button type="button" id="picked-chip-clear" style="background: none; border: none; color: var(--gold); font-family: var(--sans); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; padding: 0;">Törlés</button>
             </div>
-            <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0; color: var(--gold);" id="picked-label"></p>
             <input type="hidden" id="picked-input" name="pelda_szam" value="">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 18px;">
-              <input required name="nev" placeholder="Név" class="field-line" style="font-family: var(--sans); font-size: 14px; padding: 13px 0; background: transparent; border: none; border-bottom: 1px solid var(--line); color: var(--ink); border-radius: 0; min-width: 0;">
-              <input required type="email" name="email" placeholder="E-mail" class="field-line" style="font-family: var(--sans); font-size: 14px; padding: 13px 0; background: transparent; border: none; border-bottom: 1px solid var(--line); color: var(--ink); border-radius: 0; min-width: 0;">
-              <input name="telefon" type="tel" placeholder="Telefon" class="field-line" style="font-family: var(--sans); font-size: 14px; padding: 13px 0; background: transparent; border: none; border-bottom: 1px solid var(--line); color: var(--ink); border-radius: 0; min-width: 0;">
-              <label style="display: grid; gap: 6px; min-width: 0;">
-                <span style="font-family: var(--sans); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint);">Hány példányt kér</span>
-                <input name="db" type="number" min="1" value="1" class="field-line" style="font-family: var(--sans); font-size: 14px; padding: 8px 0; background: transparent; border: none; border-bottom: 1px solid var(--line); color: var(--ink); border-radius: 0; min-width: 0;">
-              </label>
+            <input type="hidden" name="forras" value="landing">
+            <input type="hidden" name="mod" id="mod-input" value="varolista">
+            <div class="hp" aria-hidden="true"><label>Ezt hagyd üresen<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 20px;">
+              <div class="field-wrap">
+                <label class="field-label" for="f-nev">Név</label>
+                <input required id="f-nev" name="nev" autocomplete="name" placeholder="Kovács Anna" class="field-line">
+              </div>
+              <div class="field-wrap">
+                <label class="field-label" for="f-email">E-mail</label>
+                <input required type="email" id="f-email" name="email" autocomplete="email" inputmode="email" placeholder="anna@pelda.hu" class="field-line">
+              </div>
             </div>
-            <input name="dedikalas" placeholder="Dedikálás neve" class="field-line" style="font-family: var(--sans); font-size: 14px; padding: 13px 0; background: transparent; border: none; border-bottom: 1px solid var(--line); color: var(--ink); border-radius: 0;">
-            <button type="submit" class="hover-fill" style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; background: var(--coral); color: var(--ink); border: 1px solid var(--coral); padding: 16px 28px; cursor: pointer; border-radius: 999px; justify-self: start;">Feliratkozom a várólistára</button>
+
+            <details class="more" id="extra-fields">
+              <summary id="extra-summary">Dedikálás, példányszám, telefon (nem kötelező)</summary>
+              <div style="display: grid; gap: 20px; margin-top: 20px;">
+                <div class="field-wrap" data-preorder-only>
+                  <label class="field-label" for="f-cim">Szállítási cím</label>
+                  <input id="f-cim" name="cim" autocomplete="street-address" placeholder="1234 Budapest, Példa utca 1." class="field-line">
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;">
+                  <div class="field-wrap">
+                    <label class="field-label" for="f-tel">Telefon</label>
+                    <input id="f-tel" name="telefon" type="tel" autocomplete="tel" placeholder="+36 …" class="field-line">
+                  </div>
+                  <div class="field-wrap">
+                    <label class="field-label" for="f-db">Hány példányt kér</label>
+                    <input id="f-db" name="db" type="number" min="1" max="20" value="1" class="field-line">
+                  </div>
+                </div>
+                <div class="field-wrap">
+                  <label class="field-label" for="f-ded">Kinek szóljon a dedikálás</label>
+                  <input id="f-ded" name="dedikalas" placeholder="Név, ahogy a kötetbe kerül" class="field-line">
+                </div>
+              </div>
+            </details>
+
+            <p class="cta-note" id="picked-label" style="margin: -8px 0 0;"></p>
+
+            <label class="consent">
+              <input type="checkbox" required name="hozzajarulas" value="igen">
+              <span>Kérem az e-mail értesítést a könyvről. Tudomásul veszem, hogy az adataimat kizárólag erre használod, harmadik félnek nem adod ki, és bármikor leiratkozhatok.</span>
+            </label>
+
+            <button type="submit" id="submit-btn" class="submit-btn">Felkerülök a listára</button>
+            <p class="cta-note" id="form-note">Ingyenes. Nem kérek bankkártyaadatot, és a feliratkozás nem kötelez vásárlásra.</p>
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
       </div>
@@ -407,8 +558,16 @@
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink);">Mi a dedikálás menete?</p>
           <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">Az igénylésnél megadod, kinek szóljon az ajánlás — én írom bele kézzel, a csomagolás előtt.</p>
         </div>
+        <div style="min-width: 0;">
+          <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink);">Hogyan fizetek majd?</p>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">Banki átutalással. Az előrendelés után e-mailben küldöm a díjbekérőt minden adattal — online kártyaadatot sehol nem kell megadnod.</p>
+        </div>
+        <div style="min-width: 0;">
+          <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink);">Mi lesz az e-mail címemmel?</p>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">Kizárólag ennek a könyvnek az ügyében írok róla, legfeljebb háromszor a megjelenésig. Nem adom tovább, és minden levél alján ott a leiratkozás.</p>
+        </div>
       </div>
-      <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 46px 0 0; padding-top: 16px; border-top: 1px solid var(--line); color: var(--ink-faint);">Báránybőrbe bújt pásztor · első kiadás, 2026 · [kiadó / szerző adatai]</p>
+      <p id="footer-meta" style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 46px 0 0; padding-top: 16px; border-top: 1px solid var(--line); color: var(--ink-faint);">Báránybőrbe bújt pásztor · első kiadás, 2026</p>
     </section>
 
   </div>
@@ -417,6 +576,65 @@
 <script>
 (function () {
   "use strict";
+
+  /* =====================================================================
+     BEÁLLÍTÁSOK — ezt a blokkot kell szerkesztened, a többi kódot nem.
+     ===================================================================== */
+  var CONFIG = {
+
+    /* KÖTELEZŐ: ide érkeznek a feliratkozások. Amíg üres, EGYETLEN lead sem
+       jut el hozzád. Formspree: regisztrálsz, létrehozol egy űrlapot, és
+       bemásolod ide a kapott címet, pl. "https://formspree.io/f/abcdwxyz".
+       (Ugyanígy működik Basin, FormSubmit, Getform, Netlify Forms stb.) */
+    FORM_ENDPOINT: "",
+
+    /* AJÁNLOTT: ha az űrlap bármiért hibázna, a látogató erre a címre tud
+       közvetlenül írni — így akkor sem veszik el a jelentkező. */
+    CONTACT_EMAIL: "",
+
+    /* Előrendelés nyitása. A dátum elérésekor az összes gomb és az űrlap
+       magától átvált "Előrendelem" módba. Kézi nyitáshoz/záráshoz állítsd
+       a PREORDER_LIVE értékét true-ra vagy false-ra (null = dátum dönt). */
+    PREORDER_OPEN: new Date(2026, 9, 25),   // 2026. október 25.
+    PREORDER_LIVE: null,
+
+    PRICE_EARLY: "5 400 Ft",
+    PRICE_LATER: "5 900 Ft",
+
+    COPIES_TOTAL: 20,
+    /* CSAK VALÓS SZÁMOT írj ide. A kitalált szűkösség visszaüt: ha valaki
+       látja, hogy hetek óta ugyanannyi "kelt el", elveszíted a bizalmát. */
+    COPIES_TAKEN: 7,
+
+    /* Amíg üres a tömb, az "Ajánlók" szekció nem jelenik meg. Kitalált vagy
+       "[Ajánló neve]" jellegű placeholder ajánlás többet árt, mint használ.
+       Formátum: { quote: "...", name: "Kovács Anna", role: "lelkigondozó" } */
+    TESTIMONIALS: []
+  };
+  /* ===================== BEÁLLÍTÁSOK VÉGE ============================= */
+
+  function isPreorderOpen() {
+    if (CONFIG.PREORDER_LIVE === true) return true;
+    if (CONFIG.PREORDER_LIVE === false) return false;
+    return new Date() >= CONFIG.PREORDER_OPEN;
+  }
+  var preorderOpen = isPreorderOpen();
+
+  /* Konverziómérés: ha van GA4 / Meta Pixel / GTM a lapon, megkapja az
+     eseményt; ha nincs, csendben nem történik semmi. */
+  function track(name, params) {
+    try {
+      if (window.dataLayer && window.dataLayer.push) {
+        var o = { event: name };
+        for (var k in (params || {})) { if (params.hasOwnProperty(k)) o[k] = params[k]; }
+        window.dataLayer.push(o);
+      }
+      if (typeof window.gtag === "function") window.gtag("event", name, params || {});
+      if (typeof window.fbq === "function") window.fbq("trackCustom", name, params || {});
+    } catch (err) { /* a mérés soha ne törje el az oldalt */ }
+  }
+
+  function pad3(n) { return String(n).padStart(3, "0"); }
 
   /* ---------- állapot ---------- */
   var TEXT = "Aki a nyájat őrzi, annak nem kell farkasnak lennie ahhoz, hogy vigyen belőle. Elég, ha ismeri a kaput, a kutyák nevét, és azt a hangot, amire a bárányok maguktól elindulnak. A falu tizennégy éven át nem kérdezett semmit, mert minden reggel megvolt a tej, és minden vasárnap megvolt a mise. Én sem kérdeztem. Csak számoltam, és a szám nem stimmelt, de ezt akkor még nem mondtam el senkinek, mert nem tudtam, kinek mondanám. Márton bácsi harminc éve vezette a legelőt, és harminc éve mondta ugyanazt: a nyáj nem tud számolni, de érzi, ha kevesebben vannak. Én akkor még azt hittem, ez a pásztorok szokásos beszéde, olyan, mint az időjárásról. Aztán jött az az ősz, amikor a szám kétszer sem stimmelt, és a kapu reggelre mindig nyitva volt, pedig este én magam zártam be. A rendőr azt kérdezte, kire gyanakszom. Mondtam, hogy senkire, mert ez volt az igazság: nem gyanakodtam, tudtam. A falu addig hitte el a történetemet, amíg a történet illett ahhoz, amit magukról gondoltak. Amikor már nem illett, egyetlen éjszaka alatt lettem idegen egy helyen, ahol negyven évig laktam. A báránybőr nem álruha. A báránybőr az, amit rád adnak, hogy ne kelljen megkérdezniük, mi van alatta.";
@@ -428,20 +646,20 @@
   var foundCount = 0;
 
   var pickedList = [];
-  var takenCount = 7;
-  var sent = false;
+  var takenCount = Math.max(0, Math.min(CONFIG.COPIES_TAKEN, CONFIG.COPIES_TOTAL));
+  var sending = false;
   var hoverPhase = null;
 
   var phaseDefs = [
     { date: "Most", title: "Érdeklődők gyűjtése", note: "Feliratkozol e-mailre — fizetés és kötelezettség nélkül. A lista dönti el, ki kapja elsőként a linket." },
-    { date: "2026. okt. 25.", title: "Előrendelés nyit — 5 400 Ft", note: "Dedikált, számozott kötetek, amíg a jegyzék tart. A várólistások egy nappal előbb kapják a linket." },
+    { date: "2026. okt. 25.", title: "Előrendelés nyit — " + CONFIG.PRICE_EARLY, note: "Dedikált, számozott kötetek, amíg a jegyzék tart. A várólistások egy nappal előbb vásárolhatnak." },
     { date: "A húsz után", title: "Felolvasóest", note: "További 50 előrendelő meghívót kap a zárt online estre." },
-    { date: "Black Friday után", title: "Early bird zárul", note: "Az ár 5 900 Ft-ra vált. Szállítás december elejétől." }
+    { date: "Black Friday után", title: "Early bird zárul", note: "Az ár " + CONFIG.PRICE_LATER + "-ra vált. Szállítás december elejétől." }
   ];
 
   function currentPhase() {
     var now = new Date();
-    if (now < new Date(2026, 9, 25)) return 0;
+    if (now < CONFIG.PREORDER_OPEN) return 0;
     if (now < new Date(2026, 10, 28)) return 1;
     if (now < new Date(2026, 11, 5)) return 2;
     return 3;
@@ -504,15 +722,71 @@
     bio.observe(spread);
   })();
 
-  /* ---------- visszaszámláló ---------- */
-  var daysToOpen = Math.ceil((new Date(2026, 9, 25) - new Date()) / 86400000);
-  (function () {
-    var label = daysToOpen > 1 ? daysToOpen + " nap" : daysToOpen === 1 ? "1 nap" : daysToOpen <= 0 ? "ma nyit" : "nyitva";
+  /* ---------- visszaszámláló + üzemmód (várólista / előrendelés) ---------- */
+  var daysToOpen = Math.ceil((CONFIG.PREORDER_OPEN - new Date()) / 86400000);
+
+  function applyMode() {
+    var label = daysToOpen > 1 ? daysToOpen + " nap" : daysToOpen === 1 ? "1 nap" : "ma nyit";
+
     var attnEl = document.getElementById("attn-days");
-    if (attnEl) attnEl.textContent = daysToOpen > 0 ? label : "ma nyit";
+    if (attnEl) attnEl.textContent = label;
+    var attnBar = document.getElementById("attn-bar");
+    if (attnBar && preorderOpen) {
+      attnBar.lastElementChild.textContent = "Az előrendelés nyitva — " + (CONFIG.COPIES_TOTAL - takenCount) + " dedikált példány maradt, " + CONFIG.PRICE_EARLY + ".";
+    }
+
     var stickyEl = document.getElementById("sticky-text");
-    if (stickyEl) stickyEl.textContent = daysToOpen > 0 ? "Az előrendelés október 25-én nyit · " + label : "Az előrendelés nyitva";
-  })();
+    if (stickyEl) {
+      stickyEl.textContent = preorderOpen
+        ? "Dedikált példány · " + CONFIG.PRICE_EARLY + " · amíg a jegyzék tart"
+        : "Az előrendelés október 25-én nyit · " + label + " · a listásoké az elsőbbség";
+    }
+
+    var midNote = document.getElementById("mid-cta-note");
+    if (midNote) {
+      midNote.textContent = preorderOpen
+        ? "Ne maradj le: a húsz dedikált kötet a jegyzékből fogy."
+        : "Nem kell most döntened — a listáról bármikor leléphetsz.";
+    }
+
+    var ctaText = preorderOpen ? "Előrendelem – " + CONFIG.PRICE_EARLY : "Felkerülök a listára";
+    Array.prototype.forEach.call(document.querySelectorAll("[data-cta]"), function (el) {
+      var inSticky = !!(el.closest && el.closest("#sticky-cta"));
+      el.textContent = ctaText + (inSticky ? " →" : "");
+      el.addEventListener("click", function () {
+        track(preorderOpen ? "preorder_cta_click" : "waitlist_cta_click", { hely: inSticky ? "sticky" : "oldal" });
+      });
+    });
+
+    var extras = document.querySelectorAll("[data-preorder-only]");
+    Array.prototype.forEach.call(extras, function (el) {
+      if (!preorderOpen) { el.parentNode.removeChild(el); return; }
+      var inp = el.querySelector("input, textarea");
+      if (inp) inp.required = true;
+    });
+
+    var summary = document.getElementById("extra-summary");
+    var details = document.getElementById("extra-fields");
+    var submitBtn = document.getElementById("submit-btn");
+    var formNote = document.getElementById("form-note");
+    var modInput = document.getElementById("mod-input");
+
+    if (preorderOpen) {
+      if (summary) summary.textContent = "Szállítási cím, dedikálás, példányszám";
+      if (details) details.open = true;
+      if (submitBtn) submitBtn.textContent = "Előrendelem – " + CONFIG.PRICE_EARLY;
+      if (formNote) formNote.textContent = "Az előrendelés után e-mailben küldöm a díjbekérőt, banki átutalásra. Online kártyaadatot sehol nem kérek.";
+      if (modInput) modInput.value = "elorendeles";
+    } else {
+      if (submitBtn) submitBtn.textContent = "Felkerülök a listára";
+      if (modInput) modInput.value = "varolista";
+    }
+
+    var footer = document.getElementById("footer-meta");
+    if (footer && CONFIG.CONTACT_EMAIL) {
+      footer.textContent = footer.textContent + " · " + CONFIG.CONTACT_EMAIL;
+    }
+  }
 
   /* ---------- folyamatjelző ---------- */
   var trackEl = document.getElementById("phase-track");
@@ -589,7 +863,7 @@
 
   function renderShelf() {
     shelfEl.innerHTML = "";
-    for (var i = 1; i <= 20; i++) {
+    for (var i = 1; i <= CONFIG.COPIES_TOTAL; i++) {
       (function (i) {
         var isTaken = i <= takenCount;
         var isPicked = pickedList.indexOf(i) !== -1;
@@ -629,9 +903,18 @@
         shelfEl.appendChild(btn);
       })(i);
     }
-    document.getElementById("claim-label").textContent = takenCount + " elkelt · " + (20 - takenCount) + " szabad";
-    var heroClaim = document.getElementById("claim-label-hero");
-    if (heroClaim) heroClaim.textContent = takenCount + " / 20 lefoglalva — kézzel dedikált, számozott kötet";
+    document.getElementById("claim-label").textContent = takenCount + " elkelt · " + (CONFIG.COPIES_TOTAL - takenCount) + " szabad";
+    var heroTrust = document.getElementById("hero-trust");
+    if (heroTrust) {
+      heroTrust.innerHTML = "";
+      [ (CONFIG.COPIES_TOTAL - takenCount) + " / " + CONFIG.COPIES_TOTAL + " példány szabad",
+        "Kézzel dedikált, számozott",
+        CONFIG.PRICE_EARLY + " előrendelői ár" ].forEach(function (t) {
+        var sp = document.createElement("span");
+        sp.textContent = t;
+        heroTrust.appendChild(sp);
+      });
+    }
   }
 
   function renderPickState() {
@@ -653,7 +936,7 @@
     } else {
       pickBanner.classList.remove("show");
       chip.style.display = "none";
-      pickedLabelEl.textContent = "Példányszám kiválasztása opcionális (jegyzék fent)";
+      pickedLabelEl.textContent = "Számozott példányt a fenti jegyzékből választhatsz — nem kötelező.";
       hiddenInput.value = "";
     }
   }
@@ -664,22 +947,102 @@
     renderPickState();
   });
 
-  /* ---------- várólista űrlap ---------- */
+  /* ---------- várólista / előrendelő űrlap ---------- */
   var form = document.getElementById("waitlist-form");
   var doneEl = document.getElementById("waitlist-done");
   var pickedNoteEl = document.getElementById("picked-note");
+  var statusEl = document.getElementById("form-status");
+  var submitBtnEl = document.getElementById("submit-btn");
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    sent = true;
-    pickedNoteEl.textContent = pickedList.length
-      ? (pickedList.length === 1
-        ? "A " + String(pickedList[0]).padStart(3, "0") + " számú példányt fenntartom neked a nyitásig."
-        : "A " + pickedList.map(function (n) { return String(n).padStart(3, "0"); }).join(", ") + " számú példányokat fenntartom neked a nyitásig.")
+  function clearStatus() {
+    statusEl.className = "form-status";
+    statusEl.style.display = "none";
+    statusEl.textContent = "";
+  }
+
+  function showError(summaryText) {
+    statusEl.className = "form-status err";
+    statusEl.style.display = "block";
+    statusEl.textContent = "Nem sikerült elküldeni. Próbáld újra egy perc múlva";
+    if (CONFIG.CONTACT_EMAIL) {
+      statusEl.appendChild(document.createTextNode(", vagy írj közvetlenül: "));
+      var a = document.createElement("a");
+      a.href = "mailto:" + CONFIG.CONTACT_EMAIL
+        + "?subject=" + encodeURIComponent(preorderOpen ? "Előrendelés" : "Várólista")
+        + "&body=" + encodeURIComponent(summaryText);
+      a.textContent = CONFIG.CONTACT_EMAIL;
+      statusEl.appendChild(a);
+    }
+    statusEl.appendChild(document.createTextNode("."));
+    track("lead_error", { mod: preorderOpen ? "elorendeles" : "varolista" });
+  }
+
+  function setSending(on) {
+    sending = on;
+    submitBtnEl.disabled = on;
+    if (on) {
+      submitBtnEl.dataset.label = submitBtnEl.textContent;
+      submitBtnEl.textContent = "Küldés…";
+    } else if (submitBtnEl.dataset.label) {
+      submitBtnEl.textContent = submitBtnEl.dataset.label;
+    }
+  }
+
+  function showDone() {
+    var nums = pickedList.map(pad3);
+    document.getElementById("done-title").textContent = preorderOpen ? "Előrendelés rögzítve" : "Felvéve a listára";
+    document.getElementById("done-text").textContent = preorderOpen
+      ? "Köszönöm. 24 órán belül küldöm e-mailben a díjbekérőt banki átutaláshoz — amint megérkezik az összeg, a példányod le van foglalva."
+      : "Október 24-én küldöm neked a vásárlási linket, egy nappal a nyilvános nyitás előtt.";
+    pickedNoteEl.textContent = nums.length
+      ? (nums.length === 1
+        ? "A " + nums[0] + " számú példányt fenntartom neked a nyitásig."
+        : "A " + nums.join(", ") + " számú példányokat fenntartom neked a nyitásig.")
       : "";
     form.style.display = "none";
     doneEl.style.display = "grid";
+    doneEl.scrollIntoView({ behavior: "smooth", block: "center" });
+    track(preorderOpen ? "preorder_submit" : "waitlist_submit", { peldanyok: nums.length });
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (sending) return;
+    if (form.querySelector('input[name="_gotcha"]').value) return;   /* robot */
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+
+    clearStatus();
+    var data = new FormData(form);
+    data.append("peldanyok", pickedList.map(pad3).join(", "));
+    data.append("_subject", preorderOpen ? "Új előrendelés — Báránybőrbe bújt pásztor" : "Új várólista-feliratkozó — Báránybőrbe bújt pásztor");
+
+    var summaryLines = [];
+    data.forEach(function (v, k) { if (k.charAt(0) !== "_" && v) summaryLines.push(k + ": " + v); });
+    var summaryText = summaryLines.join("\n");
+
+    if (!CONFIG.FORM_ENDPOINT) {
+      console.error("[landing] Nincs beállítva a CONFIG.FORM_ENDPOINT — a feliratkozás nem jut el sehova.");
+      showError(summaryText);
+      return;
+    }
+
+    setSending(true);
+    fetch(CONFIG.FORM_ENDPOINT, { method: "POST", body: data, headers: { Accept: "application/json" } })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        setSending(false);
+        showDone();
+      })
+      .catch(function (err) {
+        console.error("[landing] beküldési hiba:", err);
+        setSending(false);
+        showError(summaryText);
+      });
   });
+
+  if (!CONFIG.FORM_ENDPOINT) {
+    console.error("[landing] FIGYELEM: a CONFIG.FORM_ENDPOINT üres, így egyetlen feliratkozás sem érkezik meg. Töltsd ki az index.html tetején lévő BEÁLLÍTÁSOK blokkban.");
+  }
 
   /* ---------- jobb oldali navigáció ---------- */
   var railDefs = [
@@ -741,15 +1104,17 @@
     }
   })();
 
-  /* ---------- olvasói ajánlók ---------- */
+  /* ---------- olvasói ajánlók (csak valódi ajánlásokkal jelenik meg) ---------- */
   (function () {
-    var testiDefs = [
-      { quote: "[Ajánlás idézete egy-két mondatban.]", name: "[Ajánló neve]", role: "[minőség / kapcsolat]" },
-      { quote: "[Második ajánlás idézete.]", name: "[Ajánló neve]", role: "[minőség / kapcsolat]" },
-      { quote: "[Harmadik ajánlás idézete.]", name: "[Ajánló neve]", role: "[minőség / kapcsolat]" }
-    ];
+    var section = document.getElementById("ajanlok");
+    var testiDefs = (CONFIG.TESTIMONIALS || []).filter(function (t) {
+      return t && t.quote && t.name && String(t.quote).indexOf("[") !== 0;
+    });
+
+    if (!section) return;
+    if (testiDefs.length === 0) { section.parentNode.removeChild(section); return; }
+
     var quoteEl = document.getElementById("testi-quote");
-    if (!quoteEl) return;
     var nameEl = document.getElementById("testi-name");
     var roleEl = document.getElementById("testi-role");
     var dotsEl = document.getElementById("testi-dots");
@@ -770,18 +1135,20 @@
       var t = testiDefs[idx];
       quoteEl.textContent = "„" + t.quote + "”";
       nameEl.textContent = t.name;
-      roleEl.textContent = t.role;
+      roleEl.textContent = t.role || "";
       dots.forEach(function (d, i) { d.classList.toggle("active", i === idx); });
     }
 
-    document.getElementById("testi-prev").addEventListener("click", function () {
-      idx = (idx - 1 + testiDefs.length) % testiDefs.length;
-      render();
+    var single = testiDefs.length < 2;
+    ["testi-prev", "testi-next"].forEach(function (id) {
+      var b = document.getElementById(id);
+      if (single) { b.style.display = "none"; return; }
+      b.addEventListener("click", function () {
+        idx = (idx + (id === "testi-next" ? 1 : testiDefs.length - 1)) % testiDefs.length;
+        render();
+      });
     });
-    document.getElementById("testi-next").addEventListener("click", function () {
-      idx = (idx + 1) % testiDefs.length;
-      render();
-    });
+    if (single) dotsEl.style.display = "none";
 
     render();
   })();
@@ -815,12 +1182,33 @@
   }, { rootMargin: "-45% 0px -45% 0px" });
   sections.forEach(function (el) { io.observe(el); });
 
+  /* ---------- teljes részlet feltárása egy kattintással ---------- */
+  (function () {
+    var btn = document.getElementById("reveal-all");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      all.forEach(function (_, i) { if (mask[i]) revealWord(i); });
+      btn.style.display = "none";
+      track("excerpt_reveal_all");
+    });
+  })();
+
+  /* A menüből kiesnek azok a pontok, amelyek szekciója nem került ki (pl. ajánlók). */
+  railDefs = railDefs.filter(function (r) {
+    if (document.querySelector('[data-sec="' + r.id + '"]')) return true;
+    var refs = railLinks[r.id];
+    if (refs && refs.a.parentNode) refs.a.parentNode.removeChild(refs.a);
+    delete railLinks[r.id];
+    return false;
+  });
+
   /* ---------- indítás ---------- */
   renderRedacted();
   updateRevealLabels();
   renderPhases();
   renderShelf();
   renderPickState();
+  applyMode();
   updateRail();
 })();
 </script>

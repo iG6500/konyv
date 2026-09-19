@@ -33,16 +33,17 @@ leellenőrizni. Mielőtt élesíted:
 
 ## 3. Automatizálás feltétele — EZ FONTOS
 
-Az automatizálás triggerébe/szűrőjébe vedd fel:
+A bevált, leellenőrzött megoldás: **Subscribers → Segments** alatt hozz
+létre egy szegmenst mindkét változathoz, majd a szegmens lapján a
+**"Create automation"** gombbal indítsd az automatizálást — ez azt a
+triggert állítja be, hogy "amikor egy feliratkozó belép ebbe a
+szegmensbe". A szegmens feltételei (mindhárom "És"-sel összekötve):
 
 ```
-mod = elorendeles
-ÉS
-valtozat = dedikalt   (a dijbekero-dedikalt.html-hez)
-  vagy
-valtozat = normal     (a dijbekero-normal.html-hez)
-ÉS
-sorszam_varolista ≠ igen
+Fields → Mód          Equals        elorendeles
+Fields → Változat     Equals        dedikalt   (a dijbekero-dedikalt.html-hez)
+                        vagy         normal     (a dijbekero-normal.html-hez)
+Fields → Sorszám várólista   Does not equal   igen
 ```
 
 Az utolsó feltétel azért kritikus, mert ha valaki dedikáltat kért, amikor
@@ -50,24 +51,48 @@ Az utolsó feltétel azért kritikus, mert ha valaki dedikáltat kért, amikor
 példányt. Ha erre is automatikusan kimenne a díjbekérő, pénzt kérnél egy
 könyvért, ami lehet, hogy nincs is neki.
 
-Ha a sorszámot te magad rendeled hozzá utólag (a jelentkezés beérkezése
-után választod ki, melyik konkrét kötet legyen az övé), előbb frissítsd a
-subscriber "Példány számok" (`peldany_szamok`) mezőjét a MailerLite-ban,
-csak utána engedd elmenni a levelet — így a `{$peldany_szamok}` a helyes,
-végleges számot fogja mutatni.
+### Tégy egy késleltetést az e-mail lépés elé
 
-## 4. Ha a tartalom megint csonkán jelenik meg beillesztés után
+Ha valaki dedikáltat választott, de **nem** kattintott konkrét sorszámra a
+jegyzékből, a `peldany_szamok` mező üresen érkezik be — neked kell utólag
+kiválasztanod és beírnod a végleges számot a feliratkozó adatlapján, a
+MailerLite-ban. Ha az automatizálás **azonnal**, a szegmensbe kerüléskor
+(vagyis a beküldés pillanatában) elküldi a levelet, a díjbekérő üres
+"Sorszám" sorral megy ki, mielőtt esélyed lenne kézzel kitölteni.
 
-Ha az újraírt, egyszerűsített verzió is csonkán jelenne meg:
+**Tedd be a Delay/Wait lépést az e-mail lépés elé** (akár csak 1-2 óra is
+elég) — így van időd ellenőrizni az új feliratkozót, és ha üres a
+sorszám, kézzel kitölteni, mielőtt a levél ténylegesen kimegy. Azoknál,
+akik konkrét számot választottak maguknak a jegyzékből, ez a mező eleve
+ki van töltve a beküldéskor — nekik a késleltetés csak biztonsági
+ráhagyás.
 
-1. Próbáld **Ctrl+Shift+V** (beillesztés formázás nélkül) a sima Ctrl+V
-   helyett — ha a MailerLite mezője gazdag szövegdoboz (nem sima
-   szövegmező), a normál beillesztés néha megpróbálja "értelmezni" (azaz
-   megjeleníteni) a HTML-t beillesztéskor ahelyett, hogy nyers szövegként
-   kezelné, és csak a látható rész marad meg belőle.
-2. A MailerLite saját dokumentációja szerint a Custom HTML importáláshoz
-   nem csak beillesztés létezik: **ZIP-fájl behúzása** vagy **URL-ről
-   importálás** is működik — ha a beillesztés továbbra sem megbízható,
-   ezekkel érdemes próbálkozni.
-3. Írd meg pontosan, hol szakad meg a tartalom (melyik sor/rész az
-   utolsó, ami még megjelenik) — abból tovább lehet szűkíteni az okot.
+## 4. A "csonka levél" hiba — MEGOLDVA, de tartsd szem előtt
+
+Korábban a ténylegesen kiküldött levél (nem csak a szerkesztő élő
+előnézete) félúton megszakadt, majd minden nyitott HTML-címke egyszerre
+lezárult. Több teszt-levél nyers forrásának lemérésével kiderült: **a
+MailerLite automatizálás-motorjának van egy nem dokumentált, kb. 6,5–7 KB
+körüli kemény korlátja** a kiküldött levél méretén — ez nem a HTML
+szerkezetében volt hiba, hanem méret kérdése.
+
+A jelenlegi sablonok (`dijbekero-dedikalt.html` ~6,0 KB,
+`dijbekero-normal.html` ~5,4 KB) már biztonságosan a korlát alatt vannak,
+és élesben, teljes egészében leellenőrzött állapotban vannak (a nyers
+e-mail forrás `</html>`-ig ért).
+
+**Ha a jövőben bővíted a szöveget** (pl. új mező, hosszabb magyarázat), és
+a levél megint csonkán érkezne:
+
+1. Mérd le a fájl méretét (`wc -c dijbekero-*.html`) — ha 6 KB fölé megy,
+   valószínűleg megint elakad.
+2. Rövidíts a bekezdéseken, vagy vedd ki a nem létfontosságú sorokat.
+3. Ellenőrzés: kérj egy "Send test email"-t, majd a Gmailben az
+   "Eredeti üzenet letöltése" / "Show original" nézetből másold ki a
+   `Content-Type: text/html` rész teljes tartalmát, és nézd meg, eléri-e
+   a `</html>` záró címkét.
+
+(Mellékesen: próbáld **Ctrl+Shift+V**-vel beilleszteni a sima Ctrl+V
+helyett, ha a beillesztés magában is gyanúsan viselkedne — egyes
+gazdag szövegdobozok megpróbálják "értelmezni" a HTML-t beillesztéskor.
+A MailerLite ZIP-behúzást és URL-importálást is támogat alternatívaként.)

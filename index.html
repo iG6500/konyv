@@ -120,6 +120,16 @@
   .trust-row span { display: inline-flex; align-items: center; gap: 8px; }
   .trust-row span::before { content: ""; width: 5px; height: 5px; border-radius: 999px; background: var(--gold); flex: none; }
   .cta-note { font-family: var(--sans); font-size: 11.5px; line-height: 1.7; letter-spacing: 0.02em; color: var(--ink-faint); margin: 0; }
+  /* előnézet-jelölő (csak ?elonezet= mellett látszik) */
+  .preview-flag {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 14px;
+    margin: 0 0 clamp(26px, 4vw, 38px); padding: 11px 18px; border-radius: 999px;
+    border: 1px dashed var(--coral); background: rgba(209,72,58,0.10);
+    font-family: var(--sans); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink); text-align: center;
+  }
+  .preview-flag b { color: var(--coral); font-weight: 500; letter-spacing: 0.18em; }
+
   /* űrlap */
   .field-wrap { display: grid; gap: 5px; min-width: 0; }
   .field-label { font-family: var(--sans); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
@@ -441,7 +451,7 @@
 
         <div style="flex: 1 1 420px; min-width: 0; border: 1px solid var(--line); background: var(--panel); border-radius: var(--r-lg); padding: clamp(28px, 4vw, 44px); display: grid; gap: 20px;">
           <div style="display: flex; align-items: center; gap: 14px;">
-            <div style="width: 46px; height: 46px; border-radius: 999px; background: var(--panel-2); border: 1px solid var(--line); flex: none;"></div>
+            <div id="testi-avatar" style="width: 46px; height: 46px; border-radius: 999px; background: var(--panel-2); border: 1px solid var(--line); flex: none; overflow: hidden; display: grid; place-items: center; font-family: var(--sans); font-size: 16px; color: var(--gold); letter-spacing: 0.02em;"></div>
             <div style="min-width: 0;">
               <div id="testi-name" style="font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--ink);"></div>
               <div id="testi-role" style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-faint); margin-top: 2px;"></div>
@@ -631,6 +641,27 @@
   }
 
   function pad3(n) { return String(n).padStart(3, "0"); }
+
+  /* Előnézet — csak neked. A látogatók soha nem látják, mert külön
+     paraméterrel kell hívni az oldalt:
+       index.html?elonezet=ajanlok   → az Ajánlók szekció demó tartalommal
+       index.html?elonezet=mind      → minden előnézet egyszerre
+     Az így megjelenő tartalom láthatóan meg van jelölve. */
+  function previewOn(name) {
+    var q = "";
+    try { q = (new URLSearchParams(location.search).get("elonezet") || "").toLowerCase(); } catch (e) { return false; }
+    return q === "mind" || q === "1" || q === name;
+  }
+
+  /* Demó ajánlások — KIZÁRÓLAG az előnézethez. Élesben soha nem jelennek meg;
+     valódi ajánlásokat a fenti CONFIG.TESTIMONIALS tömbbe kell írni.
+     Mezők: quote, name, role, és opcionálisan photo: "kep.jpg".
+     Fotó nélkül a név kezdőbetűje jelenik meg monogramként. */
+  var DEMO_TESTIMONIALS = [
+    { quote: "Rövid ajánlás: pontosan azt nevezi meg, amit évekig nem tudtam szavakba önteni.", name: "Kovács Anna", role: "korai olvasó" },
+    { quote: "Közepes hosszúságú ajánlás, két mondatban. Nem vádol és nem is mentegetőzik — végig kitart amellett, hogy a felismerés önmagában is fájdalmas, és hogy ettől még érdemes végigmenni rajta.", name: "Nagy Péter", role: "lelkigondozó" },
+    { quote: "Hosszabb ajánlás, hogy látszódjon, mit bír el a szedés. Sok könyvet olvastam a témában, de ez az első, amelyik nem állítja szembe a hitet a józan ésszel. Együtt kezeli a kettőt, és pont ettől lesz használható annak is, aki még mindig szeretné szeretni a közösségét.", name: "Szabó Judit", role: "pszichológus" }
+  ];
 
   /* ---------- állapot ---------- */
   var pickedList = [];
@@ -1043,7 +1074,23 @@
     });
 
     if (!section) return;
+
+    var isDemo = false;
+    if (testiDefs.length === 0 && previewOn("ajanlok")) {
+      testiDefs = DEMO_TESTIMONIALS.slice();
+      isDemo = true;
+    }
     if (testiDefs.length === 0) { section.parentNode.removeChild(section); return; }
+
+    if (isDemo) {
+      var flag = document.createElement("p");
+      flag.className = "preview-flag";
+      var b = document.createElement("b");
+      b.textContent = "Előnézet";
+      flag.appendChild(b);
+      flag.appendChild(document.createTextNode("Demó ajánlások — a látogatók ezt nem látják. Valódit a CONFIG.TESTIMONIALS tömbbe írj."));
+      section.insertBefore(flag, section.firstElementChild);
+    }
 
     var quoteEl = document.getElementById("testi-quote");
     var nameEl = document.getElementById("testi-name");
@@ -1062,11 +1109,28 @@
       dots.push(d);
     });
 
+    var avatarEl = document.getElementById("testi-avatar");
+
     function render() {
       var t = testiDefs[idx];
       quoteEl.textContent = "„" + t.quote + "”";
       nameEl.textContent = t.name;
       roleEl.textContent = t.role || "";
+
+      /* van fotó → kép; nincs → monogram, hogy ne üres körnek látsszon */
+      if (avatarEl) {
+        avatarEl.innerHTML = "";
+        if (t.photo) {
+          var img = document.createElement("img");
+          img.src = t.photo;
+          img.alt = t.name;
+          img.style.cssText = "width:100%;height:100%;object-fit:cover;display:block;";
+          avatarEl.appendChild(img);
+        } else {
+          avatarEl.textContent = String(t.name).trim().charAt(0).toUpperCase();
+        }
+      }
+
       dots.forEach(function (d, i) { d.classList.toggle("active", i === idx); });
     }
 

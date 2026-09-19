@@ -581,11 +581,31 @@
      ===================================================================== */
   var CONFIG = {
 
+    /* Ki fogadja a feliratkozásokat:
+         "mailerlite" — a MailerLite beágyazott űrlapjának címe
+         "generic"    — Formspree, Basin, Getform, FormSubmit stb. */
+    FORM_PROVIDER: "mailerlite",
+
     /* KÖTELEZŐ: ide érkeznek a feliratkozások. Amíg üres, EGYETLEN lead sem
-       jut el hozzád. Formspree: regisztrálsz, létrehozol egy űrlapot, és
-       bemásolod ide a kapott címet, pl. "https://formspree.io/f/abcdwxyz".
-       (Ugyanígy működik Basin, FormSubmit, Getform, Netlify Forms stb.) */
+       jut el hozzád.
+       MailerLite: Forms → Embedded form → Code → a <form> action címe, pl.
+       "https://assets.mailerlite.com/jsonp/123456/forms/7890123/subscribe" */
     FORM_ENDPOINT: "",
+
+    /* Csak "mailerlite" módban. Bal oldalt az oldal saját mezőneve, jobbra a
+       MailerLite mezőkulcsa. A name, email és phone beépített; a többihez a
+       MailerLite-ban létre kell hozni egy-egy egyéni mezőt (Subscribers →
+       Fields) PONTOSAN ezekkel a kulcsnevekkel. Amit innen kiveszel, az nem
+       megy át. */
+    MAILERLITE_FIELDS: {
+      nev:        "name",
+      email:      "email",
+      telefon:    "phone",
+      db:         "peldanyszam",
+      dedikalas:  "dedikalas",
+      pelda_szam: "peldany_szamok",
+      mod:        "mod"
+    },
 
     /* AJÁNLOTT: ha az űrlap bármiért hibázna, a látogató erre a címre tud
        közvetlenül írni — így akkor sem veszik el a jelentkező. */
@@ -991,9 +1011,8 @@
     }
 
     setSending(true);
-    fetch(CONFIG.FORM_ENDPOINT, { method: "POST", body: data, headers: { Accept: "application/json" } })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
+    sendLead(buildPayload(data))
+      .then(function () {
         setSending(false);
         showDone();
       })
@@ -1004,8 +1023,81 @@
       });
   });
 
+  /* A MailerLite a saját mezőneveit várja (fields[email], fields[name], …),
+     a Formspree-féle szolgáltatók viszont a nyers mezőket. */
+  function buildPayload(data) {
+    if (CONFIG.FORM_PROVIDER !== "mailerlite") return data;
+
+    var map = CONFIG.MAILERLITE_FIELDS || {};
+    var out = new FormData();
+    data.forEach(function (v, k) {
+      if (!v || k.charAt(0) === "_") return;
+      if (map[k]) out.append("fields[" + map[k] + "]", v);
+    });
+    out.append("ml-submit", "1");
+    out.append("anticsrf", "true");
+    return out;
+  }
+
+  /* Elsődlegesen sima fetch, mert abból megtudjuk, tényleg átment-e.
+     Ha a böngésző CORS vagy hálózati okból elutasítja (a MailerLite
+     végpontja más domainen van), rejtett iframe-en keresztül küldjük el —
+     az ugyanúgy megérkezik, csak a választ nem tudjuk elolvasni. */
+  function sendLead(body) {
+    return fetch(CONFIG.FORM_ENDPOINT, { method: "POST", body: body, headers: { Accept: "application/json" } })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res;
+      })
+      .catch(function (err) {
+        if (err instanceof TypeError) {
+          console.warn("[landing] a közvetlen beküldést a böngésző blokkolta (" + err.message + "), átváltás rejtett űrlapra.");
+          return submitViaIframe(body);
+        }
+        throw err;
+      });
+  }
+
+  function submitViaIframe(body) {
+    return new Promise(function (resolve, reject) {
+      var name = "lead-sink-" + Date.now();
+      var frame = document.createElement("iframe");
+      frame.name = name;
+      frame.style.cssText = "position:absolute;width:0;height:0;border:0;left:-9999px;";
+
+      var f = document.createElement("form");
+      f.method = "POST";
+      f.action = CONFIG.FORM_ENDPOINT;
+      f.target = name;
+      f.style.display = "none";
+      body.forEach(function (v, k) {
+        var i = document.createElement("input");
+        i.type = "hidden"; i.name = k; i.value = v;
+        f.appendChild(i);
+      });
+
+      var done = false;
+      function finish(ok, why) {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        setTimeout(function () {
+          if (f.parentNode) f.parentNode.removeChild(f);
+          if (frame.parentNode) frame.parentNode.removeChild(frame);
+        }, 1500);
+        ok ? resolve() : reject(new Error(why));
+      }
+      var timer = setTimeout(function () { finish(false, "időtúllépés"); }, 12000);
+      frame.addEventListener("load", function () { finish(true); });
+
+      document.body.appendChild(frame);
+      document.body.appendChild(f);
+      f.submit();
+    });
+  }
+
   if (!CONFIG.FORM_ENDPOINT) {
-    console.error("[landing] FIGYELEM: a CONFIG.FORM_ENDPOINT üres, így egyetlen feliratkozás sem érkezik meg. Töltsd ki az index.html tetején lévő BEÁLLÍTÁSOK blokkban.");
+    console.error("[landing] FIGYELEM: a CONFIG.FORM_ENDPOINT üres, így egyetlen feliratkozás sem érkezik meg. Töltsd ki az index.html tetején lévő BEÁLLÍTÁSOK blokkban (MailerLite: a beágyazott űrlap <form action=\"…\"> címe).");
   }
 
   /* ---------- jobb oldali navigáció ---------- */

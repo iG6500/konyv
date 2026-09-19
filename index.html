@@ -120,16 +120,6 @@
   .trust-row span { display: inline-flex; align-items: center; gap: 8px; }
   .trust-row span::before { content: ""; width: 5px; height: 5px; border-radius: 999px; background: var(--gold); flex: none; }
   .cta-note { font-family: var(--sans); font-size: 11.5px; line-height: 1.7; letter-spacing: 0.02em; color: var(--ink-faint); margin: 0; }
-  /* előnézet-jelölő (csak ?elonezet= mellett látszik) */
-  .preview-flag {
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 14px;
-    margin: 0 0 clamp(26px, 4vw, 38px); padding: 11px 18px; border-radius: 999px;
-    border: 1px dashed var(--coral); background: rgba(209,72,58,0.10);
-    font-family: var(--sans); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--ink); text-align: center;
-  }
-  .preview-flag b { color: var(--coral); font-weight: 500; letter-spacing: 0.18em; }
-
   /* űrlap */
   .field-wrap { display: grid; gap: 5px; min-width: 0; }
   .field-label { font-family: var(--sans); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
@@ -440,6 +430,9 @@
       <a href="#varolista" class="pill-btn pill-btn-primary" data-cta="1">Felkerülök a listára</a>
     </div>
 
+    <!-- FIGYELEM: amíg a CONFIG.DEMO_AJANLOK = true, ebben a szekcióban KITALÁLT
+         demó ajánlások jelennek meg, kitalált nevekkel. Nyitás előtt kapcsold ki,
+         vagy töltsd fel a CONFIG.TESTIMONIALS tömböt valódi ajánlásokkal. -->
     <section data-sec="ajanlok" id="ajanlok" style="border-top: 1px solid var(--line); padding: clamp(40px, 5vw, 64px) 0;">
       <div style="text-align: center; max-width: 620px; margin: 0 auto 40px;">
         <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0 0 14px;">Korai olvasók</p>
@@ -1091,16 +1084,7 @@
     if (testiDefs.length === 0) { section.parentNode.removeChild(section); return; }
 
     if (isDemo) {
-      if (CONFIG.DEMO_AJANLOK === true) {
-        console.warn("[landing] Az Ajánlók szekció DEMÓ tartalommal látszik (CONFIG.DEMO_AJANLOK = true). Nyitás előtt állítsd false-ra, vagy töltsd fel a CONFIG.TESTIMONIALS tömböt valódi ajánlásokkal.");
-      }
-      var flag = document.createElement("p");
-      flag.className = "preview-flag";
-      var b = document.createElement("b");
-      b.textContent = "Előnézet";
-      flag.appendChild(b);
-      flag.appendChild(document.createTextNode("Demó ajánlások — a látogatók ezt nem látják. Valódit a CONFIG.TESTIMONIALS tömbbe írj."));
-      section.insertBefore(flag, section.firstElementChild);
+      console.warn("[landing] FIGYELEM: az Ajánlók szekció KITALÁLT, demó ajánlásokat mutat. Nyitás előtt állítsd a CONFIG.DEMO_AJANLOK értékét false-ra, vagy töltsd fel a CONFIG.TESTIMONIALS tömböt valódi ajánlásokkal.");
     }
 
     var quoteEl = document.getElementById("testi-quote");

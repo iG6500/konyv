@@ -614,8 +614,16 @@
 
     /* Amíg üres a tömb, az "Ajánlók" szekció nem jelenik meg. Kitalált vagy
        "[Ajánló neve]" jellegű placeholder ajánlás többet árt, mint használ.
-       Formátum: { quote: "...", name: "Kovács Anna", role: "lelkigondozó" } */
-    TESTIMONIALS: []
+       Formátum: { quote: "...", name: "Kovács Anna", role: "lelkigondozó" }
+       Opcionálisan photo: "kep.jpg" — enélkül a név kezdőbetűje a monogram. */
+    TESTIMONIALS: [],
+
+    /* >>> NYITÁS ELŐTT ÁLLÍTSD false-RA <<<
+       Amíg true, a szekció demó ajánlásokkal jelenik meg, jól látható
+       "Előnézet" jelöléssel — hogy tervezés közben látszódjon a szekció.
+       A demó nevek kitaláltak. Amint a TESTIMONIALS tömbbe valódi ajánlás
+       kerül, ez a kapcsoló magától hatástalanná válik. */
+    DEMO_AJANLOK: true
   };
   /* ===================== BEÁLLÍTÁSOK VÉGE ============================= */
 
@@ -1076,13 +1084,16 @@
     if (!section) return;
 
     var isDemo = false;
-    if (testiDefs.length === 0 && previewOn("ajanlok")) {
+    if (testiDefs.length === 0 && (CONFIG.DEMO_AJANLOK === true || previewOn("ajanlok"))) {
       testiDefs = DEMO_TESTIMONIALS.slice();
       isDemo = true;
     }
     if (testiDefs.length === 0) { section.parentNode.removeChild(section); return; }
 
     if (isDemo) {
+      if (CONFIG.DEMO_AJANLOK === true) {
+        console.warn("[landing] Az Ajánlók szekció DEMÓ tartalommal látszik (CONFIG.DEMO_AJANLOK = true). Nyitás előtt állítsd false-ra, vagy töltsd fel a CONFIG.TESTIMONIALS tömböt valódi ajánlásokkal.");
+      }
       var flag = document.createElement("p");
       flag.className = "preview-flag";
       var b = document.createElement("b");

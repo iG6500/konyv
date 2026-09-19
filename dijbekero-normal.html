@@ -45,17 +45,11 @@
     </tr>
 
     <tr>
-    <td style="padding: 0 40px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid #e0d9c8; border-bottom:1px solid #e0d9c8;">
-      <tr>
-      <td style="padding:16px 0 8px; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#8f6414;">Tétel</td>
-      <td align="right" style="padding:16px 0 8px; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#1f1911;">Normál példány</td>
-      </tr>
-      <tr>
-      <td style="padding:8px 0 16px; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#8f6414;">Mennyiség</td>
-      <td align="right" style="padding:8px 0 16px; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#1f1911;">{$peldanyszam} db</td>
-      </tr>
-    </table>
+    <td style="padding: 0 40px 8px;">
+    <p style="margin:0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#8f6414;">Tétel</p>
+    <p style="margin:2px 0 14px; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#1f1911;">Normál példány</p>
+    <p style="margin:0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#8f6414;">Mennyiség</p>
+    <p style="margin:2px 0 0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#1f1911;">{$peldanyszam} db</p>
     </td>
     </tr>
 
@@ -75,24 +69,10 @@
     <tr>
     <td style="padding: 26px 40px 6px;">
     <p style="margin:0 0 12px; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#8f6414;">Utalási adatok</p>
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-      <tr>
-      <td style="padding:4px 0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#4a4032; width:40%;">Kedvezményezett</td>
-      <td style="padding:4px 0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#1f1911;">[SZÁMLATULAJDONOS NEVE]</td>
-      </tr>
-      <tr>
-      <td style="padding:4px 0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#4a4032;">Számlaszám</td>
-      <td style="padding:4px 0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#1f1911;">[BANKSZÁMLASZÁM]</td>
-      </tr>
-      <tr>
-      <td style="padding:4px 0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#4a4032;">Közlemény</td>
-      <td style="padding:4px 0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#1f1911;">{$name}</td>
-      </tr>
-      <tr>
-      <td style="padding:4px 0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#4a4032;">Összeg</td>
-      <td style="padding:4px 0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#1f1911;">{$osszesen}</td>
-      </tr>
-    </table>
+    <p style="margin:0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#4a4032;">Kedvezményezett: <span style="color:#1f1911;">[SZÁMLATULAJDONOS NEVE]</span></p>
+    <p style="margin:4px 0 0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#4a4032;">Számlaszám: <span style="color:#1f1911;">[BANKSZÁMLASZÁM]</span></p>
+    <p style="margin:4px 0 0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#4a4032;">Közlemény: <span style="color:#1f1911;">{$name}</span></p>
+    <p style="margin:4px 0 0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:14px; color:#4a4032;">Összeg: <span style="color:#1f1911;">{$osszesen}</span></p>
     <p style="margin:16px 0 0; font-family:'Space Grotesk', Arial, Helvetica, sans-serif; font-size:12.5px; line-height:19px; color:#8a8672;">
       Kérlek, 24 órán belül indítsd el az utalást, hogy a példányodat fenntarthassam.
     </p>

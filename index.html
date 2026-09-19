@@ -429,7 +429,7 @@
         <div class="stat-item"><span class="stat-num">20</span><span class="stat-label">Dedikált példány</span></div>
         <div class="stat-item"><span class="stat-num" data-price-early>5 400 Ft</span><span class="stat-label">Előrendelői ár</span></div>
         <div class="stat-item"><span class="stat-num">okt. 26.</span><span class="stat-label">Nyilvános nyitás</span></div>
-        <div class="stat-item"><span class="stat-num">dec. eleje</span><span class="stat-label">Szállítás indul</span></div>
+        <div class="stat-item"><span class="stat-num">nov. 23.</span><span class="stat-label">Szállítás indul</span></div>
       </div>
     </section>
 
@@ -544,7 +544,7 @@
           <ul class="tier-list">
             <li>A teljes kötet, első és egyetlen kiadás — dedikálás és sorszám nélkül.</li>
             <li>Nincs darabszám-korlát — ebből a változatból nem fogyhat el.</li>
-            <li>Szállítás december elejétől, az előrendelés sorrendjében.</li>
+            <li>Szállítás november 23-tól, az előrendelés sorrendjében — még Black Friday előtt.</li>
             <li>Fizetés banki átutalással, a díjbekérő megérkezése után.</li>
             <li id="tier-normal-bonus"></li>
           </ul>
@@ -745,7 +745,7 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 34px;">
         <div style="min-width: 0;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink);">Mikor kapom meg?</p>
-          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">A szállítás december elején indul, a sorrend az előrendelés sorrendje.</p>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">A szállítás november 23-án indul, a sorrend az előrendelés sorrendje — tehát még Black Friday előtt a kezedben van.</p>
         </div>
         <div style="min-width: 0;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink);">Lesz utánnyomás?</p>
@@ -855,6 +855,21 @@
        A listás foglalás így csütörtöktől hétfő reggelig él — átível az
        ünnepen, tehát senkinek a határideje nem esik munkaszüneti napra. */
     SHELF_RESET: new Date(2026, 9, 26, 9, 0),     // 2026. október 26., hétfő 9:00
+
+    /* A felolvasóest hozzávetőleges időpontja. CSAK a folyamatjelzőn dönti
+       el, melyik szakasz van kiemelve — ha megvan a pontos dátum, írd át. */
+    EVENT_ABOUT: new Date(2026, 10, 15),          // 2026. november közepe
+
+    /* A szállítás indulása. Szándékosan Black Friday ELÉ esik: így a
+       vásárlók már a kezükben tartják a könyvet, amikor az early bird
+       lezárul — ez adja a legerősebb bizonyítékot a hajrához.
+       FIGYELEM: a dátum ki van írva a szövegekben is (hero statisztika,
+       normál kártya, GYIK); ha módosul, azokat is át kell írni. */
+    SHIPPING_START: new Date(2026, 10, 23),       // 2026. november 23., hétfő
+
+    /* Az early bird vége: a Black Friday utáni nap 0:00. Ettől vált a normál
+       ár PRICE_EARLY-ről PRICE_LATER-re. (Black Friday 2026: november 27.) */
+    EARLY_BIRD_END: new Date(2026, 10, 28),       // 2026. november 28., szombat
 
     /* Kézi nyitáshoz/záráshoz: true / false (null = a dátum dönt). */
     PREORDER_LIVE: null,
@@ -1021,21 +1036,27 @@
   var phaseDefs = [
     { date: "Most", title: "Érdeklődők gyűjtése", note: "Feliratkozol e-mailre — fizetés és kötelezettség nélkül. A lista dönti el, ki kapja elsőként a linket." },
     { date: "2026. okt. 22.", title: "Rendelés nyit — " + CONFIG.PRICE_EARLY, note: "Először a lista: csütörtökön ők kapják a linket és a díjbekérőt, és ők választanak sorszámot. Hétfő reggel egyszerre nyílik meg mindenkinek és szabadulnak fel a ki nem fizetett számok." },
-    { date: "Nyitás után", title: "Felolvasóest", note: "Meghívó a zárt körű online estre: minden dedikált példány vásárlójának, plusz az első " + CONFIG.SEATS_NORMAL + " normál előrendelőnek — előre fizetés mellett." },
-    { date: "Black Friday után", title: "Early bird zárul", note: "A normál ár " + CONFIG.PRICE_LATER + "-ra vált. A dedikált példány ára marad " + CONFIG.PRICE_SIGNED + ". Szállítás december elejétől." }
+    { date: "November közepe", title: "Felolvasóest", note: "Meghívó a zárt körű online estre: minden dedikált példány vásárlójának, plusz az első " + CONFIG.SEATS_NORMAL + " normál előrendelőnek — előre fizetés mellett." },
+    { date: "2026. nov. 23.", title: "Szállítás indul", note: "A csomagok az előrendelés sorrendjében indulnak, még Black Friday előtt — így a könyv a kezedben van, mire az ár vált." },
+    { date: "2026. nov. 27.", title: "Early bird zárul", note: "Black Friday: a normál ár " + CONFIG.PRICE_LATER + "-ra vált. A dedikált példány ára marad " + CONFIG.PRICE_SIGNED + "." }
   ];
 
   function currentPhase() {
     var now = new Date();
     if (now < CONFIG.PREORDER_OPEN) return 0;
-    if (now < new Date(2026, 10, 28)) return 1;
-    if (now < new Date(2026, 11, 5)) return 2;
-    return 3;
+    if (now < CONFIG.EVENT_ABOUT) return 1;
+    if (now < CONFIG.SHIPPING_START) return 2;
+    if (now < CONFIG.EARLY_BIRD_END) return 3;
+    return 4;
   }
   var curPhase = currentPhase();
+
+  /* Az árváltás NEM a folyamatjelző sorszámához kötődik, hanem dátumhoz:
+     így ha a szakaszok száma vagy sorrendje változik, az ár nem csúszik el. */
+  function earlyBirdOver() { return new Date() >= CONFIG.EARLY_BIRD_END; }
   /* A normál példány aktuális ára (Black Friday után az emelt ár).
      A dedikált változat ára ettől függetlenül fix. */
-  var normalPrice = curPhase >= 3 ? CONFIG.PRICE_LATER : CONFIG.PRICE_EARLY;
+  var normalPrice = earlyBirdOver() ? CONFIG.PRICE_LATER : CONFIG.PRICE_EARLY;
   /* "Elfogyott" = véglegesen, visszavonhatatlanul nincs több — csak akkor,
      ha mind a 20 kifizetve. Ez tereli a normál példány felé, és ez zárja
      véglegesen a tiert. A "foglalva tele" ennél gyengébb: pillanatnyilag
@@ -1450,10 +1471,10 @@
     if (signedNote) signedNote.textContent = "fix ár — Black Friday után sem emelkedik";
 
     var laterEl = document.getElementById("tier-normal-later");
-    if (laterEl) laterEl.textContent = curPhase >= 3 ? "az early bird lezárult" : "Black Friday után " + CONFIG.PRICE_LATER;
+    if (laterEl) laterEl.textContent = earlyBirdOver() ? "az early bird lezárult" : "Black Friday után " + CONFIG.PRICE_LATER;
     var normalFoot = document.getElementById("tier-normal-foot");
     if (normalFoot) {
-      normalFoot.textContent = curPhase >= 3
+      normalFoot.textContent = earlyBirdOver()
         ? "Dedikálás és sorszám nélkül, korlátlan darabszámban."
         : "Az előrendelői ár a Black Friday-ig él, utána " + CONFIG.PRICE_LATER + ".";
     }

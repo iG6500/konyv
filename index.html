@@ -681,7 +681,7 @@
             </div>
 
             <details class="more" id="extra-fields">
-              <summary id="extra-summary">Példányszám, telefon, szállítási cím (nem kötelező)</summary>
+              <summary id="extra-summary">Példányszám, telefon (nem kötelező)</summary>
               <div style="display: grid; gap: 20px; margin-top: 20px;">
                 <div class="field-wrap" data-preorder-only>
                   <label class="field-label" for="f-cim">Szállítási cím</label>
@@ -982,12 +982,16 @@
     var modInput = document.getElementById("mod-input");
 
     if (preorderOpen) {
+      /* Előrendeléskor a szállítási cím bent van a DOM-ban és kötelező. */
       if (summary) summary.textContent = "Szállítási cím, példányszám, telefon";
       if (details) details.open = true;
       if (submitBtn) submitBtn.textContent = "Előrendelem – " + currentPrice();
       if (formNote) formNote.textContent = "Az előrendelés után e-mailben küldöm a díjbekérőt, banki átutalásra. Online kártyaadatot sehol nem kérek.";
       if (modInput) modInput.value = "elorendeles";
     } else {
+      /* Várólistán nincs vásárlás, ezért a szállítási cím mezőt a fenti
+         ciklus kiveszi — a felirat sem ígérheti. */
+      if (summary) summary.textContent = "Példányszám, telefon (nem kötelező)";
       if (submitBtn) submitBtn.textContent = "Felkerülök a listára";
       if (modInput) modInput.value = "varolista";
     }

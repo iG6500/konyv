@@ -1,9 +1,10 @@
 # Automata díjbekérő — beüzemelési útmutató
 
-Ez a két fájl (`dijbekero-dedikalt.html`, `dijbekero-normal.html`) nem a
-weboldal része, semmi nem hivatkozik rájuk élesben. Kizárólag arra valók,
-hogy a teljes forráskódjukat bemásold a MailerLite Automation → Email
-lépés → **"Code your own" / Custom HTML** szerkesztőjébe.
+Ez a három fájl (`dijbekero-dedikalt.html`, `dijbekero-normal.html`,
+`koszonto-varolista.html`) nem a weboldal része, semmi nem hivatkozik rájuk
+élesben. Kizárólag arra valók, hogy a teljes forráskódjukat bemásold a
+MailerLite Automation → Email lépés → **"Code your own" / Custom HTML**
+szerkesztőjébe.
 
 *(Az előző verzió a fájl tetején, egy nagy HTML-kommentben tartalmazta ezt
 az útmutatót — kivettem onnan, mert az egyik gyanús ok arra, hogy a
@@ -96,3 +97,54 @@ a levél megint csonkán érkezne:
 helyett, ha a beillesztés magában is gyanúsan viselkedne — egyes
 gazdag szövegdobozok megpróbálják "értelmezni" a HTML-t beillesztéskor.
 A MailerLite ZIP-behúzást és URL-importálást is támogat alternatívaként.)
+
+## 5. Köszöntő e-mail a várólistának
+
+A `koszonto-varolista.html` ugyanúgy Custom HTML-ként megy be, saját
+automatizálásba:
+
+1. **Subscribers → Segments**: hozz létre egy szegmenst `Fields → Mód
+   Equals varolista` feltétellel (ez mindenkit befog, aki most iratkozik
+   fel, hiszen a `mod` mező `"varolista"` értékkel érkezik — lásd
+   `index.html` `MAILERLITE_FIELDS.mod`).
+2. A szegmens lapján **"Create automation"**, e-mail lépésben illeszd be
+   a `koszonto-varolista.html` teljes forráskódját.
+3. **Nincs szükség Delay/Wait lépésre** ennél — a köszöntő nem függ olyan
+   mezőtől, amit utólag neked kellene kitöltened (ellentétben a
+   díjbekérővel, ahol a `peldany_szamok` mező üres lehet). Mehet
+   azonnal, a szegmensbe kerüléskor.
+4. Csak `{$name}` személyre szabó címkét használ — nincs egyéni mező,
+   amit előbb ellenőrizni kellene.
+
+Ez a levél **nem** a díjbekérő — nem kér fizetést, nem tartalmaz banki
+adatot. Csak megerősíti a feliratkozást, és felkészíti az embert arra,
+hogy október 22-én kap linket.
+
+## 6. Korai fizetési lehetőség a listásoknak — ez NEM új automatizálás
+
+Az oldal (`index.html`) `CONFIG.PREORDER_OPEN` értéke már október 22.
+9:00-ra van állítva, a nyilvános `CONFIG.PUBLIC_OPEN` pedig október 26-ra.
+Ez azt jelenti: **az oldal saját magától élesíti az előrendelést október
+22-én** — bárki, aki aznap megnyitja a linket, tud rendelni és fizetni,
+napokkal a nyilvános meghirdetés előtt.
+
+A kódban erről ez áll (`index.html`, CONFIG blokk): *"az oldalon nincs
+bejelentkezés, tehát nem tudja megkülönböztetni a listást a látogatótól
+— a listás elsőbbség nem technikai zár, hanem az, hogy aznap csak ők
+kapják meg a linket és a díjbekérőt e-mailben."*
+
+Tehát a teendő nem egy automatizálás, hanem **egy időzített, egyszeri
+kampány** (MailerLite: Campaigns → Regular campaign, NEM Automation):
+
+1. Írj egy rövid levelet a várólista-szegmensnek (`Mód Equals varolista`)
+   — "Nyitva az előrendelés, neked már most" + a live oldal linkje
+   (`index.html` publikált URL-je).
+2. Ütemezd **október 22. csütörtök 9:00**-ra (ugyanarra az időpontra,
+   mint `CONFIG.PREORDER_OPEN` — ha ez a dátum változik, ezt az
+   ütemezést is told el vele együtt).
+3. Ne hirdesd sehol máshol (poszt, hirdetés) október 26. előtt — a
+   "korai hozzáférés" kizárólag azon múlik, hogy addig csak a lista
+   ismeri a linket.
+4. Ha valaki a listáról dedikált példányra rendel, arra ugyanúgy
+   vonatkozik a 2–3. pontban leírt automata díjbekérő-folyamat (Delay/Wait
+   lépéssel), csak épp ő már csütörtökön be tud lépni a rendelésbe.

@@ -654,6 +654,10 @@
             <span id="done-title" style="font-size: 24px; color: var(--ink);">Felvéve a listára</span>
             <span id="done-text" style="font-size: 16px; line-height: 1.6; color: var(--ink-soft);"></span>
             <span id="picked-note" style="font-size: 16px; line-height: 1.6; color: var(--gold-soft);"></span>
+            <div id="paynow-block" style="display: none; flex-direction: column; gap: 12px; margin-top: 10px; padding-top: 18px; border-top: 1px solid var(--line);">
+              <span style="font-size: 14px; line-height: 1.6; color: var(--ink-soft);">Nem szeretnél várni október 22-ig? Már most is rendelhetsz és fizethetsz, nem kell megvárnod a nyitást.</span>
+              <button type="button" id="paynow-btn" class="pill-btn pill-btn-gold" style="justify-content: center;">Fizetnék most →</button>
+            </div>
           </div>
           <form id="waitlist-form" style="display: grid; gap: 20px;">
             <div class="field-wrap" id="variant-pick">
@@ -1122,11 +1126,14 @@
       });
     });
 
+    /* Elrejtve, nem eltávolítva: a "Fizetnék most" gomb (lásd showDone /
+       paynow-btn) a preorderOpen-t utólag, kattintásra is igazra tudja
+       állítani, és ilyenkor ennek a mezőnek elő kell tudnia bukkannia. */
     var extras = document.querySelectorAll("[data-preorder-only]");
     Array.prototype.forEach.call(extras, function (el) {
-      if (!preorderOpen) { el.parentNode.removeChild(el); return; }
+      el.style.display = preorderOpen ? "" : "none";
       var inp = el.querySelector("input, textarea");
-      if (inp) inp.required = true;
+      if (inp) inp.required = preorderOpen;
     });
 
     var summary = document.getElementById("extra-summary");
@@ -1718,10 +1725,35 @@
       : variant === "dedikalt"
         ? "Dedikált, számozott példányt jelöltél be (" + CONFIG.PRICE_SIGNED + ") — a sorszámot a jegyzékből együtt választjuk ki."
         : "";
+    var paynowBlock = document.getElementById("paynow-block");
+    /* A "Fizetnék most" csak a várólista-visszaigazolásban jelenik meg —
+       ha valaki már ténylegesen rendelt (preorderOpen igazra váltott, vagy
+       eleve nyitva volt), nincs mit felajánlani. */
+    if (paynowBlock) paynowBlock.style.display = preorderOpen ? "none" : "flex";
     form.style.display = "none";
     doneEl.style.display = "grid";
     doneEl.scrollIntoView({ behavior: "smooth", block: "center" });
     track(preorderOpen ? "preorder_submit" : "waitlist_submit", { peldanyok: nums.length, valtozat: variant });
+  }
+
+  var paynowBtn = document.getElementById("paynow-btn");
+  if (paynowBtn) {
+    /* Aki most akar fizetni, nem kell megvárnia a PREORDER_OPEN dátumot:
+       ugyanaz a form, ugyanazok a mezők, csak a mód vált át — a kitöltött
+       adatok (név, e-mail, változat, választott sorszám) megmaradnak. */
+    paynowBtn.addEventListener("click", function () {
+      preorderOpen = true;
+      track("waitlist_pay_now_click", { valtozat: variant });
+      applyMode();
+      setVariant(variant, true);
+      renderShelf();
+      renderPickState();
+      updateSubmitLabel();
+      doneEl.style.display = "none";
+      form.style.display = "grid";
+      clearStatus();
+      form.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
   }
 
   form.addEventListener("submit", function (e) {

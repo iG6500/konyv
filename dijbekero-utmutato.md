@@ -120,31 +120,47 @@ Ez a levél **nem** a díjbekérő — nem kér fizetést, nem tartalmaz banki
 adatot. Csak megerősíti a feliratkozást, és felkészíti az embert arra,
 hogy október 22-én kap linket.
 
-## 6. Korai fizetési lehetőség a listásoknak — ez NEM új automatizálás
+## 6. Korai fizetési lehetőség a listásoknak
 
-Az oldal (`index.html`) `CONFIG.PREORDER_OPEN` értéke már október 22.
-9:00-ra van állítva, a nyilvános `CONFIG.PUBLIC_OPEN` pedig október 26-ra.
-Ez azt jelenti: **az oldal saját magától élesíti az előrendelést október
-22-én** — bárki, aki aznap megnyitja a linket, tud rendelni és fizetni,
-napokkal a nyilvános meghirdetés előtt.
+Döntés: ez **csak a listásoknak** szól, nem mindenkinek. A nyilvánosság
+felé az oldal továbbra is "várólista" marad október 26-ig (hero, meta
+leírás, FAQ — semmi nem változott ezekben). A listásoknak viszont nem
+kell megvárniuk október 22-ét, ha fizetnének — ez most már az `index.html`
+kódjában is megvalósul, nem csak e-mail-küldéssel.
 
-A kódban erről ez áll (`index.html`, CONFIG blokk): *"az oldalon nincs
-bejelentkezés, tehát nem tudja megkülönböztetni a listást a látogatótól
-— a listás elsőbbség nem technikai zár, hanem az, hogy aznap csak ők
-kapják meg a linket és a díjbekérőt e-mailben."*
+### 6a. Azonnali "Fizetnék most" — ez az elsődleges út
 
-Tehát a teendő nem egy automatizálás, hanem **egy időzített, egyszeri
-kampány** (MailerLite: Campaigns → Regular campaign, NEM Automation):
+Amikor valaki beküldi a várólista-űrlapot, a visszaigazoló panelen
+("Felvéve a listára") megjelenik egy **"Fizetnék most →"** gomb
+(`#paynow-btn`, `index.html`). Erre kattintva a JS helyben átkapcsolja az
+oldalt előrendelés-módba (a `preorderOpen` változót igazra állítja,
+`applyMode()` + a kapcsolódó render-függvények újrafutnak) — a már
+kitöltött adatok (név, e-mail, választott változat, kiválasztott
+sorszám) megmaradnak, csak a szállítási cím mező bukkan elő és válik
+kötelezővé. A második beküldésnél a `mod` mező már `"elorendeles"`
+értékkel megy ki, tehát **ugyanaz** a 3. pontban leírt automatizálás
+(`Mód Equals elorendeles` szegmens → díjbekérő) kapja el — nem kell
+hozzá semmilyen új MailerLite-beállítás.
 
-1. Írj egy rövid levelet a várólista-szegmensnek (`Mód Equals varolista`)
-   — "Nyitva az előrendelés, neked már most" + a live oldal linkje
-   (`index.html` publikált URL-je).
-2. Ütemezd **október 22. csütörtök 9:00**-ra (ugyanarra az időpontra,
-   mint `CONFIG.PREORDER_OPEN` — ha ez a dátum változik, ezt az
-   ütemezést is told el vele együtt).
+Technikai megjegyzés, ha később hozzányúlsz a kódhoz: az `applyMode()`
+korábban `removeChild`-del **véglegesen kivette** a DOM-ból a
+`data-preorder-only` mezőket (pl. a szállítási címet), amíg nem nyitott
+az előrendelés. Ez összeférhetetlen lett volna a "Fizetnék most"
+funkcióval (a mező soha nem tudott volna visszakerülni), ezért ez most
+`style.display`-jal reverzibilis elrejtésre lett átírva.
+
+### 6b. Emlékeztető kampány október 22-én — kiegészítő, nem kötelező
+
+Aki nem kattintott a "Fizetnék most" gombra, annak érdemes egy
+**időzített, egyszeri kampányt** küldeni (MailerLite: Campaigns →
+Regular campaign, NEM Automation) a `CONFIG.PREORDER_OPEN` dátumára
+(jelenleg október 22. csütörtök 9:00 — ha ez a dátum változik, az
+ütemezést is told el vele együtt):
+
+1. Címzett: a várólista-szegmens (`Mód Equals varolista`).
+2. Tartalom: rövid emlékeztető + a live oldal linkje — ők ekkor már
+   automatikusan előrendelés-módban látják az oldalt, hiszen a
+   `CONFIG.PREORDER_OPEN` időpontja elérkezett.
 3. Ne hirdesd sehol máshol (poszt, hirdetés) október 26. előtt — a
-   "korai hozzáférés" kizárólag azon múlik, hogy addig csak a lista
-   ismeri a linket.
-4. Ha valaki a listáról dedikált példányra rendel, arra ugyanúgy
-   vonatkozik a 2–3. pontban leírt automata díjbekérő-folyamat (Delay/Wait
-   lépéssel), csak épp ő már csütörtökön be tud lépni a rendelésbe.
+   nyilvánosság felé az oldal csak akkor vált látszólag is nyilvánosan
+   megnyitottá.

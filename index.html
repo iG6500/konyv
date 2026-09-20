@@ -35,6 +35,12 @@
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--serif); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+  /* Háttér: "a kibontott szál". A body háttere a canvasra propagálódik, így
+     a -1-es réteg a háttérszín fölött, de minden tartalom mögött fut — a
+     panelek eltakarják, a szekciók közti résekben előbukkan. */
+  #weave { position: absolute; top: 0; left: 0; width: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
+  #weave svg { display: block; width: 100%; height: 100%; }
   a { color: var(--ink); text-underline-offset: 4px; }
   a:hover { color: var(--gold); }
   ::selection { background: var(--gold); color: var(--bg); }
@@ -364,6 +370,8 @@
 </style>
 </head>
 <body>
+
+<div id="weave" aria-hidden="true"></div>
 
 <div>
 
@@ -2100,6 +2108,240 @@
   renderBonus();
   setVariant(variant, true);
   updateRail();
+})();
+
+/* =====================================================================
+   HÁTTÉR — "a kibontott szál"
+
+   A cím szövet: báránybőr. A lap tetején még feszes a szövés, néhány
+   párhuzamos szállal; onnan egyetlen szál kifeslik, végigfut a
+   dokumentumon, középtájt megcsomósodik, lejjebb kiegyenesedik.
+   Görgetésre rajzolódik ki, és szándékosan NEM húzódik vissza felfelé
+   görgetve: amit egyszer kibontottál, az kibontva marad.
+
+   Díszítés, semmi több — ha a JS elhasal, az oldalból semmi nem vész el.
+   ===================================================================== */
+(function () {
+  "use strict";
+
+  var host = document.getElementById("weave");
+  if (!host) return;
+
+  var NS = "http://www.w3.org/2000/svg";
+  var GOLD = "#d7a854";
+
+  var reduce = false;
+  try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { }
+
+  var svg = document.createElementNS(NS, "svg");
+
+  var defs = document.createElementNS(NS, "defs");
+  var fade = document.createElementNS(NS, "linearGradient");
+  fade.setAttribute("id", "weave-fade");
+  fade.setAttribute("gradientUnits", "userSpaceOnUse");
+  fade.setAttribute("x1", "0");
+  fade.setAttribute("x2", "0");
+  [["0", "0.17"], ["1", "0"]].forEach(function (s) {
+    var stop = document.createElementNS(NS, "stop");
+    stop.setAttribute("offset", s[0]);
+    stop.setAttribute("stop-color", GOLD);
+    stop.setAttribute("stop-opacity", s[1]);
+    fade.appendChild(stop);
+  });
+  defs.appendChild(fade);
+  svg.appendChild(defs);
+
+  var weaveG = document.createElementNS(NS, "g");
+  svg.appendChild(weaveG);
+
+  function mkPath(opacity) {
+    var p = document.createElementNS(NS, "path");
+    p.setAttribute("fill", "none");
+    p.setAttribute("stroke", GOLD);
+    p.setAttribute("stroke-opacity", opacity);
+    p.setAttribute("stroke-width", "1");
+    p.setAttribute("stroke-linecap", "round");
+    svg.appendChild(p);
+    return p;
+  }
+  var thread = mkPath("0.16");
+  /* A húzás pontja: a szál utolsó pár centije világosabb, mintha ott
+     feszülne. Reduced motion mellett nincs rá szükség. */
+  var tip = reduce ? null : mkPath("0.4");
+
+  host.appendChild(svg);
+
+  var docH = 0, vw = 0, total = 0, reached = 0;
+  var baseX = 0, amp = 0, knots = [];
+
+  /* Több, nem egész arányú szinusz összege — így nem ismétlődő hullám
+     lesz belőle, hanem sodródás. */
+  function drift(t) {
+    return 0.60 * Math.sin(t * 8.48 + 0.4)
+         + 0.27 * Math.sin(t * 19.79 + 1.9)
+         + 0.13 * Math.sin(t * 34.87 + 3.1);
+  }
+
+  /* Fent még fogja a szövés, középen szabadon sodródik, lent elcsitul. */
+  function envelope(t) {
+    if (t < 0.055) return 0;
+    if (t < 0.17) return (t - 0.055) / 0.115;
+    if (t < 0.68) return 1;
+    if (t < 0.90) return 1 - (t - 0.68) / 0.22;
+    return 0;
+  }
+
+  function pointAt(y) {
+    var t = docH > 0 ? y / docH : 0;
+    var x = baseX + amp * drift(t) * envelope(t);
+    var yy = y;
+    /* A csomó egy körmozgás a haladó vonalra ültetve: a span/r aránytól
+       az ív vissza is fordul, ilyenkor a szál tényleg átmetszi magát. */
+    for (var i = 0; i < knots.length; i++) {
+      var k = knots[i];
+      var d = y - k.y;
+      if (d <= -k.span || d >= k.span) continue;
+      var u = (d + k.span) / (2 * k.span);
+      var env = Math.sin(u * Math.PI);
+      var a = u * Math.PI * 2;
+      x += k.r * env * (1 - Math.cos(a));
+      yy += k.r * env * Math.sin(a);
+    }
+    return [x, yy];
+  }
+
+  function inKnot(y) {
+    for (var i = 0; i < knots.length; i++) {
+      if (Math.abs(y - knots[i].y) < knots[i].span + 4) return true;
+    }
+    return false;
+  }
+
+  function build() {
+    vw = host.clientWidth || window.innerWidth || 1024;
+    docH = Math.max(
+      document.documentElement ? document.documentElement.scrollHeight : 0,
+      document.body ? document.body.scrollHeight : 0
+    );
+    if (!docH) return;
+    host.style.height = docH + "px";
+
+    var narrow = vw < 900;
+    baseX = narrow ? Math.max(vw * 0.13, 42) : Math.min(vw * 0.085, 180);
+    amp = narrow ? vw * 0.05 : Math.min(vw * 0.07, 150);
+    var kR = narrow ? 30 : 52;
+    knots = [
+      { y: docH * 0.46, r: kR, span: kR * 1.15 },
+      { y: docH * 0.68, r: kR * 0.45, span: kR * 0.52 }
+    ];
+
+    /* A szövet a lap tetején. A szálak más-más hosszon érnek véget, hogy
+       foszlott legyen a széle, nem elvágott. */
+    var weaveDepth = Math.min(docH * 0.09, (window.innerHeight || 800) * 1.35);
+    fade.setAttribute("y1", "0");
+    fade.setAttribute("y2", String(weaveDepth));
+    while (weaveG.firstChild) weaveG.removeChild(weaveG.firstChild);
+
+    var gap = narrow ? 6 : 8, n = narrow ? 5 : 7, i;
+    for (i = -n; i <= n; i++) {
+      if (i === 0) continue;                       /* a középső maga a szál */
+      var lx = baseX + i * gap;
+      var len = weaveDepth * (0.45 + (Math.abs(i * 37) % 11) / 20);
+      var ln = document.createElementNS(NS, "line");
+      ln.setAttribute("x1", lx.toFixed(1));
+      ln.setAttribute("y1", "0");
+      ln.setAttribute("x2", (lx + i * 0.6).toFixed(1));
+      ln.setAttribute("y2", len.toFixed(1));
+      ln.setAttribute("stroke", "url(#weave-fade)");
+      ln.setAttribute("stroke-width", "1");
+      weaveG.appendChild(ln);
+    }
+    /* Keresztszálak. Szándékosan nem érnek végig és nem egyforma szélesek:
+       így szövet lesz belőle, nem milliméterpapír. */
+    for (i = 1; i <= 5; i++) {
+      var hy = weaveDepth * (i / 9);
+      var half = n * gap * (0.42 + (i % 3) * 0.23);
+      var off = ((i % 2) ? -1 : 1) * gap * 1.4;
+      var hl = document.createElementNS(NS, "line");
+      hl.setAttribute("x1", (baseX + off - half).toFixed(1));
+      hl.setAttribute("y1", hy.toFixed(1));
+      hl.setAttribute("x2", (baseX + off + half).toFixed(1));
+      hl.setAttribute("y2", hy.toFixed(1));
+      hl.setAttribute("stroke", "url(#weave-fade)");
+      hl.setAttribute("stroke-width", "1");
+      weaveG.appendChild(hl);
+    }
+
+    /* Maga a szál. Sűrű pontsor: ilyen lépésközzel az egyenes szakaszok
+       már nem látszanak töröttnek, a csomóban pedig finomabban mintázunk. */
+    var step = Math.max(9, Math.min(16, docH / 1200));
+    var parts = [], y = 0, p;
+    while (y < docH) {
+      p = pointAt(y);
+      parts.push((parts.length ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1));
+      y += inKnot(y) ? 2.5 : step;
+    }
+    p = pointAt(docH);
+    parts.push("L" + p[0].toFixed(1) + " " + p[1].toFixed(1));
+
+    var d = parts.join("");
+    thread.setAttribute("d", d);
+    if (tip) tip.setAttribute("d", d);
+
+    total = thread.getTotalLength();
+    thread.setAttribute("stroke-dasharray", String(total));
+
+    if (reduce) thread.setAttribute("stroke-dashoffset", "0");
+    else draw(true);
+  }
+
+  var ticking = false;
+
+  function draw(force) {
+    ticking = false;
+    if (!total || !docH) return;
+
+    var vh = window.innerHeight || 800;
+    var scrolled = window.pageYOffset || (document.documentElement ? document.documentElement.scrollTop : 0) || 0;
+    /* A kihúzott vég kicsit a nézet alja elé szalad: a szálat mindig
+       valamivel előbbre húzzák, mint ahol épp tartasz. */
+    var target = scrolled + vh * 0.78;
+    if (target > reached) reached = target;
+    else if (!force) return;
+
+    /* A hossz és a dokumentummagasság aránya közel áll egymáshoz (a
+       sodródás csak pár százalékot tesz hozzá), így elég ez a leképezés —
+       nem kell képpontonként hosszt keresgélni. */
+    var len = total * Math.min(1, reached / docH);
+    thread.setAttribute("stroke-dashoffset", String(Math.max(0, total - len)));
+
+    if (tip) {
+      var tipLen = Math.min(46, len);
+      var before = Math.max(0, len - tipLen);
+      tip.setAttribute("stroke-dasharray", "0 " + before.toFixed(1) + " " + tipLen.toFixed(1) + " " + (total + 10).toFixed(1));
+    }
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function () { draw(false); });
+  }
+
+  var rebuildTimer = null;
+  function scheduleBuild() {
+    if (rebuildTimer) clearTimeout(rebuildTimer);
+    rebuildTimer = setTimeout(function () { rebuildTimer = null; build(); }, 160);
+  }
+
+  build();
+  if (!reduce) window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", scheduleBuild);
+  /* Az oldal magassága menet közben is változik (űrlap → visszaigazolás,
+     lenyíló blokkok), ilyenkor újra kell rajzolni a szálat. */
+  try {
+    if (window.ResizeObserver && document.body) new ResizeObserver(scheduleBuild).observe(document.body);
+  } catch (e) { }
 })();
 </script>
 

@@ -739,6 +739,7 @@
 
             <button type="submit" id="submit-btn" class="submit-btn">Felkerülök a listára</button>
             <p class="cta-note" id="form-note">Ingyenes. Nem kérek bankkártyaadatot, és a feliratkozás nem kötelez vásárlásra.</p>
+            <p class="cta-note" id="paynow-early-note">Nem várnál október 22-ig? <button type="button" id="paynow-early-btn" style="background: none; border: none; padding: 0; margin: 0; color: var(--gold); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; font: inherit;">Fizetnék most</button></p>
             <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
@@ -1135,6 +1136,12 @@
       var inp = el.querySelector("input, textarea");
       if (inp) inp.required = preorderOpen;
     });
+
+    /* "Fizetnék most" link magán az űrlapon — ha már előrendelés-módban
+       vagyunk (akár a valódi dátum miatt, akár mert valaki már aktiválta),
+       nincs értelme felkínálni. */
+    var paynowEarlyNote = document.getElementById("paynow-early-note");
+    if (paynowEarlyNote) paynowEarlyNote.style.display = preorderOpen ? "none" : "block";
 
     var summary = document.getElementById("extra-summary");
     var details = document.getElementById("extra-fields");
@@ -1736,19 +1743,36 @@
     track(preorderOpen ? "preorder_submit" : "waitlist_submit", { peldanyok: nums.length, valtozat: variant });
   }
 
+  /* Aki most akar fizetni, nem kell megvárnia a PREORDER_OPEN dátumot:
+     ugyanaz a form, ugyanazok a mezők, csak a mód vált át — a kitöltött
+     adatok (név, e-mail, változat, választott sorszám) megmaradnak.
+     Két helyről hívható: közvetlenül az űrlapról (mielőtt beküldené), és
+     a várólista-visszaigazolásból (ha utólag gondolja meg magát). */
+  function activatePayNow(hely) {
+    if (preorderOpen) return;
+    preorderOpen = true;
+    track("waitlist_pay_now_click", { valtozat: variant, hely: hely });
+    applyMode();
+    setVariant(variant, true);
+    renderShelf();
+    renderPickState();
+    updateSubmitLabel();
+  }
+
+  var paynowEarlyBtn = document.getElementById("paynow-early-btn");
+  if (paynowEarlyBtn) {
+    paynowEarlyBtn.addEventListener("click", function () {
+      activatePayNow("urlap");
+      var cim = document.getElementById("f-cim");
+      if (cim) cim.focus();
+      else form.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
+
   var paynowBtn = document.getElementById("paynow-btn");
   if (paynowBtn) {
-    /* Aki most akar fizetni, nem kell megvárnia a PREORDER_OPEN dátumot:
-       ugyanaz a form, ugyanazok a mezők, csak a mód vált át — a kitöltött
-       adatok (név, e-mail, változat, választott sorszám) megmaradnak. */
     paynowBtn.addEventListener("click", function () {
-      preorderOpen = true;
-      track("waitlist_pay_now_click", { valtozat: variant });
-      applyMode();
-      setVariant(variant, true);
-      renderShelf();
-      renderPickState();
-      updateSubmitLabel();
+      activatePayNow("visszaigazolas");
       doneEl.style.display = "none";
       form.style.display = "grid";
       clearStatus();

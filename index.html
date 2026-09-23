@@ -6,6 +6,7 @@
 <title>Báránybőrbe bújt pásztor — előrendelés | 20 dedikált példány, 2026</title>
 <meta name="description" content="Könyv a nárcisztikus működésről és a lelki bántalmazásról keresztény közösségekben: felismerés, hatások, felépülés. A nyilvános előrendelés október 26-án indul — a várólistások már 22-én, csütörtökön rendelhetnek, és ők választanak először sorszámot.">
 <meta name="theme-color" content="#15120e">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2315120e'/%3E%3Cpath d='M13 3C13 10 12 12 14 15C16 18 22 17 21 13C20 9 13 12 15 19C17 25 18 27 18 29' fill='none' stroke='%23d7a854' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="book">
 <meta property="og:locale" content="hu_HU">
@@ -23,7 +24,7 @@
   :root{
     --bg:#15120e; --bg-alt:#1b1712; --panel:#211b14; --panel-2:#2a2217;
     --line: rgba(255,246,232,0.08);
-    --ink:#f3efe4; --ink-soft:#a89d8c; --ink-faint:#7a715f;
+    --ink:#f3efe4; --ink-soft:#a89d8c; --ink-faint:#8f8573;
     --gold:#d7a854; --gold-soft:#e8c98a;
     --coral:#d1483a; --coral-hover:#b93a2e;
     --paper:#f3efe4; --paper-ink:#1f1911;
@@ -62,6 +63,11 @@
     display: grid; place-items: center;
     transform: translateY(0) rotate(0deg); transform-origin: bottom center;
     transition: transform 300ms cubic-bezier(.3,1.4,.5,1), background 240ms ease, color 240ms ease, border-color 240ms ease;
+  }
+  @media (max-width: 700px) {
+    /* mobilon két egyenlő, tízes sor — különben 9+9+2 lesz, két árva kötettel */
+    #copy-shelf { display: grid !important; grid-template-columns: repeat(10, minmax(0, 1fr)); align-items: end; gap: 3px !important; padding: 26px 0 0 !important; }
+    #copy-shelf .copy-btn { min-width: 0; max-width: none; }
   }
   .copy-btn[disabled] { background: var(--bg-alt); color: var(--ink-faint); border-color: var(--line); cursor: not-allowed; }
   .copy-btn.picked { background: var(--coral); border-color: var(--coral); color: var(--ink); transform: translateY(-16px); }
@@ -435,7 +441,7 @@
 
       <div style="margin-top: clamp(36px, 5vw, 60px); border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--panel); padding: clamp(22px, 3vw, 32px) clamp(24px, 4vw, 40px); display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 22px;">
         <div class="stat-item"><span class="stat-num">20</span><span class="stat-label">Dedikált példány</span></div>
-        <div class="stat-item"><span class="stat-num" data-price-early>5 400 Ft</span><span class="stat-label">Előrendelői ár</span></div>
+        <div class="stat-item"><span class="stat-num" data-price-early>5&nbsp;400&nbsp;Ft</span><span class="stat-label">Előrendelői ár</span></div>
         <div class="stat-item"><span class="stat-num">okt. 26.</span><span class="stat-label">Nyilvános nyitás</span></div>
         <div class="stat-item"><span class="stat-num">nov. 23.</span><span class="stat-label">Szállítás indul</span></div>
       </div>
@@ -548,7 +554,7 @@
             <p class="tier-eyebrow">Normál példány</p>
           </div>
           <h3 class="tier-name">A könyv, előrendelői áron</h3>
-          <div class="tier-price"><b data-price-early>5 400 Ft</b><span id="tier-normal-later"></span></div>
+          <div class="tier-price"><b data-price-early>5&nbsp;400&nbsp;Ft</b><span id="tier-normal-later"></span></div>
           <ul class="tier-list">
             <li>A teljes kötet, első és egyetlen kiadás — dedikálás és sorszám nélkül.</li>
             <li>Nincs darabszám-korlát — ebből a változatból nem fogyhat el.</li>
@@ -566,7 +572,7 @@
             <span class="tier-chip" id="tier-signed-chip">20 példány · sorszámozva</span>
           </div>
           <h3 class="tier-name">Dedikált, számozott példány</h3>
-          <div class="tier-price"><b id="tier-signed-price">7 900 Ft</b><span id="tier-signed-price-note">fix ár — Black Friday után sem emelkedik</span></div>
+          <div class="tier-price"><b id="tier-signed-price">7&nbsp;900&nbsp;Ft</b><span id="tier-signed-price-note">fix ár — Black Friday után sem emelkedik</span></div>
           <ul class="tier-list">
             <li>Kézzel írt, személyre szóló ajánlás — a te nevedre, vagy akinek ajándékozod.</li>
             <li>A kötetbe írt sorszám, 001-től 020-ig — a jegyzékből te választod ki, melyiket kéred.</li>
@@ -649,7 +655,7 @@
         <div style="min-width: 0;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin: 0 0 22px; color: var(--gold);">Az egyetlen, ami nincs kifedve</p>
           <h2 style="font-size: clamp(28px, 3.4vw, 48px); font-weight: 500; line-height: 1.05; margin: 0 0 20px;">Négy nappal a nyilvános nyitás előtt te már választhatsz sorszámot, így bizonyosan nem maradsz le.</h2>
-          <p style="font-size: 17px; line-height: 1.65; max-width: 40ch; margin: 0 0 24px; color: var(--ink-soft);">A dedikált húsz példány jó eséllyel a listáról fogy el. Október 22-én, csütörtökön küldöm a linket és vele a díjbekérőt a kiválasztott számodra — a hosszú hétvége alatt nyugodtan rendezheted, a határidő hétfő reggel. Így nem kell versenyezned, csak rendezned. Most csak az e-mail címed kell: fizetés nincs, és a feliratkozás nem kötelez semmire.</p>
+          <p style="font-size: 17px; line-height: 1.65; max-width: 40ch; margin: 0 0 24px; color: var(--ink-soft);">A dedikált húsz példány jó eséllyel a listáról fogy el. Október 22-én, csütörtökön küldöm a linket és vele a díjbekérőt a kiválasztott számodra — a hosszú hétvége alatt nyugodtan rendezheted, a határidő hétfő reggel. Így nem kell versenyezned, csak rendezned. Most elég az e-mail címed: a feliratkozás ingyenes, és nem kötelez semmire — de ha nem várnál, már most is rendelhetsz.</p>
           <div class="trust-row" style="margin: 0 0 6px;">
             <span>Október 22-én, csütörtökön kapod a linket</span>
             <span>Legfeljebb 3 levél a megjelenésig</span>
@@ -674,12 +680,12 @@
                 <label class="vopt on" data-vopt="normal">
                   <input type="radio" name="valtozat" value="normal" checked>
                   <span class="vopt-t">Normál példány</span>
-                  <span class="vopt-p" data-price-early>5 400 Ft</span>
+                  <span class="vopt-p" data-price-early>5&nbsp;400&nbsp;Ft</span>
                 </label>
                 <label class="vopt" data-vopt="dedikalt">
                   <input type="radio" name="valtozat" value="dedikalt">
                   <span class="vopt-t">Dedikált, számozott</span>
-                  <span class="vopt-p" id="vopt-signed-price">7 900 Ft</span>
+                  <span class="vopt-p" id="vopt-signed-price">7&nbsp;900&nbsp;Ft</span>
                 </label>
               </div>
             </div>
@@ -767,7 +773,7 @@
         </div>
         <div style="min-width: 0;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink);">Most kell fizetnem?</p>
-          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">Nem. A várólista ingyenes, csak a linket kapod meg elsőként.</p>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);" id="faq-most">Nem kell. A várólista ingyenes, és elsőként kapod meg a linket — de ha nem várnál, a jelentkezésnél a „Fizetnék most” linkkel már most is rendelhetsz.</p>
         </div>
         <div style="min-width: 0;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink);">Mi a dedikálás menete?</p>
@@ -895,12 +901,12 @@
     PREORDER_LIVE: null,
 
     /* Normál példány: early bird ár, majd Black Friday után az emelt ár. */
-    PRICE_EARLY: "5 400 Ft",
-    PRICE_LATER: "5 900 Ft",
+    PRICE_EARLY: "5\u00a0400\u00a0Ft",
+    PRICE_LATER: "5\u00a0900\u00a0Ft",
 
     /* Dedikált, számozott példány: FIX ár, Black Friday után sem emelkedik.
        Ez a külön tier — nem a normál példány felára, hanem önálló változat. */
-    PRICE_SIGNED: "7 900 Ft",
+    PRICE_SIGNED: "7\u00a0900\u00a0Ft",
 
     /* Felolvasóest. A meghívók KÉT külön kvótából állnak össze:
          1) minden dedikált példány vásárlója kap egyet (COPIES_TOTAL),
@@ -956,7 +962,7 @@
        "Előnézet" jelöléssel — hogy tervezés közben látszódjon a szekció.
        A demó nevek kitaláltak. Amint a TESTIMONIALS tömbbe valódi ajánlás
        kerül, ez a kapcsoló magától hatástalanná válik. */
-    DEMO_AJANLOK: true
+    DEMO_AJANLOK: false
   };
   /* ===================== BEÁLLÍTÁSOK VÉGE ============================= */
 
@@ -1059,6 +1065,10 @@
   })();
   var reservedCount = Object.keys(reservedMap).length;
   var freeCount = Math.max(0, CONFIG.COPIES_TOTAL - takenCount - reservedCount);
+  /* Amíg egyetlen példány sem kelt el és nincs foglalás, a "0/20 elkelt"
+     csak azt üzenné, hogy senki nem vette meg — ilyenkor a darabszámot
+     (a szűkösséget) mutatjuk, nem az eladásokat. */
+  var noneSold = takenCount === 0 && reservedCount === 0;
 
   var phaseDefs = [
     { date: "Most", title: "Érdeklődők gyűjtése", note: "Feliratkozol e-mailre — fizetés és kötelezettség nélkül. A lista dönti el, ki kapja elsőként a linket." },
@@ -1111,7 +1121,7 @@
     var stickyEl = document.getElementById("sticky-text");
     if (stickyEl) {
       stickyEl.textContent = preorderOpen
-        ? "Normál " + normalPrice + " · dedikált " + CONFIG.PRICE_SIGNED + " · " + takenCount + "/" + CONFIG.COPIES_TOTAL + " elkelt"
+        ? "Normál " + normalPrice + " · dedikált " + CONFIG.PRICE_SIGNED + (noneSold ? "" : " · " + takenCount + "/" + CONFIG.COPIES_TOTAL + " elkelt")
         : "A lista október 22-én rendelhet · " + label + " · nyilvánosan 26-án";
     }
 
@@ -1178,6 +1188,11 @@
         + " normál előrendelő — vagyis legfeljebb " + (CONFIG.COPIES_TOTAL + CONFIG.SEATS_NORMAL)
         + " ember. Ez felső korlát, nem kvóta: ha például csak " + (CONFIG.COPIES_TOTAL - 2) + " dedikált példány kel el, "
         + ((CONFIG.COPIES_TOTAL - 2) + CONFIG.SEATS_NORMAL) + " meghívó megy ki. Egy megrendelés egy meghívó, akárhány példányról szól, és mindenkinél feltétel, hogy a könyv ára az est előtti határidőig megérkezzen.";
+    }
+
+    var faqMost = document.getElementById("faq-most");
+    if (faqMost && preorderOpen) {
+      faqMost.textContent = "A rendelés után e-mailben kapod a díjbekérőt, banki átutaláshoz — onnantól " + CONFIG.HOLD_HOURS + " órád van rendezni. Kártyaadatot sehol nem kérek.";
     }
 
     var faqFizetes = document.getElementById("faq-fizetes");
@@ -1334,6 +1349,7 @@
     if (claimEl) {
       claimEl.textContent = isSoldOut()
         ? "Mind a " + CONFIG.COPIES_TOTAL + " elkelt"
+        : noneSold ? "001–" + pad3(CONFIG.COPIES_TOTAL) + " · válassz számot"
         : takenCount + "/" + CONFIG.COPIES_TOTAL + " elkelt"
           + (reservedCount ? " · " + reservedCount + " foglalva" : "")
           + " · " + freeCount + " szabad";
@@ -1355,6 +1371,7 @@
           ? "Mind a " + CONFIG.COPIES_TOTAL + " dedikált példány elkelt"
           : isFullyReserved()
             ? "Pillanatnyilag nincs szabad dedikált sorszám"
+            : noneSold ? "Csak " + CONFIG.COPIES_TOTAL + " dedikált, számozott példány"
             : freeCount + " / " + CONFIG.COPIES_TOTAL + " dedikált példány szabad",
         "Dedikált, számozott — " + CONFIG.PRICE_SIGNED,
         "Normál példány — " + CONFIG.PRICE_EARLY ].forEach(function (t) {
@@ -1486,7 +1503,9 @@
     /* készletszámláló — ez adja a bizonyítható szűkösséget. A "foglalva"
        rész külön szegmens: az még visszafordulhat, ha lejár a határidő. */
     var countEl = document.getElementById("tier-meter-count");
-    if (countEl) {
+    if (countEl && noneSold) {
+      countEl.textContent = "Csak " + total + " kötet";
+    } else if (countEl) {
       countEl.textContent = "";
       var strong = document.createElement("b");
       strong.textContent = String(takenCount);
@@ -1509,6 +1528,7 @@
     if (noteEl) {
       noteEl.textContent = sold ? "A dedikált példányok elfogytak"
         : fullyReserved ? "Pillanatnyilag nincs szabad dedikált sorszám"
+        : noneSold ? "Csak " + total + " dedikált példány készül"
         : takenCount + "/" + total + " dedikált példány elkelt";
     }
 
@@ -1537,7 +1557,7 @@
     }
 
     var signedDeadline = document.getElementById("tier-signed-deadline");
-    if (signedDeadline) signedDeadline.textContent = "A kiválasztott számot a rendeléstől számított " + CONFIG.HOLD_HOURS + " óráig tartjuk fenn — a díjbekérő azonnal megy, és ha nem érkezik meg az utalás, a szám magától visszakerül a szabadok közé.";
+    if (signedDeadline) signedDeadline.textContent = "A kiválasztott számot a rendeléstől számított " + CONFIG.HOLD_HOURS + " óráig tartom fenn — a díjbekérő azonnal megy, és ha nem érkezik meg az utalás, a szám magától visszakerül a szabadok közé.";
 
     var normalBonus = document.getElementById("tier-normal-bonus");
     if (normalBonus) normalBonus.textContent = "Az első " + CONFIG.SEATS_NORMAL + " előrendelő meghívót kap a zárt körű online felolvasóestre.";

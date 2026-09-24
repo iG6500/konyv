@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Báránybőrbe bújt pásztor — előrendelés | 20 dedikált példány, 2026</title>
-<meta name="description" content="Könyv a nárcisztikus működésről és a lelki bántalmazásról keresztény közösségekben: felismerés, hatások, felépülés. A nyilvános előrendelés október 26-án indul — a várólistások már 22-én, csütörtökön rendelhetnek, és ők választanak először sorszámot.">
+<title>A pásztorbőrbe bújt farkas — Szőke Tamás | előrendelés, 20 dedikált példány</title>
+<meta name="description" content="Szőke Tamás könyve a nárcisztikus működésről és a lelki bántalmazásról keresztény közösségekben: felismerés, hatások, felépülés. A nyilvános előrendelés október 26-án indul — a várólistások már 22-én, csütörtökön rendelhetnek, és ők választanak először sorszámot.">
 <meta name="theme-color" content="#15120e">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2315120e'/%3E%3Cpath d='M13 3C13 10 12 12 14 15C16 18 22 17 21 13C20 9 13 12 15 19C17 25 18 27 18 29' fill='none' stroke='%23d7a854' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="book">
 <meta property="og:locale" content="hu_HU">
-<meta property="og:title" content="Báránybőrbe bújt pásztor — 20 dedikált példány">
+<meta property="og:title" content="A pásztorbőrbe bújt farkas — Szőke Tamás · 20 dedikált példány">
 <meta property="og:description" content="Nárcisztikus működés és lelki bántalmazás keresztény közösségekben. A nyilvános előrendelés október 26-án indul, a várólistások már 22-én, csütörtökön rendelhetnek és választanak először sorszámot.">
-<!-- OG-KÉP: amint van valódi borítófotó, töltsd fel (pl. "og-borito.jpg", 1200x630) és vedd ki a kommentet.
-     Addig szándékosan nincs kép: a Facebook/Messenger inkább ne mutasson semmit, mint egy placeholdert.
+<!-- A Facebook abszolút URL-t vár: amint megvan az oldal végleges címe, írd elé (pl. https://.../og-borito.jpg). -->
 <meta property="og:image" content="og-borito.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
--->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
@@ -235,22 +235,8 @@
   .fit-list li { display: grid; grid-template-columns: auto 1fr; gap: 12px; font-size: 16px; line-height: 1.55; color: var(--ink-soft); }
   .fit-list li::before { content: "—"; color: var(--gold); }
 
-  /* zárolt borító (a valódi borítófotó helyén) */
-  .cover-mock {
-    position: relative; width: min(100%, 370px); aspect-ratio: 5 / 7; overflow: hidden;
-    border-radius: 3px 14px 14px 3px; border: 1px solid rgba(255,246,232,0.14);
-    background: linear-gradient(150deg, #2e2517 0%, #1d1811 55%, #15120e 100%);
-    box-shadow: 0 50px 80px -34px rgba(0,0,0,0.9);
-    display: grid; align-content: space-between; gap: 18px; padding: clamp(24px, 4vw, 36px);
-  }
-  .cover-mock::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 18px; background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0,0)); }
-  .cover-mock::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 70% at 50% 115%, rgba(215,168,84,0.16), transparent 62%); pointer-events: none; }
-  .cover-mock > * { position: relative; }
-  .cover-eyebrow { font-family: var(--sans); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
-  .cover-plate { background: var(--paper); border-radius: 4px; padding: 20px 18px 16px; display: grid; gap: 11px; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.8); }
-  .cover-bar { height: 21px; border-radius: 2px; background: var(--paper-ink); display: block; }
-  .cover-cap { font-family: var(--sans); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: rgba(31,25,17,0.55); display: block; margin-top: 3px; }
-  .cover-seal { justify-self: start; font-family: var(--sans); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 999px; padding: 7px 13px; }
+  /* borító: átlátszó hátterű mockup, a vetett árnyék adja a mélységet */
+  .hero-cover-img { display: block; width: clamp(320px, 38vw, 560px); height: auto; filter: drop-shadow(0 34px 38px rgba(0,0,0,0.6)); }
 
   /* hero borítókép */
   .hero-grid { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: clamp(30px, 5vw, 60px); align-items: center; }
@@ -258,7 +244,9 @@
   @media (max-width: 860px) {
     .hero-grid { grid-template-columns: 1fr; }
     .hero-cover-wrap { justify-self: stretch; justify-content: center; }
-    .cover-mock { width: min(100%, 230px); }
+    /* mobilon a borító a cím fölé kerül: ez a legerősebb horog, ne a hajtás alatt legyen */
+    .hero-cover-wrap { order: -1; }
+    .hero-cover-img { width: min(80%, 330px); }
   }
 
   /* ---- rendelési változatok (normál / dedikált) ---- */
@@ -401,11 +389,13 @@
       <div class="hero-grid">
 
         <div style="min-width: 0; display: grid; gap: 24px; max-width: 50ch;">
-          <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin: 0; display: flex; align-items: center; gap: 10px;"><span style="width: 7px; height: 7px; background: var(--gold); border-radius: 999px; display: inline-block;"></span>Egyszemélyes kiadás, 2026</p>
+          <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin: 0; display: flex; align-items: center; gap: 10px;"><span style="width: 7px; height: 7px; background: var(--gold); border-radius: 999px; display: inline-block;"></span>Szőke Tamás · első kiadás, 2026</p>
 
           <h1 style="margin: 0; font-weight: 500; letter-spacing: -0.02em; line-height: 1.04; font-size: clamp(34px, 4.6vw, 62px);">
-            Bárány<em style="font-style: italic; color: var(--gold-soft);">bőrbe</em> bújt pásztor
+            A pásztor<em style="font-style: italic; color: var(--gold-soft);">bőrbe</em> bújt farkas
           </h1>
+
+          <p style="font-size: clamp(19px, 1.7vw, 25px); line-height: 1.3; font-style: italic; color: var(--ink-soft); margin: -10px 0 0;">Segítség, <span style="color: var(--gold-soft);">nárcisztikus</span> a lelkipásztorom?!</p>
 
           <p style="font-size: clamp(17px, 1.4vw, 20px); line-height: 1.55; color: var(--ink); margin: 0; max-width: 40ch;">Könyv a nárcisztikus működésről és a lelki bántalmazásról keresztény közösségekben — a felismerésről, a következményeiről és a gyógyulás útjáról.</p>
 
@@ -424,17 +414,8 @@
         </div>
 
         <div class="hero-cover-wrap">
-          <!-- VALÓDI BORÍTÓ HELYE: amint kész a borítófotó, cseréld ki ezt a blokkot egy <img>-re.
-               Addig szándékosan egy "zárolt borító" áll itt — stock mockup helyett, ami elvinné a hitelességet. -->
-          <div class="cover-mock" role="img" aria-label="A borító október 26-ig zárolva">
-            <span class="cover-eyebrow">Első kiadás · 2026</span>
-            <div class="cover-plate">
-              <span class="cover-bar" style="width: 92%;"></span>
-              <span class="cover-bar" style="width: 58%;"></span>
-              <span class="cover-cap">A borító október 26-án kerül le a zárlatról</span>
-            </div>
-            <span class="cover-seal">001 – 020</span>
-          </div>
+          <img class="hero-cover-img" src="borito.webp" width="1430" height="1100" fetchpriority="high"
+               alt="A pásztorbőrbe bújt farkas — Szőke Tamás könyvének borítója: csuklyás pásztor, a köpenye alól farkas néz ki">
         </div>
 
       </div>
@@ -491,7 +472,7 @@
             <p>Ha magadra ismersz ebben, szeretnélek valamire bátorítani. Ne szégyelld, ha még nem tudod pontosan megfogalmazni, mi a probléma. A felismerés gyakran hosszú folyamat. Sokszor előbb érezzük a bajt, mint ahogy megértjük. Előbb tapasztaljuk a következményeket, mint ahogy felismerjük az okokat. Ez az emberi működés természetes része lehet.</p>
           </div>
           <footer class="quote-foot">
-            <span>Báránybőrbe bújt pásztor · részlet a kéziratból</span>
+            <span>A pásztorbőrbe bújt farkas · részlet a kéziratból</span>
             <span class="seal">Első kiadás, 2026</span>
           </footer>
         </blockquote>
@@ -796,7 +777,7 @@
           <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">Kizárólag ennek a könyvnek az ügyében írok róla, legfeljebb háromszor a megjelenésig. Nem adom tovább, és minden levél alján ott a leiratkozás.</p>
         </div>
       </div>
-      <p id="footer-meta" style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 46px 0 0; padding-top: 16px; border-top: 1px solid var(--line); color: var(--ink-faint);">Báránybőrbe bújt pásztor · első kiadás, 2026</p>
+      <p id="footer-meta" style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 46px 0 0; padding-top: 16px; border-top: 1px solid var(--line); color: var(--ink-faint);">A pásztorbőrbe bújt farkas · Szőke Tamás · első kiadás, 2026</p>
     </section>
 
   </div>
@@ -1818,7 +1799,7 @@
     var data = new FormData(form);
     data.append("peldanyok", pickedList.map(pad3).join(", "));
     data.append("_subject", (preorderOpen ? "Új előrendelés — " : "Új várólista-feliratkozó — ")
-      + (variant === "dedikalt" ? "DEDIKÁLT példány — " : "") + "Báránybőrbe bújt pásztor");
+      + (variant === "dedikalt" ? "DEDIKÁLT példány — " : "") + "A pásztorbőrbe bújt farkas");
 
     /* A díjbekérő automatához kiszámolt végösszeg. Dedikáltnál a
        mennyiség mindig 1 (lásd a "db" mező zárolását), normálnál a
@@ -2133,7 +2114,7 @@
 /* =====================================================================
    HÁTTÉR — "a kibontott szál"
 
-   A cím szövet: báránybőr. A lap tetején még feszes a szövés, néhány
+   A borítón a pásztor köpenye szőtt gyapjú. A lap tetején még feszes a szövés, néhány
    párhuzamos szállal; onnan egyetlen szál kifeslik, végigfut a
    dokumentumon, középtájt megcsomósodik, lejjebb kiegyenesedik.
    Görgetésre rajzolódik ki, és szándékosan NEM húzódik vissza felfelé

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elállás a szerződéstől — A pásztorbőrbe bújt farkas</title>
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#15120e">
+<link rel="canonical" href="https://www.nemjopasztor.hu/elallas.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2315120e'/%3E%3Cpath d='M13 3C13 10 12 12 14 15C16 18 22 17 21 13C20 9 13 12 15 19C17 25 18 27 18 29' fill='none' stroke='%23d7a854' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="jogi.css">
+</head>
+<body>
+<main class="wrap">
+
+  <a class="back" href="index.html">← Vissza a könyvhöz</a>
+
+  <p class="eyebrow">A pásztorbőrbe bújt farkas · Szőke Tamás</p>
+  <h1>Elállás a szerződéstől</h1>
+  <p class="lead">A <strong>normál példánytól</strong> az átvételtől számított 14 napon belül indoklás nélkül elállhatsz. Két lépés: kitöltöd, majd megerősíted — a beérkezésről azonnal e-mailes visszaigazolást kapsz.</p>
+  <p class="meta">A dedikált, számozott példány névre szóló, személyre szabott termék, ezért arra elállási jog nem vonatkozik (<a href="aszf.html#elallas">részletek</a>).</p>
+
+  <section id="step-1">
+    <form id="withdraw-form" novalidate>
+      <div class="field">
+        <label for="w-nev">Név</label>
+        <input id="w-nev" name="nev" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="w-email">E-mail-cím, amellyel rendeltél</label>
+        <input id="w-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+        <p class="hint">Erre a címre küldjük a visszaigazolást.</p>
+      </div>
+      <div class="field">
+        <label for="w-targy">Melyik rendelésről állsz el?</label>
+        <textarea id="w-targy" name="targy" required placeholder="Pl. A pásztorbőrbe bújt farkas, normál példány, 1 db"></textarea>
+      </div>
+      <div class="field">
+        <label for="w-datum">A rendelés vagy az átvétel dátuma</label>
+        <input id="w-datum" name="datum" required placeholder="Pl. 2026. november 25.">
+      </div>
+      <p class="err" id="w-err-1" hidden>Kérjük, tölts ki minden mezőt, és adj meg érvényes e-mail-címet.</p>
+      <button type="submit" class="btn">Itt elállok a szerződéstől</button>
+      <p class="hint" style="margin-top: 12px;">A következő lépésben még átnézheted és megerősítheted.</p>
+    </form>
+  </section>
+
+  <section id="step-2" hidden>
+    <div class="box gold">
+      <p><strong>Elállási nyilatkozat</strong></p>
+      <dl class="facts summary">
+        <dt>Címzett</dt><dd>Gondolatindító Kft., 6500 Baja, Telcs Ede utca 2/b</dd>
+        <dt>Név</dt><dd id="s-nev"></dd>
+        <dt>E-mail</dt><dd id="s-email"></dd>
+        <dt>Rendelés</dt><dd id="s-targy"></dd>
+        <dt>Dátum</dt><dd id="s-datum"></dd>
+      </dl>
+      <p>Kijelentem, hogy elállok a fenti termék adásvételére irányuló szerződéstől.</p>
+    </div>
+    <p class="err" id="w-err-2" hidden></p>
+    <button type="button" class="btn" id="w-confirm">Elállás megerősítése</button>
+    <button type="button" class="btn btn-ghost" id="w-back">Vissza, javítom</button>
+  </section>
+
+  <section id="step-3" hidden>
+    <div class="box gold">
+      <p><strong>Megkaptuk az elállási nyilatkozatodat.</strong></p>
+      <p>Beérkezés ideje: <strong id="d-ido"></strong></p>
+      <p>A visszaigazolást e-mailben is elküldtük a(z) <strong id="d-email"></strong> címre. Ha 24 órán belül nem érkezik meg (a spam mappát is érdemes megnézni), küldd el a nyilatkozatot e-mailben is: <a id="d-mail" href="#">nemjopasztor@gmail.com</a>.</p>
+    </div>
+    <h2>Mi a teendőd?</h2>
+    <ul>
+      <li>A könyvet 14 napon belül küldd vissza a <strong>6500 Baja, Telcs Ede utca 2/b</strong> címre. A visszaküldés költsége téged terhel.</li>
+      <li>A kifizetett teljes összeget a szállítási díjjal együtt 14 napon belül visszautaljuk. A visszautalást visszatarthatjuk, amíg a könyv vissza nem érkezik, vagy amíg nem igazolod, hogy feladtad.</li>
+    </ul>
+  </section>
+
+  <h2>Másképp is elállhatsz</h2>
+  <p>Elküldheted a nyilatkozatodat e-mailben (<a href="mailto:nemjopasztor@gmail.com">nemjopasztor@gmail.com</a>) vagy postán (Gondolatindító Kft., 6500 Baja, Telcs Ede utca 2/b) is; ehhez használhatod a <a href="aszf.html#minta">nyilatkozat-mintát</a>. Az elállási határidő betartásához elég, ha a 14. nap vége előtt elküldöd.</p>
+
+  <footer class="foot">
+    <a href="index.html">A könyv</a><a href="aszf.html">Vásárlási feltételek és impresszum</a><a href="adatkezeles.html">Adatkezelés</a>
+    <br>Gondolatindító Kft. · 6500 Baja, Telcs Ede utca 2/b · nemjopasztor@gmail.com
+  </footer>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  /* Ugyanaz a MailerLite-űrlap, mint a főoldalon (index.html CONFIG.FORM_ENDPOINT).
+     A "mod" mező "elallas" értéke teszi a feliratkozót az elállási szegmensbe,
+     ahonnan az automatizálás azonnal kiküldi az időbélyeges visszaigazolást. */
+  var ENDPOINT = "https://assets.mailerlite.com/jsonp/2646815/forms/199070784852853935/subscribe";
+  var CONTACT = "nemjopasztor@gmail.com";
+
+  var form = document.getElementById("withdraw-form");
+  var s1 = document.getElementById("step-1");
+  var s2 = document.getElementById("step-2");
+  var s3 = document.getElementById("step-3");
+  var err1 = document.getElementById("w-err-1");
+  var err2 = document.getElementById("w-err-2");
+  var confirmBtn = document.getElementById("w-confirm");
+  var data = null;
+
+  function val(id) { return document.getElementById(id).value.trim(); }
+  function set(id, text) { document.getElementById(id).textContent = text; }
+  function pad(n) { return n < 10 ? "0" + n : String(n); }
+  function stamp(d) {
+    return d.getFullYear() + ". " + pad(d.getMonth() + 1) + ". " + pad(d.getDate()) + ". "
+      + pad(d.getHours()) + ":" + pad(d.getMinutes());
+  }
+  function statement(d) {
+    return "Elállási nyilatkozat\n\nCímzett: Gondolatindító Kft., 6500 Baja, Telcs Ede utca 2/b\n"
+      + "Kijelentem, hogy elállok az alábbi termék adásvételére irányuló szerződéstől.\n\n"
+      + "Rendelés: " + d.targy + "\nA rendelés / átvétel dátuma: " + d.datum
+      + "\nNév: " + d.nev + "\nE-mail: " + d.email + (d.ido ? "\nKelt: " + d.ido : "");
+  }
+  function mailtoHref(d) {
+    return "mailto:" + CONTACT + "?subject=" + encodeURIComponent("Elállási nyilatkozat")
+      + "&body=" + encodeURIComponent(statement(d));
+  }
+  function show(step) {
+    s1.hidden = step !== 1; s2.hidden = step !== 2; s3.hidden = step !== 3;
+    (step === 1 ? s1 : step === 2 ? s2 : s3).scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    data = { nev: val("w-nev"), email: val("w-email"), targy: val("w-targy"), datum: val("w-datum") };
+    var ok = data.nev && data.targy && data.datum && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email);
+    err1.hidden = !!ok;
+    if (!ok) return;
+    set("s-nev", data.nev); set("s-email", data.email); set("s-targy", data.targy); set("s-datum", data.datum);
+    err2.hidden = true;
+    show(2);
+  });
+
+  document.getElementById("w-back").addEventListener("click", function () { show(1); });
+
+  function send(body) {
+    return fetch(ENDPOINT, { method: "POST", body: body, headers: { Accept: "application/json" } })
+      .then(function (res) { if (!res.ok) throw new Error("HTTP " + res.status); })
+      .catch(function (e) {
+        /* CORS-elutasításnál rejtett űrlapon küldjük el — az is megérkezik */
+        if (!(e instanceof TypeError)) throw e;
+        return new Promise(function (resolve) {
+          var name = "w-sink-" + Date.now();
+          var frame = document.createElement("iframe");
+          frame.name = name; frame.style.cssText = "position:absolute;width:0;height:0;border:0;left:-9999px;";
+          var f = document.createElement("form");
+          f.method = "POST"; f.action = ENDPOINT; f.target = name; f.style.display = "none";
+          body.forEach(function (v, k) {
+            var i = document.createElement("input"); i.type = "hidden"; i.name = k; i.value = v; f.appendChild(i);
+          });
+          document.body.appendChild(frame); document.body.appendChild(f);
+          frame.addEventListener("load", function () { resolve(); });
+          f.submit();
+          setTimeout(resolve, 4000);
+        });
+      });
+  }
+
+  confirmBtn.addEventListener("click", function () {
+    if (!data) return;
+    data.ido = stamp(new Date());
+    var body = new FormData();
+    body.append("fields[name]", data.nev);
+    body.append("fields[email]", data.email);
+    body.append("fields[mod]", "elallas");
+    body.append("fields[elallas_targy]", data.targy + " — rendelés/átvétel: " + data.datum);
+    body.append("fields[elallas_idopont]", data.ido);
+    body.append("ml-submit", "1");
+    body.append("anticsrf", "true");
+
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = "Küldés…";
+    send(body).then(function () {
+      set("d-ido", data.ido);
+      set("d-email", data.email);
+      document.getElementById("d-mail").href = mailtoHref(data);
+      show(3);
+    }).catch(function () {
+      err2.hidden = false;
+      err2.textContent = "";
+      err2.appendChild(document.createTextNode("Nem sikerült elküldeni. Kérjük, küldd el a nyilatkozatot e-mailben — egy kattintással előkészítjük: "));
+      var a = document.createElement("a");
+      a.href = mailtoHref(data); a.textContent = CONTACT;
+      err2.appendChild(a);
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = "Elállás megerősítése";
+    });
+  });
+})();
+</script>
+</body>
+</html>

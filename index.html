@@ -12,8 +12,9 @@
 <meta property="og:locale" content="hu_HU">
 <meta property="og:title" content="A pásztorbőrbe bújt farkas — Szőke Tamás · 20 dedikált példány">
 <meta property="og:description" content="Nárcisztikus működés és lelki bántalmazás keresztény közösségekben. A nyilvános előrendelés október 26-án indul, a várólistások már 22-én, csütörtökön rendelhetnek és választanak először sorszámot.">
-<!-- A Facebook abszolút URL-t vár: amint megvan az oldal végleges címe, írd elé (pl. https://.../og-borito.jpg). -->
-<meta property="og:image" content="og-borito.jpg">
+<link rel="canonical" href="https://www.nemjopasztor.hu/">
+<meta property="og:url" content="https://www.nemjopasztor.hu/">
+<meta property="og:image" content="https://www.nemjopasztor.hu/og-borito.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -539,7 +540,7 @@
           <ul class="tier-list">
             <li>A teljes kötet, első és egyetlen kiadás — dedikálás és sorszám nélkül.</li>
             <li>Nincs darabszám-korlát — ebből a változatból nem fogyhat el.</li>
-            <li>Szállítás november 23-tól, az előrendelés sorrendjében — még Black Friday előtt.</li>
+            <li>Szállítás november 23-tól Foxpost-csomagautomatába (<span data-shipping>1&nbsp;800&nbsp;Ft</span> rendelésenként), az előrendelés sorrendjében — még Black Friday előtt.</li>
             <li>Fizetés banki átutalással, a díjbekérő megérkezése után.</li>
             <li id="tier-normal-bonus"></li>
           </ul>
@@ -695,8 +696,13 @@
               <summary id="extra-summary">Példányszám, telefon (nem kötelező)</summary>
               <div style="display: grid; gap: 20px; margin-top: 20px;">
                 <div class="field-wrap" data-preorder-only>
-                  <label class="field-label" for="f-cim">Szállítási cím</label>
+                  <label class="field-label" for="f-cim">Számlázási cím</label>
                   <input id="f-cim" name="cim" autocomplete="street-address" placeholder="1234 Budapest, Példa utca 1." class="field-line">
+                </div>
+                <div class="field-wrap" data-preorder-only>
+                  <label class="field-label" for="f-foxpost">Foxpost automata, ahová kéred</label>
+                  <input id="f-foxpost" name="foxpost" placeholder="Pl. Baja, Tesco — az automata neve vagy címe" class="field-line">
+                  <span class="cta-note" style="margin-top: 2px;">Automatakereső: <a href="https://foxpost.hu" target="_blank" rel="noopener">foxpost.hu</a> · a szállítás <span data-shipping>1&nbsp;800&nbsp;Ft</span> rendelésenként.</span>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;">
                   <div class="field-wrap">
@@ -729,11 +735,12 @@
 
             <label class="consent">
               <input type="checkbox" required name="hozzajarulas" value="igen">
-              <span>Kérem az e-mail értesítést a könyvről. Tudomásul veszem, hogy az adataimat kizárólag erre használod, harmadik félnek nem adod ki, és bármikor leiratkozhatok.</span>
+              <span id="consent-text">Kérem az e-mail értesítést a könyvről. Az adataimat az <a href="adatkezeles.html" target="_blank">adatkezelési tájékoztató</a> szerint kezeled, és bármikor leiratkozhatok.</span>
             </label>
 
             <button type="submit" id="submit-btn" class="submit-btn">Felkerülök a listára</button>
             <p class="cta-note" id="form-note">Ingyenes. Nem kérek bankkártyaadatot, és a feliratkozás nem kötelez vásárlásra.</p>
+            <p class="cta-note" id="legal-note" data-preorder-only>A megrendelés fizetési kötelezettséggel jár. A normál példánytól az átvételtől számított 14 napon belül indoklás nélkül <a href="elallas.html">elállhatsz</a>; a dedikált példány névre szóló, személyre szabott termék, ezért arra elállási jog nem vonatkozik. Részletek: <a href="aszf.html" target="_blank">vásárlási feltételek</a>.</p>
             <p class="cta-note" id="paynow-early-note">Nem várnál október 22-ig? <button type="button" id="paynow-early-btn" style="background: none; border: none; padding: 0; margin: 0; color: var(--gold); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; font: inherit;">Fizetnék most</button></p>
             <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
           </form>
@@ -746,7 +753,7 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 34px;">
         <div style="min-width: 0;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink);">Mikor kapom meg?</p>
-          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">A szállítás november 23-án indul, a sorrend az előrendelés sorrendje — tehát még Black Friday előtt a kezedben van.</p>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">A szállítás november 23-án indul Foxpost-csomagautomatába (<span data-shipping>1&nbsp;800&nbsp;Ft</span> rendelésenként), a sorrend az előrendelés sorrendje — tehát még Black Friday előtt a kezedben van.</p>
         </div>
         <div style="min-width: 0;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink);">Lesz utánnyomás?</p>
@@ -778,6 +785,13 @@
         </div>
       </div>
       <p id="footer-meta" style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 46px 0 0; padding-top: 16px; border-top: 1px solid var(--line); color: var(--ink-faint);">A pásztorbőrbe bújt farkas · Szőke Tamás · első kiadás, 2026</p>
+      <p style="font-family: var(--sans); font-size: 12px; line-height: 2; margin: 14px 0 0; color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 0 18px;">
+        <a href="aszf.html">Vásárlási feltételek és impresszum</a>
+        <a href="adatkezeles.html">Adatkezelés</a>
+        <a href="elallas.html">Elállás a szerződéstől</a>
+        <a href="https://www.facebook.com/nemjopasztor" target="_blank" rel="noopener">Facebook</a>
+      </p>
+      <p style="font-family: var(--sans); font-size: 11.5px; line-height: 1.7; margin: 6px 0 0; color: var(--ink-faint);">Kiadó és forgalmazó: Gondolatindító Kft. · 6500 Baja, Telcs Ede utca 2/b · +36 30 936 0296</p>
     </section>
 
   </div>
@@ -829,7 +843,9 @@
          e-mailhez. ÚJ MEZŐ — hozd létre a MailerLite-ban ugyanígy
          (Text típus, "osszesen" kulccsal), a dijbekero-*.html sablonok
          ezt a mezőt hívják be {$fields:osszesen} címkével. */
-      osszesen:   "osszesen"
+      osszesen:   "osszesen",
+      /* a választott Foxpost automata — ÚJ MEZŐ, "foxpost" kulccsal (Text) */
+      foxpost:    "foxpost"
     },
 
     /* AJÁNLOTT: ha az űrlap bármiért hibázna, a látogató erre a címre tud
@@ -888,6 +904,11 @@
     /* Dedikált, számozott példány: FIX ár, Black Friday után sem emelkedik.
        Ez a külön tier — nem a normál példány felára, hanem önálló változat. */
     PRICE_SIGNED: "7\u00a0900\u00a0Ft",
+
+    /* Szállítás: Foxpost csomagautomatába, rendelésenként egyszer. Benne van
+       a díjbekérő végösszegében és a rendelés gombján is — ha változik, csak
+       itt kell átírni (és az aszf.html 3. és 6. pontjában). */
+    SHIPPING_FEE: "1\u00a0800\u00a0Ft",
 
     /* Felolvasóest. A meghívók KÉT külön kvótából állnak össze:
          1) minden dedikált példány vásárlója kap egyet (COPIES_TOTAL),
@@ -1142,6 +1163,19 @@
     var paynowEarlyNote = document.getElementById("paynow-early-note");
     if (paynowEarlyNote) paynowEarlyNote.style.display = preorderOpen ? "none" : "block";
 
+    Array.prototype.forEach.call(document.querySelectorAll("[data-shipping]"), function (el) {
+      el.textContent = CONFIG.SHIPPING_FEE;
+    });
+
+    /* Rendelésnél a hozzájárulás helyett a feltételek elfogadása kell: a
+       rendeléshez nem köthető marketing-hozzájárulás (GDPR "önkéntesség"). */
+    var consentText = document.getElementById("consent-text");
+    if (consentText) {
+      consentText.innerHTML = preorderOpen
+        ? 'Elolvastam és elfogadom a <a href="aszf.html" target="_blank">vásárlási feltételeket</a> és az <a href="adatkezeles.html" target="_blank">adatkezelési tájékoztatót</a>.'
+        : 'Kérem az e-mail értesítést a könyvről. Az adataimat az <a href="adatkezeles.html" target="_blank">adatkezelési tájékoztató</a> szerint kezeled, és bármikor leiratkozhatok.';
+    }
+
     var summary = document.getElementById("extra-summary");
     var details = document.getElementById("extra-fields");
     var submitBtn = document.getElementById("submit-btn");
@@ -1150,10 +1184,10 @@
 
     if (preorderOpen) {
       /* Előrendeléskor a szállítási cím bent van a DOM-ban és kötelező. */
-      if (summary) summary.textContent = "Szállítási cím, példányszám, telefon";
+      if (summary) summary.textContent = "Számlázási cím, Foxpost automata, példányszám, telefon";
       if (details) details.open = true;
-      if (submitBtn) submitBtn.textContent = "Előrendelem – " + currentPrice();
-      if (formNote) formNote.textContent = "Az előrendelés után e-mailben küldöm a díjbekérőt, banki átutalásra. Online kártyaadatot sehol nem kérek.";
+      if (submitBtn) submitBtn.textContent = submitLabel();
+      if (formNote) formNote.textContent = "A végösszeg tartalmazza a " + CONFIG.SHIPPING_FEE + " Foxpost-szállítást. A díjbekérőt azonnal küldöm e-mailben, banki átutalásra — kártyaadatot sehol nem kérek.";
       if (modInput) modInput.value = "elorendeles";
     } else {
       /* Várólistán nincs vásárlás, ezért a szállítási cím mezőt a fenti
@@ -1422,15 +1456,29 @@
   var variantOpts = Array.prototype.slice.call(document.querySelectorAll("[data-vopt]"));
   var dbInput = document.getElementById("f-db");
   var dbLockNote = document.getElementById("db-lock-note");
+  if (dbInput) dbInput.addEventListener("input", updateSubmitLabel);
 
   function currentPrice() {
     return variant === "dedikalt" ? CONFIG.PRICE_SIGNED : normalPrice;
   }
 
+  function orderTotal() {
+    var qty = variant === "dedikalt" ? 1 : (parseInt(dbInput && dbInput.value, 10) || 1);
+    return parseHuf(currentPrice()) * qty + parseHuf(CONFIG.SHIPPING_FEE);
+  }
+
+  /* A 45/2014. Korm. rendelet szerint a rendelés gombjának egyértelműen
+     jeleznie kell, hogy fizetési kötelezettséggel jár. */
+  function submitLabel() {
+    return preorderOpen
+      ? "Megrendelés fizetési kötelezettséggel · " + formatHuf(orderTotal()).replace(/ /g, "\u00a0")
+      : "Felkerülök a listára";
+  }
+
   function updateSubmitLabel() {
     var btn = document.getElementById("submit-btn");
     if (!btn || sending) return;
-    btn.textContent = preorderOpen ? "Előrendelem – " + currentPrice() : "Felkerülök a listára";
+    btn.textContent = submitLabel();
   }
 
   function setVariant(v, silent) {
@@ -1526,10 +1574,10 @@
     if (voptPrice) voptPrice.textContent = CONFIG.PRICE_SIGNED;
 
     var signedNote = document.getElementById("tier-signed-price-note");
-    if (signedNote) signedNote.textContent = "fix ár — Black Friday után sem emelkedik";
+    if (signedNote) signedNote.textContent = "fix ár — Black Friday után sem emelkedik · + " + CONFIG.SHIPPING_FEE + " szállítás";
 
     var laterEl = document.getElementById("tier-normal-later");
-    if (laterEl) laterEl.textContent = earlyBirdOver() ? "az early bird lezárult" : "Black Friday után " + CONFIG.PRICE_LATER;
+    if (laterEl) laterEl.textContent = (earlyBirdOver() ? "az early bird lezárult" : "Black Friday után " + CONFIG.PRICE_LATER) + " · + " + CONFIG.SHIPPING_FEE + " szállítás";
     var normalFoot = document.getElementById("tier-normal-foot");
     if (normalFoot) {
       normalFoot.textContent = earlyBirdOver()
@@ -1804,8 +1852,7 @@
     /* A díjbekérő automatához kiszámolt végösszeg. Dedikáltnál a
        mennyiség mindig 1 (lásd a "db" mező zárolását), normálnál a
        ténylegesen beírt darabszám. */
-    var orderQty = variant === "dedikalt" ? 1 : (parseInt(form.querySelector('input[name="db"]').value, 10) || 1);
-    data.append("osszesen", formatHuf(parseHuf(currentPrice()) * orderQty));
+    data.append("osszesen", formatHuf(orderTotal()));
 
     var summaryLines = [];
     data.forEach(function (v, k) { if (k.charAt(0) !== "_" && v) summaryLines.push(k + ": " + v); });

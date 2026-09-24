@@ -164,3 +164,39 @@ Regular campaign, NEM Automation) a `CONFIG.PREORDER_OPEN` dátumára
 3. Ne hirdesd sehol máshol (poszt, hirdetés) október 26. előtt — a
    nyilvánosság felé az oldal csak akkor vált látszólag is nyilvánosan
    megnyitottá.
+
+## 7. Új mezők (szállítás és elállás miatt) — hozd létre a MailerLite-ban
+
+**Subscribers → Fields**, mindhárom **Text** típus, pontosan ezekkel a
+kulcsokkal:
+
+| Kulcs | Mire való |
+|---|---|
+| `foxpost` | a választott Foxpost automata (a rendelés űrlapjáról) |
+| `elallas_targy` | melyik rendelésről áll el a vevő (az elállási oldalról) |
+| `elallas_idopont` | az elállás beérkezésének ideje, pl. `2026. 11. 30. 14:05` |
+
+Enélkül a MailerLite csendben eldobja ezeket az értékeket.
+
+A díjbekérőkben (`dijbekero-*.html`) mostantól a végösszeg a **szállítással
+együtt** szerepel (az oldal számolja ki: ár × darab + 1 800 Ft), és a cím
+helyén a **Foxpost automata + számlázási cím** áll — ezért **mindkét
+díjbekérőt újra be kell illeszteni** (Ctrl+Shift+V, utána teszt-levél).
+
+## 8. Elállási automatizálás — kötelező (2023/2673 irányelv)
+
+A `elallas.html` oldal kétlépéses űrlapja ugyanarra a MailerLite-űrlapra küld,
+`mod = elallas` értékkel. A visszaigazolást a te automatizálásod küldi ki:
+
+1. **Segments**: új szegmens `Fields → Mód  Equals  elallas`.
+2. **Create automation** a szegmens lapján, e-mail lépésben az
+   `elallas-visszaigazolas.html` teljes forráskódja. **Delay nélkül** —
+   a visszaigazolásnak késedelem nélkül ki kell mennie.
+3. Teszteld: töltsd ki az elállási oldalt egy saját címmel, és nézd meg,
+   megérkezik-e a levél az időponttal és a rendelés megnevezésével.
+
+**Figyeld ezt a szegmenst** (vagy kapcsolj rá értesítést): minden belépés egy
+elállás, amire 14 napon belül vissza kell utalni. Ha a vevő korábban
+leiratkozott a listáról, előfordulhat, hogy a MailerLite nem veszi fel újra —
+ezért az oldal mindig felkínálja az e-mailes küldést is, tehát a
+nemjopasztor@gmail.com postafiókot is érdemes figyelni.

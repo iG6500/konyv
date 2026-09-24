@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# E-mail sablonok és belső útmutató: nem weboldalak, ne kerüljenek a találatok közé.
+Disallow: /dijbekero-dedikalt.html
+Disallow: /dijbekero-normal.html
+Disallow: /koszonto-varolista.html
+Disallow: /elallas-visszaigazolas.html
+Disallow: /dijbekero-utmutato.md
+
+Sitemap: https://www.nemjopasztor.hu/sitemap.xml

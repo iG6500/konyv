@@ -162,7 +162,8 @@
       "https://schema.org/OnSitePickup"
      ]
     }
-   ]
+   ],
+   "isbn": "978-615-01-9621-3"
   },
   {
    "@type": "FAQPage",
@@ -243,6 +244,8 @@
      panelek eltakarják, a szekciók közti résekben előbukkan. */
   #weave { position: absolute; top: 0; left: 0; width: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
   #weave svg { display: block; width: 100%; height: 100%; }
+  /* mobilon és táblagépen (érintőképernyőn) nincs szál */
+  @media (max-width: 1024px), (hover: none) and (pointer: coarse) { #weave { display: none; } }
   a { color: var(--ink); text-underline-offset: 4px; }
   a:hover { color: var(--gold); }
   ::selection { background: var(--gold); color: var(--bg); }
@@ -434,6 +437,11 @@
   /* "neked szól, ha" lista */
   .fit-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
   .fit-list li { display: grid; grid-template-columns: auto 1fr; gap: 12px; font-size: 16px; line-height: 1.55; color: var(--ink-soft); }
+  .toc-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0 44px; }
+  .toc-row { display: grid; grid-template-columns: 26px 1fr; align-items: baseline; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+  .toc-n { font-family: var(--sans); font-size: 12px; letter-spacing: 0.1em; color: var(--gold); }
+  .toc-t { font-size: 17px; line-height: 1.4; color: var(--ink); }
+  .toc-sub { display: block; font-size: 14.5px; line-height: 1.45; color: var(--ink-soft); margin-top: 3px; }
   .fit-list li::before { content: "—"; color: var(--gold); }
 
   /* borító: átlátszó hátterű mockup, a vetett árnyék adja a mélységet */
@@ -592,11 +600,11 @@
       <div class="hero-grid">
 
         <div style="min-width: 0; display: grid; gap: 24px; max-width: 50ch;">
-          <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin: 0; display: flex; align-items: center; gap: 10px;"><span style="width: 7px; height: 7px; background: var(--gold); border-radius: 999px; display: inline-block;"></span>Szőke Tamás · első kiadás, 2026</p>
+          <p style="font-family: var(--sans); font-size: 15px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0; display: flex; align-items: center; gap: 10px;"><span style="width: 7px; height: 7px; background: var(--gold); border-radius: 999px; display: inline-block;"></span>Szőke Tamás</p>
 
           <h1 class="hero-title" style="margin: 0; font-weight: 500; letter-spacing: 0.01em; line-height: 1.02; text-transform: uppercase; font-size: clamp(32px, 4.4vw, 56px);">
-            <span style="display: block; white-space: nowrap;">A pásztor<em style="font-style: italic; color: var(--gold-soft);">bőrbe</em></span>
-            <span style="display: block; white-space: nowrap;">bújt farkas.</span>
+            <span style="display: block; white-space: nowrap;">A pásztor<span style="color: var(--gold-soft);">bőrbe</span></span>
+            <span style="display: block; white-space: nowrap;">bújt farkas</span>
           </h1>
 
           <p style="font-size: clamp(19px, 1.7vw, 25px); line-height: 1.3; font-style: italic; color: var(--ink-soft); margin: -10px 0 0;">Segítség, <span style="color: var(--gold-soft);">nárcisztikus</span> a lelkipásztorom?!</p>
@@ -636,25 +644,41 @@
         <span style="flex: 1 1 auto; height: 1px; background: var(--line);"></span>
         <span style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap;">14 fejezet</span>
       </div>
-      <div id="toc-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2px 44px;"></div>
-      <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 26px 0 0;">A fejezetcímek október 26-án kerülnek le a listáról.</p>
+      <ol class="toc-list" id="toc-grid">
+        <li class="toc-row"><span class="toc-n">·</span><span class="toc-t">Ráhangoló</span></li>
+        <li class="toc-row"><span class="toc-n">01</span><span class="toc-t">Az eredeti terv</span></li>
+        <li class="toc-row"><span class="toc-n">02</span><span class="toc-t">Amikor valami nincs rendben</span></li>
+        <li class="toc-row"><span class="toc-n">03</span><span class="toc-t">Mi a nárcizmus?</span></li>
+        <li class="toc-row"><span class="toc-n">04</span><span class="toc-t">A nárcisztikus vezető felismerése</span></li>
+        <li class="toc-row"><span class="toc-n">05</span><span class="toc-t">Miért követik mégis?</span></li>
+        <li class="toc-row"><span class="toc-n">06</span><span class="toc-t">A nárcisztikus lelkipásztor eszköztára</span></li>
+        <li class="toc-row"><span class="toc-n">07</span><span class="toc-t">A sérült gyülekezet</span></li>
+        <li class="toc-row"><span class="toc-n">08</span><span class="toc-t">A sérült hívő</span></li>
+        <li class="toc-row"><span class="toc-n">09</span><span class="toc-t">Mit mond a Biblia a vezetésről?</span></li>
+        <li class="toc-row"><span class="toc-n">10</span><span class="toc-t">Mit tehetek, ha felismerem a problémát?</span></li>
+        <li class="toc-row"><span class="toc-n">11</span><span class="toc-t">Maradni vagy menni?</span></li>
+        <li class="toc-row"><span class="toc-n">12</span><span class="toc-t">A gyógyulás útja</span></li>
+        <li class="toc-row"><span class="toc-n">13</span><span class="toc-t">Egészséges gyülekezet, egészséges vezetés</span></li>
+        <li class="toc-row"><span class="toc-n">14</span><span class="toc-t">Zárszó</span></li>
+        <li class="toc-row"><span class="toc-n">·</span><span class="toc-t">Függelék<span class="toc-sub">Kérdések és érdekességek a nárcisztikusok világából</span></span></li>
+      </ol>
     </section>
 
 
     <section data-sec="konyv" style="border-top: 1px solid var(--line); padding: clamp(40px, 5vw, 64px) 0;">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(30px, 5vw, 56px); align-items: center; margin-bottom: clamp(40px, 6vw, 64px);">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(30px, 5vw, 56px); align-items: stretch; margin-bottom: clamp(40px, 6vw, 64px);">
         <div style="min-width: 0;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0 0 22px;">A könyvről</p>
-          <h2 style="font-size: clamp(20px, 2vw, 28px); line-height: 1.4; font-style: italic; font-weight: 400; margin: 0 0 22px; max-width: 32ch; color: var(--ink);">Nárcisztikus vezetés és lelki bántalmazás a gyülekezetben — és a gyógyulás útja</h2>
-          <p style="font-family: var(--sans); font-size: 12px; line-height: 1.9; margin: 0; color: var(--ink-soft); border-left: 2px solid var(--gold); padding-left: 16px;">Ez a könyv személyes történetekkel, megfigyelésekkel, keresztény szempontokkal és gyakorlati tanulságokkal átszőtt ismeretterjesztő mű. Távolról sem klasszikus pszichológiai tankönyv, hanem olyan írás, amely a bibliai szempontokat, a pszichológiai ismereteket és a mindennapi élet tapasztalatait kapcsolja össze. Abban szeretne segítséget nyújtani, hogy felismerhetőbbé váljon a nárcisztikus működés és az ahhoz kapcsolódó lelki bántalmazás a keresztény közösségekben — bemutatja ennek hatásait, és foglalkozik a felépülés és a gyógyulás lehetőségeivel is.</p>
+          <h2 style="font-size: clamp(20px, 2vw, 28px); line-height: 1.4; font-style: italic; font-weight: 400; margin: 0 0 22px; max-width: 32ch; color: var(--ink);">Nárcisztikus vezetés és a lelki bántalmazás felismerése, lehetséges hatásai és a gyógyulás lehetőségei</h2>
+          <p style="font-size: 17px; line-height: 1.7; margin: 0; color: var(--ink-soft); border-left: 2px solid var(--gold); padding-left: 18px;">Ez a könyv személyes történetekkel, megfigyelésekkel, keresztény szempontokkal és gyakorlati tanulságokkal átszőtt ismeretterjesztő mű. Távolról sem klasszikus pszichológiai tankönyv, hanem olyan írás, amely a bibliai szempontokat, a pszichológiai ismereteket és a mindennapi élet tapasztalatait kapcsolja össze. Abban szeretne segítséget nyújtani, hogy felismerhetőbbé váljon a nárcisztikus működés és az ahhoz kapcsolódó lelki bántalmazás a keresztény közösségekben — bemutatja ennek hatásait, és foglalkozik a felépülés és a gyógyulás lehetőségeivel is.</p>
         </div>
         <div style="min-width: 0; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--panel); padding: clamp(24px, 3.5vw, 34px);">
           <h3 style="font-family: var(--sans); font-size: 11px; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0 0 18px;">Neked szól, ha</h3>
           <ul class="fit-list">
-            <li>évek óta érzed, hogy valami nincs rendben a közösségedben, de nem tudod megfogalmazni, mi</li>
-            <li>a vezető kívülről kifogástalan, a közelében mégis rendre te maradsz alul</li>
-            <li>szégyent érzel amiatt, hogy egyáltalán kérdezel</li>
-            <li>keresed a határt a hűség és a saját épséged feladása között</li>
+            <li>évek óta úgy érzed, hogy valami nincs rendben a közösségedben, de nem tudod megfogalmazni, mi az</li>
+            <li>a vezető kívülről megnyerő, a közelében mégis egyre gyakrabban érzed magad bizonytalannak és kiszolgáltatottnak</li>
+            <li>egyre gyakrabban azon kapod magad, hogy már a saját érzéseidben és emlékeidben is kételkedsz</li>
+            <li>szeretnéd megérteni, hogyan lehet egy bántó helyzetben úgy kiállni magadért, hogy közben ne veszítsd el a hitedet és a lelki egyensúlyodat</li>
             <li>szeretnéd tudni, hol kezdődik a felépülés — és hogy egyáltalán lehetséges-e</li>
           </ul>
         </div>
@@ -662,20 +686,27 @@
 
       <div style="text-align: center; max-width: 620px; margin: 0 auto clamp(30px, 4vw, 44px);">
         <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0 0 14px;">Részlet a könyvből</p>
-        <h2 style="font-size: clamp(26px, 3vw, 42px); font-weight: 500; margin: 0; letter-spacing: -0.02em; line-height: 1.08;">Egy oldal, ami <em style="font-style: italic; color: var(--gold-soft);">nincs</em> kifedve.</h2>
+        <h2 style="font-size: clamp(26px, 3vw, 42px); font-weight: 500; margin: 0; letter-spacing: -0.02em; line-height: 1.08;">„Nem akarok <em style="font-style: italic; color: var(--gold-soft);">cinkos</em> lenni.”</h2>
       </div>
 
       <div class="quote-wrap" style="margin-bottom: clamp(44px, 6vw, 72px);">
         <blockquote class="quote-paper">
-          <p class="quote-eyebrow">A kéziratból</p>
+          <p class="quote-eyebrow">A kéziratból · 7. fejezet</p>
           <div class="quote-body">
-            <p>Egy vezető lehet kiváló igehirdető, miközben egészségtelen kapcsolati mintákat alakít ki maga körül. Egy gyülekezetben történhetnek őszinte megtérések és valódi lelki növekedések, miközben a vezetési kultúra mégis torzult. Jelen lehet Isten munkája, miközben emberi gyengeségek és súlyos elcsúszások is ott lehetnek. Ez a kettősség különösen megnehezíti a helyzet felismerését. Az ember látását elhomályosíthatják a látványos külsőségek, és talán éppen ezért nem akarja elhinni a rosszat.</p>
-            <p>Sok sérült keresztény éveken át él ebben a bizonytalanságban. <span class="quote-hi">Nem tudja pontosan megfogalmazni, mi a baj, csak azt érzi, hogy valami fáj.</span> Valami nyomasztja. Valami lassan elszívja az örömét, és eltávolítja attól a szabadságtól, amelyre Krisztus meghívta.</p>
-            <p>Ha magadra ismersz ebben, szeretnélek valamire bátorítani. Ne szégyelld, ha még nem tudod pontosan megfogalmazni, mi a probléma. A felismerés gyakran hosszú folyamat. Sokszor előbb érezzük a bajt, mint ahogy megértjük. Előbb tapasztaljuk a következményeket, mint ahogy felismerjük az okokat. Ez az emberi működés természetes része lehet.</p>
+            <p>E könyv írása közben sokszor feltettem magamnak a kérdést: szabad-e, sőt kell-e egyáltalán ilyen könyvet írnom? Vajon nem adok-e muníciót azok kezébe, akik eleve elutasítják Istent és a keresztény közösségeket? Nem lesz-e ez a könyv az önigazolás eszköze azok számára, akik egy rossz tapasztalat miatt hátat fordítottak a hitnek?</p>
+            <p>Bevallom, voltak éjszakák és nappalok, amikor elbizonytalanodtam és újra meg újra erre a kérdésre kerestem a választ. Előfordult, hogy álmomból felébredve is ezen gondolkodtam.</p>
+            <p>Vajon több kárt okozok ezzel a könyvvel, mint amennyi jót? Nem lenne egyszerűbb hallgatni?</p>
+            <p>Aztán ismét eszembe jutottak azok az emberek, akiket személyesen ismerek. Olyan hívők, akiket éveken át tapostak a sárba. Akik őszinte szívvel akarták szolgálni Istent, mégis megaláztatás, manipuláció és lelki bántalmazás lett az osztályrészük.</p>
+            <p>Arcok, beszélgetések, könnyek, összetört életek jelentek meg előttem. Egyenként is megrázó történetek.</p>
+            <p>Néhányan közülük ma is tanácstalanok. Eszköztelennek érzik magukat. Nem tudják, hogyan tovább. Nem tudják, hogy amit átéltek, annak neve van, és azt sem, hogy nincsenek egyedül.</p>
+            <p>Ilyenkor mindig ugyanarra a következtetésre jutottam: <span class="quote-hi">nem akarok cinkos lenni a hallgatásommal!</span></p>
+            <p>Ha ez a könyv akár csak egyetlen embernek segít felismerni, hogy ami vele történt, az lelki visszaélés volt; ha akár csak egyetlen presbitert bátorít arra, hogy végre megszólaljon; ha akár csak egyetlen felekezeti vezetőt arra indít, hogy komolyan vegyen egy panaszt; vagy ha akár csak egyetlen lelkipásztort önvizsgálatra késztet, akkor már nem hiába született meg.</p>
+            <p>Hiszem, hogy az igazság kimondása soha nem a gyülekezet ellensége, hanem a gyógyulás első lépése. Értem én, hogy a hallgatás néha a békés útnak látszik, valójában azonban sokszor csak konzerválja a sebeket.</p>
+            <p>A világosság ezzel szemben fájdalmas lehet, de egyben reményt is hordoz. Mert csak azt lehet meggyógyítani, amit végre hajlandók vagyunk őszintén meglátni és nevén nevezni.</p>
           </div>
           <footer class="quote-foot">
-            <span>A pásztorbőrbe bújt farkas · részlet a kéziratból</span>
-            <span class="seal">Első kiadás, 2026</span>
+            <span>7. fejezet – A sérült gyülekezet · 5. rész: Ki a felelős?</span>
+            <span class="seal">ISBN: 978-615-01-9621-3</span>
           </footer>
         </blockquote>
       </div>
@@ -836,7 +867,7 @@
     <section data-sec="varolista" id="varolista" style="border-top: 1px solid var(--line); padding: clamp(48px, 6vw, 76px) 0;">
       <div style="border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--panel); padding: clamp(28px, 5vw, 56px); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(30px, 5vw, 68px); align-items: start;">
         <div style="min-width: 0;">
-          <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin: 0 0 22px; color: var(--gold);">Az egyetlen, ami nincs kifedve</p>
+          <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin: 0 0 22px; color: var(--gold);">Elsőbbség a listán</p>
           <h2 style="font-size: clamp(28px, 3.4vw, 48px); font-weight: 500; line-height: 1.05; margin: 0 0 20px;">Négy nappal a nyilvános nyitás előtt te már választhatsz sorszámot, így bizonyosan nem maradsz le.</h2>
           <p style="font-size: 17px; line-height: 1.65; max-width: 40ch; margin: 0 0 24px; color: var(--ink-soft);">A dedikált húsz példány jó eséllyel a listáról fogy el. Október 22-én, csütörtökön küldöm a linket és vele a díjbekérőt a kiválasztott számodra — a hosszú hétvége alatt nyugodtan rendezheted, a határidő hétfő reggel. Így nem kell versenyezned, csak rendezned. Most elég az e-mail címed: a feliratkozás ingyenes, és nem kötelez semmire — de ha nem várnál, már most is rendelhetsz.</p>
           <div class="trust-row" style="margin: 0 0 6px;">
@@ -2258,25 +2289,6 @@
     });
   }
 
-  /* ---------- tartalomjegyzék-sávok ---------- */
-  (function () {
-    var tocEl = document.getElementById("toc-grid");
-    if (!tocEl) return;
-    var CHAPTERS = 14;
-    for (var c = 1; c <= CHAPTERS; c++) {
-      var row = document.createElement("div");
-      row.style.cssText = "display:grid;grid-template-columns:auto 1fr;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid rgba(255,246,232,0.08);min-width:0;";
-      var n = document.createElement("span");
-      n.style.cssText = "font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:0.1em;color:#d7a854;";
-      n.textContent = String(c).padStart(2, "0");
-      var bar = document.createElement("span");
-      bar.style.cssText = "height:10px;border-radius:999px;background:#2a2217;width:" + (44 + ((c * 37) % 46)) + "%;min-width:100px;";
-      row.appendChild(n);
-      row.appendChild(bar);
-      tocEl.appendChild(row);
-    }
-  })();
-
   /* ---------- olvasói ajánlók (csak valódi ajánlásokkal jelenik meg) ---------- */
   (function () {
     var section = document.getElementById("ajanlok");
@@ -2531,7 +2543,11 @@
     return false;
   }
 
+  var hideMq = window.matchMedia ? window.matchMedia("(max-width: 1024px), (hover: none) and (pointer: coarse)") : null;
+
   function build() {
+    /* mobilon és táblagépen a CSS elrejti — ilyenkor rajzolni sem kell */
+    if (hideMq && hideMq.matches) { host.style.height = "0px"; total = 0; return; }
     vw = host.clientWidth || window.innerWidth || 1024;
     docH = Math.max(
       document.documentElement ? document.documentElement.scrollHeight : 0,

@@ -167,12 +167,13 @@ Regular campaign, NEM Automation) a `CONFIG.PREORDER_OPEN` dátumára
 
 ## 7. Új mezők (szállítás és elállás miatt) — hozd létre a MailerLite-ban
 
-**Subscribers → Fields**, mindhárom **Text** típus, pontosan ezekkel a
+**Subscribers → Fields**, mind **Text** típus, pontosan ezekkel a
 kulcsokkal:
 
 | Kulcs | Mire való |
 |---|---|
 | `foxpost` | a választott Foxpost automata (a rendelés űrlapjáról) |
+| `atvetel` | az átvétel módja: „Foxpost csomagautomata” vagy „Személyes átvétel — Budapest / Szeged / Baja, a szerzőnél” |
 | `elallas_targy` | melyik rendelésről áll el a vevő (az elállási oldalról) |
 | `elallas_idopont` | az elállás beérkezésének ideje, pl. `2026. 11. 30. 14:05` |
 

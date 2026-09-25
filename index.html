@@ -124,7 +124,11 @@
       "merchantReturnDays": 14,
       "returnMethod": "https://schema.org/ReturnByMail",
       "returnFees": "https://schema.org/ReturnShippingFees"
-     }
+     },
+     "availableDeliveryMethod": [
+      "https://schema.org/ParcelService",
+      "https://schema.org/OnSitePickup"
+     ]
     },
     {
      "@type": "Offer",
@@ -152,7 +156,11 @@
       "@type": "MerchantReturnPolicy",
       "applicableCountry": "HU",
       "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
-     }
+     },
+     "availableDeliveryMethod": [
+      "https://schema.org/ParcelService",
+      "https://schema.org/OnSitePickup"
+     ]
     }
    ]
   },
@@ -439,6 +447,8 @@
     .hero-cover-wrap { justify-self: stretch; justify-content: center; }
     /* mobilon a borító a cím fölé kerül: ez a legerősebb horog, ne a hajtás alatt legyen */
     .hero-cover-wrap { order: -1; }
+    /* egy hasábban a cím a képernyő szélességéhez igazodik, két sorban marad */
+    .hero-title { font-size: min(8.6vw, 48px) !important; }
     .hero-cover-img { width: min(80%, 330px); }
   }
 
@@ -584,13 +594,14 @@
         <div style="min-width: 0; display: grid; gap: 24px; max-width: 50ch;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin: 0; display: flex; align-items: center; gap: 10px;"><span style="width: 7px; height: 7px; background: var(--gold); border-radius: 999px; display: inline-block;"></span>Szőke Tamás · első kiadás, 2026</p>
 
-          <h1 style="margin: 0; font-weight: 500; letter-spacing: -0.02em; line-height: 1.04; font-size: clamp(34px, 4.6vw, 62px);">
-            A pásztor<em style="font-style: italic; color: var(--gold-soft);">bőrbe</em> bújt farkas
+          <h1 class="hero-title" style="margin: 0; font-weight: 500; letter-spacing: 0.01em; line-height: 1.02; text-transform: uppercase; font-size: clamp(32px, 4.4vw, 56px);">
+            <span style="display: block; white-space: nowrap;">A pásztor<em style="font-style: italic; color: var(--gold-soft);">bőrbe</em></span>
+            <span style="display: block; white-space: nowrap;">bújt farkas.</span>
           </h1>
 
           <p style="font-size: clamp(19px, 1.7vw, 25px); line-height: 1.3; font-style: italic; color: var(--ink-soft); margin: -10px 0 0;">Segítség, <span style="color: var(--gold-soft);">nárcisztikus</span> a lelkipásztorom?!</p>
 
-          <p style="font-size: clamp(17px, 1.4vw, 20px); line-height: 1.55; color: var(--ink); margin: 0; max-width: 40ch;">Könyv a nárcisztikus működésről és a lelki bántalmazásról keresztény közösségekben — a felismerésről, a következményeiről és a gyógyulás útjáról.</p>
+          <p style="font-size: clamp(17px, 1.4vw, 20px); line-height: 1.55; color: var(--ink); margin: 0; max-width: 40ch;">Könyv a nárcisztikus működésről és a lelki bántalmazásról keresztény közösségekben — a felismerésről, a következményeiről és a lehetséges gyógyulás útjáról.</p>
 
           <p style="font-size: clamp(15px, 1.2vw, 17px); line-height: 1.6; color: var(--ink-soft); margin: 0; max-width: 46ch;">A könyvből húsz kézzel dedikált, számozott példány is készül — a többi normál kiadás. A nyilvános előrendelés október 26-án indul — <strong style="font-weight: 500; color: var(--ink);">a listán lévők már 22-én, csütörtökön rendelhetnek, és ők választanak először sorszámot</strong>, négy nappal mindenki más előtt.</p>
 
@@ -615,7 +626,7 @@
         <div class="stat-item"><span class="stat-num">20</span><span class="stat-label">Dedikált példány</span></div>
         <div class="stat-item"><span class="stat-num" data-price-early>5&nbsp;400&nbsp;Ft</span><span class="stat-label">Előrendelői ár</span></div>
         <div class="stat-item"><span class="stat-num">okt. 26.</span><span class="stat-label">Nyilvános nyitás</span></div>
-        <div class="stat-item"><span class="stat-num">nov. 23.</span><span class="stat-label">Szállítás indul</span></div>
+        <div class="stat-item"><span class="stat-num">nov. 25.</span><span class="stat-label">Szállítás indul</span></div>
       </div>
     </section>
 
@@ -686,7 +697,7 @@
       </div>
 
       <div style="display: flex; gap: 3px; margin-bottom: 30px;" id="phase-track"></div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px;" id="phase-cards"><div class="phase-card" tabindex="0" style="background: rgba(215, 168, 84, 0.14); color: rgb(243, 239, 228); border-color: rgb(215, 168, 84);"><span class="phase-stamp" style="color: rgb(215, 168, 84); border-color: rgb(215, 168, 84);">Most itt</span><span class="phase-num" style="color: rgb(232, 201, 138);">01</span><span class="phase-date" style="color: rgb(232, 201, 138);">Most</span><span class="phase-title">Érdeklődők gyűjtése</span><span class="phase-note" style="color: rgb(168, 157, 140);">Feliratkozol e-mailre — fizetés és kötelezettség nélkül. A lista dönti el, ki kapja elsőként a linket.</span></div><div class="phase-card" tabindex="0" style="background: transparent; color: rgb(243, 239, 228); border-color: rgba(255, 246, 232, 0.08);"><span class="phase-stamp" style="color: rgb(122, 113, 95); border-color: rgb(122, 113, 95);">Hátravan</span><span class="phase-num" style="color: rgb(122, 113, 95);">02</span><span class="phase-date" style="color: rgb(168, 157, 140);">2026. okt. 22.</span><span class="phase-title">Rendelés nyit — 5&nbsp;400&nbsp;Ft</span><span class="phase-note" style="color: rgb(168, 157, 140);">Először a lista: csütörtökön ők kapják a linket és a díjbekérőt, és ők választanak sorszámot. Hétfő reggel egyszerre nyílik meg mindenkinek és szabadulnak fel a ki nem fizetett számok.</span></div><div class="phase-card" tabindex="0" style="background: transparent; color: rgb(243, 239, 228); border-color: rgba(255, 246, 232, 0.08);"><span class="phase-stamp" style="color: rgb(122, 113, 95); border-color: rgb(122, 113, 95);">Hátravan</span><span class="phase-num" style="color: rgb(122, 113, 95);">03</span><span class="phase-date" style="color: rgb(168, 157, 140);">November közepe</span><span class="phase-title">Felolvasóest</span><span class="phase-note" style="color: rgb(168, 157, 140);">Meghívó a zárt körű online estre: minden dedikált példány vásárlójának, plusz az első 50 normál előrendelőnek — előre fizetés mellett.</span></div><div class="phase-card" tabindex="0" style="background: transparent; color: rgb(243, 239, 228); border-color: rgba(255, 246, 232, 0.08);"><span class="phase-stamp" style="color: rgb(122, 113, 95); border-color: rgb(122, 113, 95);">Hátravan</span><span class="phase-num" style="color: rgb(122, 113, 95);">04</span><span class="phase-date" style="color: rgb(168, 157, 140);">2026. nov. 23.</span><span class="phase-title">Szállítás indul</span><span class="phase-note" style="color: rgb(168, 157, 140);">A csomagok az előrendelés sorrendjében indulnak, még Black Friday előtt — így a könyv a kezedben van, mire az ár vált.</span></div><div class="phase-card" tabindex="0" style="background: transparent; color: rgb(243, 239, 228); border-color: rgba(255, 246, 232, 0.08);"><span class="phase-stamp" style="color: rgb(122, 113, 95); border-color: rgb(122, 113, 95);">Hátravan</span><span class="phase-num" style="color: rgb(122, 113, 95);">05</span><span class="phase-date" style="color: rgb(168, 157, 140);">2026. nov. 27.</span><span class="phase-title">Early bird zárul</span><span class="phase-note" style="color: rgb(168, 157, 140);">Black Friday: a normál ár 5&nbsp;900&nbsp;Ft-ra vált. A dedikált példány ára marad 7&nbsp;900&nbsp;Ft.</span></div></div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px;" id="phase-cards"><div class="phase-card" tabindex="0" style="background: rgba(215, 168, 84, 0.14); color: rgb(243, 239, 228); border-color: rgb(215, 168, 84);"><span class="phase-stamp" style="color: rgb(215, 168, 84); border-color: rgb(215, 168, 84);">Most itt</span><span class="phase-num" style="color: rgb(232, 201, 138);">01</span><span class="phase-date" style="color: rgb(232, 201, 138);">Most</span><span class="phase-title">Érdeklődők gyűjtése</span><span class="phase-note" style="color: rgb(168, 157, 140);">Feliratkozol e-mailre — fizetés és kötelezettség nélkül. A lista dönti el, ki kapja elsőként a linket.</span></div><div class="phase-card" tabindex="0" style="background: transparent; color: rgb(243, 239, 228); border-color: rgba(255, 246, 232, 0.08);"><span class="phase-stamp" style="color: rgb(122, 113, 95); border-color: rgb(122, 113, 95);">Hátravan</span><span class="phase-num" style="color: rgb(122, 113, 95);">02</span><span class="phase-date" style="color: rgb(168, 157, 140);">2026. okt. 22.</span><span class="phase-title">Rendelés nyit — 5&nbsp;400&nbsp;Ft</span><span class="phase-note" style="color: rgb(168, 157, 140);">Először a lista: csütörtökön ők kapják a linket és a díjbekérőt, és ők választanak sorszámot. Hétfő reggel egyszerre nyílik meg mindenkinek és szabadulnak fel a ki nem fizetett számok.</span></div><div class="phase-card" tabindex="0" style="background: transparent; color: rgb(243, 239, 228); border-color: rgba(255, 246, 232, 0.08);"><span class="phase-stamp" style="color: rgb(122, 113, 95); border-color: rgb(122, 113, 95);">Hátravan</span><span class="phase-num" style="color: rgb(122, 113, 95);">03</span><span class="phase-date" style="color: rgb(168, 157, 140);">2026. nov. 14., 18:05</span><span class="phase-title">Felolvasóest</span><span class="phase-note" style="color: rgb(168, 157, 140);">Meghívó a zárt körű online estre: minden dedikált példány vásárlójának, plusz az első 50 normál előrendelőnek — előre fizetés mellett.</span></div><div class="phase-card" tabindex="0" style="background: transparent; color: rgb(243, 239, 228); border-color: rgba(255, 246, 232, 0.08);"><span class="phase-stamp" style="color: rgb(122, 113, 95); border-color: rgb(122, 113, 95);">Hátravan</span><span class="phase-num" style="color: rgb(122, 113, 95);">04</span><span class="phase-date" style="color: rgb(168, 157, 140);">2026. nov. 25.</span><span class="phase-title">Szállítás indul</span><span class="phase-note" style="color: rgb(168, 157, 140);">A csomagok az előrendelés sorrendjében indulnak, még Black Friday előtt — így a könyv a kezedben van, mire az ár vált.</span></div><div class="phase-card" tabindex="0" style="background: transparent; color: rgb(243, 239, 228); border-color: rgba(255, 246, 232, 0.08);"><span class="phase-stamp" style="color: rgb(122, 113, 95); border-color: rgb(122, 113, 95);">Hátravan</span><span class="phase-num" style="color: rgb(122, 113, 95);">05</span><span class="phase-date" style="color: rgb(168, 157, 140);">2026. nov. 27.</span><span class="phase-title">Early bird zárul</span><span class="phase-note" style="color: rgb(168, 157, 140);">Black Friday: a normál ár 5&nbsp;900&nbsp;Ft-ra vált. A dedikált példány ára marad 7&nbsp;900&nbsp;Ft.</span></div></div>
 
       <div style="margin-top: 26px; border-top: 1px solid var(--line); padding-top: 16px; display: flex; flex-wrap: wrap; gap: 20px; font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint);">
         <span style="display: flex; align-items: center; gap: 8px;"><span style="width: 14px; height: 8px; border-radius: 3px; background: var(--ink-faint);"></span>Lezárt</span>
@@ -726,11 +737,11 @@
             <p class="tier-eyebrow">Normál példány</p>
           </div>
           <h3 class="tier-name">A könyv, előrendelői áron</h3>
-          <div class="tier-price"><b data-price-early>5&nbsp;400&nbsp;Ft</b><span id="tier-normal-later">Black Friday után 5&nbsp;900&nbsp;Ft · + 1&nbsp;800&nbsp;Ft szállítás</span></div>
+          <div class="tier-price"><b data-price-early>5&nbsp;400&nbsp;Ft</b><span id="tier-normal-later">Black Friday után 5&nbsp;900&nbsp;Ft · szállítás 1&nbsp;800&nbsp;Ft, személyesen ingyen</span></div>
           <ul class="tier-list">
             <li>A teljes kötet, első és egyetlen kiadás — dedikálás és sorszám nélkül.</li>
             <li>Nincs darabszám-korlát — ebből a változatból nem fogyhat el.</li>
-            <li>Szállítás november 23-tól Foxpost-csomagautomatába (<span data-shipping>1&nbsp;800&nbsp;Ft</span> rendelésenként), az előrendelés sorrendjében — még Black Friday előtt.</li>
+            <li>Szállítás november 25-től Foxpost-csomagautomatába (<span data-shipping>1&nbsp;800&nbsp;Ft</span> rendelésenként), vagy ingyenes személyes átvétel Budapesten, Szegeden vagy Baján — az előrendelés sorrendjében, még Black Friday előtt.</li>
             <li>Fizetés banki átutalással, a díjbekérő megérkezése után.</li>
             <li id="tier-normal-bonus"></li>
           </ul>
@@ -744,7 +755,7 @@
             <span class="tier-chip" id="tier-signed-chip">20 példány · sorszámozva</span>
           </div>
           <h3 class="tier-name">Dedikált, számozott példány</h3>
-          <div class="tier-price"><b id="tier-signed-price">7&nbsp;900&nbsp;Ft</b><span id="tier-signed-price-note">fix ár — Black Friday után sem emelkedik</span></div>
+          <div class="tier-price"><b id="tier-signed-price">7&nbsp;900&nbsp;Ft</b><span id="tier-signed-price-note">fix ár — Black Friday után sem emelkedik · szállítás 1&nbsp;800&nbsp;Ft, személyesen ingyen</span></div>
           <ul class="tier-list">
             <li>Kézzel írt, személyre szóló ajánlás — a te nevedre, vagy akinek ajándékozod.</li>
             <li>A kötetbe írt sorszám, 001-től 020-ig — a jegyzékből te választod ki, melyiket kéred.</li>
@@ -776,7 +787,7 @@
         <div class="bonus-main">
           <p class="tier-eyebrow">Előrendelői bónusz</p>
           <h3 class="tier-name">Zárt körű online felolvasóest</h3>
-          <p class="bonus-lead" id="bonus-lead"></p>
+          <p class="bonus-lead" id="bonus-lead">Élő, online írói est november 14-én, szombaton 18:05-kor, kizárólag előrendelőknek — összesen legfeljebb 70 meghívóval. Két helyről gyűlik össze:</p>
           <ul class="tier-list bonus-list" id="bonus-list"></ul>
         </div>
         <div class="bonus-meter" id="bonus-meter">
@@ -890,6 +901,16 @@
                   <input id="f-cim" name="cim" autocomplete="street-address" placeholder="1234 Budapest, Példa utca 1." class="field-line">
                 </div>
                 <div class="field-wrap" data-preorder-only>
+                  <span class="field-label" id="atvetel-legend">Hogyan kéred a könyvet?</span>
+                  <div class="vswitch" role="radiogroup" aria-labelledby="atvetel-legend">
+                    <label class="vopt on" data-atv><input type="radio" name="atvetel" value="Foxpost csomagautomata" checked><span class="vopt-t">Foxpost-automatába</span><span class="vopt-p" data-shipping>1&nbsp;800&nbsp;Ft</span></label>
+                    <label class="vopt" data-atv><input type="radio" name="atvetel" value="Személyes átvétel — Budapest"><span class="vopt-t">Személyesen, Budapesten</span><span class="vopt-p">ingyenes</span></label>
+                    <label class="vopt" data-atv><input type="radio" name="atvetel" value="Személyes átvétel — Szeged"><span class="vopt-t">Személyesen, Szegeden</span><span class="vopt-p">ingyenes</span></label>
+                    <label class="vopt" data-atv><input type="radio" name="atvetel" value="Személyes átvétel — Baja, a szerzőnél"><span class="vopt-t">Baján, a szerzőnél</span><span class="vopt-p">ingyenes</span></label>
+                  </div>
+                  <span class="cta-note" style="margin-top: 2px;">Személyes átvételnél a pontos helyet és időpontot e-mailben egyeztetem.</span>
+                </div>
+                <div class="field-wrap" id="foxpost-wrap">
                   <label class="field-label" for="f-foxpost">Foxpost automata, ahová kéred</label>
                   <input id="f-foxpost" name="foxpost" placeholder="Pl. Baja, Tesco — az automata neve vagy címe" class="field-line">
                   <span class="cta-note" style="margin-top: 2px;">Automatakereső: <a href="https://foxpost.hu" target="_blank" rel="noopener">foxpost.hu</a> · a szállítás <span data-shipping>1&nbsp;800&nbsp;Ft</span> rendelésenként.</span>
@@ -959,7 +980,7 @@
         </div>
         <div style="min-width: 0;">
           <h3 style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink); font-weight: 400;">Mikor kapom meg?</h3>
-          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">A szállítás november 23-án indul Foxpost-csomagautomatába (<span data-shipping>1&nbsp;800&nbsp;Ft</span> rendelésenként), a sorrend az előrendelés sorrendje — tehát még Black Friday előtt a kezedben van.</p>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">A szállítás november 25-én indul Foxpost-csomagautomatába (<span data-shipping>1&nbsp;800&nbsp;Ft</span> rendelésenként), a sorrend az előrendelés sorrendje — tehát még Black Friday előtt a kezedben van. Személyesen is átveheted, ingyen: Budapesten, Szegeden vagy Baján, a szerzőnél.</p>
         </div>
         <div style="min-width: 0;">
           <h3 style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink); font-weight: 400;">Lesz utánnyomás?</h3>
@@ -975,7 +996,7 @@
         </div>
         <div style="min-width: 0;">
           <h3 style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink); font-weight: 400;">Ki kap meghívót a felolvasóestre?</h3>
-          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);" id="faq-est">Minden dedikált példány vásárlója, plusz az első 50 normál előrendelő — vagyis legfeljebb 70 ember. Ez felső korlát, nem kvóta: ha például csak 18 dedikált példány kel el, 68 meghívó megy ki. Egy megrendelés egy meghívó, akárhány példányról szól, és mindenkinél feltétel, hogy a könyv ára az est előtti határidőig megérkezzen.</p>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);" id="faq-est">Az online est november 14-én, szombaton 18:05-kor lesz. Minden dedikált példány vásárlója, plusz az első 50 normál előrendelő — vagyis legfeljebb 70 ember. Ez felső korlát, nem kvóta: ha például csak 18 dedikált példány kel el, 68 meghívó megy ki. Egy megrendelés egy meghívó, akárhány példányról szól, és mindenkinél feltétel, hogy a könyv ára az est előtti határidőig megérkezzen.</p>
         </div>
         <div style="min-width: 0;">
           <h3 style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink); font-weight: 400;">Hogyan fizetek majd?</h3>
@@ -1051,7 +1072,10 @@
          ezt a mezőt hívják be {$fields:osszesen} címkével. */
       osszesen:   "osszesen",
       /* a választott Foxpost automata — ÚJ MEZŐ, "foxpost" kulccsal (Text) */
-      foxpost:    "foxpost"
+      foxpost:    "foxpost",
+      /* átvételi mód: "Foxpost csomagautomata" vagy "Személyes átvétel — …"
+         — ÚJ MEZŐ, "atvetel" kulccsal (Text) */
+      atvetel:    "atvetel"
     },
 
     /* AJÁNLOTT: ha az űrlap bármiért hibázna, a látogató erre a címre tud
@@ -1085,16 +1109,18 @@
        ünnepen, tehát senkinek a határideje nem esik munkaszüneti napra. */
     SHELF_RESET: new Date(2026, 9, 26, 9, 0),     // 2026. október 26., hétfő 9:00
 
-    /* A felolvasóest hozzávetőleges időpontja. CSAK a folyamatjelzőn dönti
-       el, melyik szakasz van kiemelve — ha megvan a pontos dátum, írd át. */
-    EVENT_ABOUT: new Date(2026, 10, 15),          // 2026. november közepe
+    /* A felolvasóest időpontja: a folyamatjelző ebből dönti el, melyik szakasz
+       van kiemelve. Az EVENT_TEXT a szövegekbe kerül — dátumváltáskor mindkettőt
+       írd át (a toldalékok miatt kézzel). */
+    EVENT_ABOUT: new Date(2026, 10, 14, 18, 5),   // 2026. november 14., szombat 18:05
+    EVENT_TEXT: "november 14-én, szombaton 18:05-kor",
 
     /* A szállítás indulása. Szándékosan Black Friday ELÉ esik: így a
        vásárlók már a kezükben tartják a könyvet, amikor az early bird
        lezárul — ez adja a legerősebb bizonyítékot a hajrához.
        FIGYELEM: a dátum ki van írva a szövegekben is (hero statisztika,
        normál kártya, GYIK); ha módosul, azokat is át kell írni. */
-    SHIPPING_START: new Date(2026, 10, 23),       // 2026. november 23., hétfő
+    SHIPPING_START: new Date(2026, 10, 25),       // 2026. november 25., szerda
 
     /* Az early bird vége: a Black Friday utáni nap 0:00. Ettől vált a normál
        ár PRICE_EARLY-ről PRICE_LATER-re. (Black Friday 2026: november 27.) */
@@ -1281,8 +1307,8 @@
   var phaseDefs = [
     { date: "Most", title: "Érdeklődők gyűjtése", note: "Feliratkozol e-mailre — fizetés és kötelezettség nélkül. A lista dönti el, ki kapja elsőként a linket." },
     { date: "2026. okt. 22.", title: "Rendelés nyit — " + CONFIG.PRICE_EARLY, note: "Először a lista: csütörtökön ők kapják a linket és a díjbekérőt, és ők választanak sorszámot. Hétfő reggel egyszerre nyílik meg mindenkinek és szabadulnak fel a ki nem fizetett számok." },
-    { date: "November közepe", title: "Felolvasóest", note: "Meghívó a zárt körű online estre: minden dedikált példány vásárlójának, plusz az első " + CONFIG.SEATS_NORMAL + " normál előrendelőnek — előre fizetés mellett." },
-    { date: "2026. nov. 23.", title: "Szállítás indul", note: "A csomagok az előrendelés sorrendjében indulnak, még Black Friday előtt — így a könyv a kezedben van, mire az ár vált." },
+    { date: "2026. nov. 14., 18:05", title: "Felolvasóest", note: "Meghívó a zárt körű online estre: minden dedikált példány vásárlójának, plusz az első " + CONFIG.SEATS_NORMAL + " normál előrendelőnek — előre fizetés mellett." },
+    { date: "2026. nov. 25.", title: "Szállítás indul", note: "A csomagok az előrendelés sorrendjében indulnak, még Black Friday előtt — így a könyv a kezedben van, mire az ár vált." },
     { date: "2026. nov. 27.", title: "Early bird zárul", note: "Black Friday: a normál ár " + CONFIG.PRICE_LATER + "-ra vált. A dedikált példány ára marad " + CONFIG.PRICE_SIGNED + "." }
   ];
 
@@ -1390,10 +1416,9 @@
 
     if (preorderOpen) {
       /* Előrendeléskor a szállítási cím bent van a DOM-ban és kötelező. */
-      if (summary) summary.textContent = "Számlázási cím, Foxpost automata, példányszám, telefon";
+      if (summary) summary.textContent = "Számlázási cím, átvétel, példányszám, telefon";
       if (details) details.open = true;
       if (submitBtn) submitBtn.textContent = submitLabel();
-      if (formNote) formNote.textContent = "A végösszeg tartalmazza a " + CONFIG.SHIPPING_FEE + " Foxpost-szállítást. A díjbekérőt azonnal küldöm e-mailben, banki átutalásra — kártyaadatot sehol nem kérek.";
       if (modInput) modInput.value = "elorendeles";
     } else {
       /* Várólistán nincs vásárlás, ezért a szállítási cím mezőt a fenti
@@ -1405,7 +1430,7 @@
 
     var faqEst = document.getElementById("faq-est");
     if (faqEst) {
-      faqEst.textContent = "Minden dedikált példány vásárlója, plusz az első " + CONFIG.SEATS_NORMAL
+      faqEst.textContent = "Az online est " + CONFIG.EVENT_TEXT + " lesz. Minden dedikált példány vásárlója, plusz az első " + CONFIG.SEATS_NORMAL
         + " normál előrendelő — vagyis legfeljebb " + (CONFIG.COPIES_TOTAL + CONFIG.SEATS_NORMAL)
         + " ember. Ez felső korlát, nem kvóta: ha például csak " + (CONFIG.COPIES_TOTAL - 2) + " dedikált példány kel el, "
         + ((CONFIG.COPIES_TOTAL - 2) + CONFIG.SEATS_NORMAL) + " meghívó megy ki. Egy megrendelés egy meghívó, akárhány példányról szól, és mindenkinél feltétel, hogy a könyv ára az est előtti határidőig megérkezzen.";
@@ -1425,6 +1450,8 @@
     if (faqFoglalas) {
       faqFoglalas.textContent = "A sorszámodat a rendeléstől számított " + CONFIG.HOLD_HOURS + " óráig tartom fenn — a díjbekérő azonnal megy, tehát a teljes idő a tiéd. Ha nem érkezik meg addig az utalás, a szám magától visszakerül a szabadok közé. A nyitóhétvégén rendelt példányok határideje egységesen hétfő reggel jár le, akkor szabadulnak fel a ki nem fizetett számok.";
     }
+
+    updateDelivery();
 
     var footer = document.getElementById("footer-meta");
     if (footer && CONFIG.CONTACT_EMAIL) {
@@ -1670,8 +1697,39 @@
 
   function orderTotal() {
     var qty = variant === "dedikalt" ? 1 : (parseInt(dbInput && dbInput.value, 10) || 1);
-    return parseHuf(currentPrice()) * qty + parseHuf(CONFIG.SHIPPING_FEE);
+    return parseHuf(currentPrice()) * qty + (isFoxpost() ? parseHuf(CONFIG.SHIPPING_FEE) : 0);
   }
+
+  /* ---------- átvétel: Foxpost vagy személyesen (Budapest, Szeged, Baja) ---------- */
+  function isFoxpost() {
+    var r = document.querySelector('input[name="atvetel"]:checked');
+    return !r || r.value.indexOf("Foxpost") === 0;
+  }
+
+  function updateDelivery() {
+    var fox = isFoxpost();
+    var wrap = document.getElementById("foxpost-wrap");
+    var inp = document.getElementById("f-foxpost");
+    if (wrap) wrap.style.display = preorderOpen && fox ? "" : "none";
+    if (inp) inp.required = preorderOpen && fox;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-atv]"), function (lab) {
+      var r = lab.querySelector("input");
+      r.disabled = !preorderOpen;   /* várólistán nincs átvétel, ne menjen el a mező */
+      lab.classList.toggle("on", r.checked);
+    });
+    var formNote = document.getElementById("form-note");
+    if (formNote && preorderOpen) {
+      formNote.textContent = (fox
+        ? "A végösszeg tartalmazza a " + CONFIG.SHIPPING_FEE + " Foxpost-szállítást."
+        : "Személyes átvételnél nincs szállítási díj.")
+        + " A díjbekérőt azonnal küldöm e-mailben, banki átutalásra — kártyaadatot sehol nem kérek.";
+    }
+    updateSubmitLabel();
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="atvetel"]'), function (r) {
+    r.addEventListener("change", updateDelivery);
+  });
 
   /* A 45/2014. Korm. rendelet szerint a rendelés gombjának egyértelműen
      jeleznie kell, hogy fizetési kötelezettséggel jár. */
@@ -1780,10 +1838,10 @@
     if (voptPrice) voptPrice.textContent = CONFIG.PRICE_SIGNED;
 
     var signedNote = document.getElementById("tier-signed-price-note");
-    if (signedNote) signedNote.textContent = "fix ár — Black Friday után sem emelkedik · + " + CONFIG.SHIPPING_FEE + " szállítás";
+    if (signedNote) signedNote.textContent = "fix ár — Black Friday után sem emelkedik · szállítás " + CONFIG.SHIPPING_FEE + ", személyesen ingyen";
 
     var laterEl = document.getElementById("tier-normal-later");
-    if (laterEl) laterEl.textContent = (earlyBirdOver() ? "az early bird lezárult" : "Black Friday után " + CONFIG.PRICE_LATER) + " · + " + CONFIG.SHIPPING_FEE + " szállítás";
+    if (laterEl) laterEl.textContent = (earlyBirdOver() ? "az early bird lezárult" : "Black Friday után " + CONFIG.PRICE_LATER) + " · szállítás " + CONFIG.SHIPPING_FEE + ", személyesen ingyen";
     var normalFoot = document.getElementById("tier-normal-foot");
     if (normalFoot) {
       normalFoot.textContent = earlyBirdOver()
@@ -1875,7 +1933,7 @@
 
     var lead = document.getElementById("bonus-lead");
     if (lead) {
-      lead.textContent = "Élő, online írói est, kizárólag előrendelőknek — összesen legfeljebb "
+      lead.textContent = "Élő, online írói est " + CONFIG.EVENT_TEXT + ", kizárólag előrendelőknek — összesen legfeljebb "
         + maxSeats + " meghívóval. Két helyről gyűlik össze:";
     }
 

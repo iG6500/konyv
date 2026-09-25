@@ -437,11 +437,11 @@
   /* "neked szól, ha" lista */
   .fit-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
   .fit-list li { display: grid; grid-template-columns: auto 1fr; gap: 12px; font-size: 16px; line-height: 1.55; color: var(--ink-soft); }
-  .toc-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0 44px; }
-  .toc-row { display: grid; grid-template-columns: 26px 1fr; align-items: baseline; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+  /* hasábok: fentről lefelé olvasható, 15 tétel = 3 × 5 */
+  .toc-list { list-style: none; margin: 0; padding: 0; columns: 3 260px; column-gap: 44px; }
+  .toc-row { display: grid; grid-template-columns: 26px 1fr; align-items: baseline; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); min-width: 0; break-inside: avoid; }
   .toc-n { font-family: var(--sans); font-size: 12px; letter-spacing: 0.1em; color: var(--gold); }
   .toc-t { font-size: 17px; line-height: 1.4; color: var(--ink); }
-  .toc-sub { display: block; font-size: 14.5px; line-height: 1.45; color: var(--ink-soft); margin-top: 3px; }
   .fit-list li::before { content: "—"; color: var(--gold); }
 
   /* borító: átlátszó hátterű mockup, a vetett árnyék adja a mélységet */
@@ -660,7 +660,6 @@
         <li class="toc-row"><span class="toc-n">12</span><span class="toc-t">A gyógyulás útja</span></li>
         <li class="toc-row"><span class="toc-n">13</span><span class="toc-t">Egészséges gyülekezet, egészséges vezetés</span></li>
         <li class="toc-row"><span class="toc-n">14</span><span class="toc-t">Zárszó</span></li>
-        <li class="toc-row"><span class="toc-n">·</span><span class="toc-t">Függelék<span class="toc-sub">Kérdések és érdekességek a nárcisztikusok világából</span></span></li>
       </ol>
     </section>
 

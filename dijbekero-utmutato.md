@@ -201,3 +201,15 @@ elállás, amire 14 napon belül vissza kell utalni. Ha a vevő korábban
 leiratkozott a listáról, előfordulhat, hogy a MailerLite nem veszi fel újra —
 ezért az oldal mindig felkínálja az e-mailes küldést is, tehát a
 nemjopasztor@gmail.com postafiókot is érdemes figyelni.
+
+## 9. Az e-mail sablonok arculata (2026. szeptember)
+
+Mind a négy sablon (`koszonto-varolista`, `dijbekero-dedikalt`,
+`dijbekero-normal`, `elallas-visszaigazolas`) az oldal mostani arculatát
+követi: borítókép (az elállás-visszaigazolás kivételével), „Szőke Tamás”,
+kapitális cím arany „bőrbe”-vel, alcím, lent a kiadó adatai és link az
+oldalra. A borítókép a `https://www.nemjopasztor.hu/borito-email.jpg`
+címről töltődik be — ha a fájlt átnevezed vagy törlöd, a levelekből eltűnik.
+
+Mindegyik a méretkorlát alatt van (a dedikált díjbekérő a legnagyobb,
+~5,9 KB). Beillesztés továbbra is **Ctrl+Shift+V**-vel, utána teszt-levél.

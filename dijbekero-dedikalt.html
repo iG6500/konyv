@@ -5,110 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Díjbekérő — dedikált példány</title>
 </head>
-<body style="margin:0; padding:0; background-color:#15120e;">
-
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#15120e;">
-  <tr>
-  <td align="center" style="padding: 36px 16px;">
-
-  <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px; max-width:600px;">
-
-  <tr>
-  <td align="center" style="padding: 8px 34px 26px;">
-  <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#d7a854;">Első kiadás &middot; 2026</p>
-  <p style="margin:10px 0 0; font-family:Georgia, 'Times New Roman', serif; font-size:22px; line-height:1.3; color:#f3efe4;">A pásztor<span style="font-style:italic; color:#e8c98a;">bőrbe</span> bújt farkas</p>
-  </td>
-  </tr>
-
-  <tr>
-  <td align="center" style="padding: 0 34px 22px;">
-  <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:#a89d8c;">Díjbekérő &middot; dedikált, számozott példány</p>
-  </td>
-  </tr>
-
-  <tr>
-  <td style="padding: 0 14px;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f3efe4; border-radius:4px;">
-
-    <tr>
-    <td style="padding: 40px 40px 8px;">
-    <p style="margin:0 0 20px; font-family:Georgia, serif; font-size:19px; line-height:1.5; color:#1f1911;">Kedves {$name}!</p>
-    <p style="margin:0 0 26px; font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:22px; color:#4a4032;">
-      Köszönöm, hogy lefoglaltad a dedikált, számozott példányt — ez a levél a fizetéshez kell.
-    </p>
-    </td>
-    </tr>
-
-    <tr>
-    <td style="padding: 0 40px 8px;">
-    <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#8f6414;">Tétel</p>
-    <p style="margin:2px 0 14px; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1f1911;">Dedikált, számozott példány</p>
-    <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#8f6414;">Sorszám</p>
-    <p style="margin:2px 0 14px; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1f1911;">{$peldany_szamok}</p>
-    <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#8f6414;">Dedikálás</p>
-    <p style="margin:2px 0 14px; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1f1911;">{$dedikalas}</p>
-    <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#8f6414;">Üzenet</p>
-    <p style="margin:2px 0 0; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#1f1911;">{$dedikalas_uzenet}</p>
-    </td>
-    </tr>
-
-    <tr>
-    <td style="padding: 24px 40px 6px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#d1483a; border-radius:4px;">
-      <tr>
-      <td align="center" style="padding: 18px 20px;">
-      <p style="margin:0 0 4px; font-family:Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#ffe9e5;">Fizetendő összesen</p>
-      <p style="margin:0; font-family:Georgia, serif; font-size:28px; color:#ffffff;">{$osszesen}</p>
-      </td>
-      </tr>
-    </table>
-    </td>
-    </tr>
-
-    <tr>
-    <td style="padding: 26px 40px 6px;">
-    <p style="margin:0 0 12px; font-family:Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#8f6414;">Utalási adatok</p>
-    <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#4a4032;">Kedvezményezett: <span style="color:#1f1911;">[SZÁMLATULAJDONOS NEVE]</span></p>
-    <p style="margin:4px 0 0; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#4a4032;">Számlaszám: <span style="color:#1f1911;">[BANKSZÁMLASZÁM]</span></p>
-    <p style="margin:4px 0 0; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#4a4032;">Közlemény: <span style="color:#1f1911;">{$name}</span></p>
-    <p style="margin:4px 0 0; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#4a4032;">Összeg: <span style="color:#1f1911;">{$osszesen}</span></p>
-    <p style="margin:16px 0 0; font-family:Arial, Helvetica, sans-serif; font-size:12.5px; line-height:19px; color:#8a8672;">
-      Kérlek, 24 órán belül utald át, hogy a sorszámodat fenntarthassam.
-    </p>
-    </td>
-    </tr>
-
-    <tr>
-    <td style="padding: 22px 40px 4px;">
-    <p style="margin:0 0 6px; font-family:Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#8f6414;">Átvétel</p>
-    <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:20px; color:#1f1911;">{$atvetel} {$foxpost}<br>Számlázási cím: {$cim}</p>
-    <p style="margin:8px 0 0; font-family:Arial, Helvetica, sans-serif; font-size:12.5px; line-height:19px; color:#8a8672;">
-      Ha nem pontos, válaszolj a helyes adattal.
-    </p>
-    </td>
-    </tr>
-
-    <tr>
-    <td style="padding: 26px 40px 34px;">
-    <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:21px; color:#4a4032;">Kérdésed van? Válaszolj erre a levélre. Köszönöm, hogy velem tartasz.</p>
-    </td>
-    </tr>
-
-  </table>
-  </td>
-  </tr>
-
-  <tr>
-  <td align="center" style="padding: 20px 34px 10px;">
-  <p style="margin:0; font-family:Arial, Helvetica, sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#7a715f;">Első kiadás, 2026</p>
-  </td>
-  </tr>
-
-  </table>
-
-  </td>
-  </tr>
-  </table>
-
+<body style="margin:0;padding:0;background-color:#15120e;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#15120e;">
+<tr><td align="center" style="padding:32px 12px;">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;">
+<tr><td align="center" style="padding:0 20px 18px;"><a href="https://www.nemjopasztor.hu/"><img src="https://www.nemjopasztor.hu/borito-email.jpg" width="220" alt="A pásztorbőrbe bújt farkas — borító" style="display:block;width:220px;max-width:100%;height:auto;border:0;"></a></td></tr>
+<tr><td align="center" style="padding:0 30px 24px;">
+<p style="margin:0;font-family:Arial,sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#d7a854;">Szőke Tamás</p>
+<p style="margin:10px 0 0;font-family:Georgia,serif;font-size:26px;line-height:1.12;letter-spacing:1px;text-transform:uppercase;color:#f3efe4;">A pásztor<span style="color:#e8c98a;">bőrbe</span><br>bújt farkas</p>
+<p style="margin:8px 0 0;font-family:Georgia,serif;font-size:15px;font-style:italic;color:#a89d8c;">Segítség, <span style="color:#e8c98a;">nárcisztikus</span> a lelkipásztorom?!</p>
+<p style="margin:20px 0 0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#a89d8c;">Díjbekérő · dedikált, számozott példány</p>
+</td></tr>
+<tr><td style="padding:0 12px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f3efe4;border-radius:4px;">
+<tr><td style="padding:34px 36px 18px;">
+<p style="margin:0 0 18px;font-family:Georgia,serif;font-size:19px;color:#1f1911;">Kedves {$name}!</p><p style="margin:0;font-family:Arial,sans-serif;font-size:14px;line-height:22px;color:#4a4032;">Köszönöm, hogy lefoglaltad a dedikált, számozott példányt — ez a levél a fizetéshez kell.</p>
+</td></tr>
+<tr><td style="padding:0 36px 4px;">
+<p style="margin:0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8f6414;">Tétel</p><p style="margin:2px 0 14px;font-family:Arial,sans-serif;font-size:14px;line-height:20px;color:#1f1911;">Dedikált, számozott példány</p><p style="margin:0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8f6414;">Sorszám</p><p style="margin:2px 0 14px;font-family:Arial,sans-serif;font-size:14px;line-height:20px;color:#1f1911;">{$peldany_szamok}</p><p style="margin:0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8f6414;">Dedikálás</p><p style="margin:2px 0 14px;font-family:Arial,sans-serif;font-size:14px;line-height:20px;color:#1f1911;">{$dedikalas}</p><p style="margin:0;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8f6414;">Üzenet</p><p style="margin:2px 0 0;font-family:Arial,sans-serif;font-size:14px;line-height:20px;color:#1f1911;">{$dedikalas_uzenet}</p>
+</td></tr>
+<tr><td style="padding:18px 36px 4px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#d1483a;border-radius:4px;"><tr><td align="center" style="padding:16px 18px;">
+<p style="margin:0 0 4px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#ffe9e5;">Fizetendő összesen</p>
+<p style="margin:0;font-family:Georgia,serif;font-size:28px;color:#ffffff;">{$osszesen}</p>
+</td></tr></table>
+</td></tr>
+<tr><td style="padding:22px 36px 4px;">
+<p style="margin:0 0 10px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8f6414;">Utalási adatok</p><p style="margin:0;font-family:Arial,sans-serif;font-size:14px;line-height:20px;color:#4a4032;">Kedvezményezett: <span style="color:#1f1911;">[SZÁMLATULAJDONOS NEVE]</span></p><p style="margin:4px 0 0;font-family:Arial,sans-serif;font-size:14px;line-height:20px;color:#4a4032;">Számlaszám: <span style="color:#1f1911;">[BANKSZÁMLASZÁM]</span></p><p style="margin:4px 0 0;font-family:Arial,sans-serif;font-size:14px;line-height:20px;color:#4a4032;">Közlemény: <span style="color:#1f1911;">{$name}</span></p><p style="margin:4px 0 0;font-family:Arial,sans-serif;font-size:14px;line-height:20px;color:#4a4032;">Összeg: <span style="color:#1f1911;">{$osszesen}</span></p><p style="margin:14px 0 0;font-family:Arial,sans-serif;font-size:12.5px;line-height:19px;color:#7a715f;">Kérlek, 24 órán belül utald át, hogy a sorszámodat fenntarthassam.</p>
+</td></tr>
+<tr><td style="padding:20px 36px 4px;">
+<p style="margin:0 0 6px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8f6414;">Átvétel</p><p style="margin:0;font-family:Arial,sans-serif;font-size:14px;line-height:20px;color:#1f1911;">{$atvetel} {$foxpost}<br>Számlázási cím: {$cim}</p><p style="margin:8px 0 0;font-family:Arial,sans-serif;font-size:12.5px;line-height:19px;color:#7a715f;">Ha nem pontos, válaszolj a helyes adattal.</p>
+</td></tr>
+<tr><td style="padding:22px 36px 32px;">
+<p style="margin:0;font-family:Arial,sans-serif;font-size:14px;line-height:22px;color:#4a4032;">Kérdésed van? Válaszolj erre a levélre. Köszönöm, hogy velem tartasz.</p>
+</td></tr>
+</table>
+</td></tr>
+<tr><td align="center" style="padding:22px 30px 8px;">
+<p style="margin:0;font-family:Arial,sans-serif;font-size:11px;line-height:18px;color:#8f8573;">Gondolatindító Kft. · 6500 Baja, Telcs Ede utca 2/b<br><a href="https://www.nemjopasztor.hu/" style="color:#d7a854;text-decoration:none;">nemjopasztor.hu</a></p>
+</td></tr>
+</table>
+</td></tr>
+</table>
 </body>
 </html>

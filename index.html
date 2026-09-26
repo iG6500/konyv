@@ -438,6 +438,16 @@
   .fit-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
   .fit-list li { display: grid; grid-template-columns: auto 1fr; gap: 12px; font-size: 16px; line-height: 1.55; color: var(--ink-soft); }
   /* hasábok: fentről lefelé olvasható, 15 tétel = 3 × 5 */
+  .fb-link { margin-top: 46px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 18px 22px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--panel); text-decoration: none; color: var(--ink); transition: border-color 180ms ease; }
+  .fb-link:hover { border-color: var(--gold); color: var(--ink); }
+  .fb-link svg { width: 30px; height: 30px; padding: 6px; border-radius: 999px; background: var(--gold); color: var(--bg); flex: none; }
+  .fb-text { font-size: 18px; }
+  .fb-handle { margin-left: auto; font-family: var(--sans); font-size: 12px; letter-spacing: 0.08em; color: var(--gold); }
+  @media (max-width: 560px) {
+    .fb-link { display: grid; grid-template-columns: 30px 1fr; gap: 4px 14px; padding: 16px 18px; }
+    .fb-text { font-size: 16px; line-height: 1.35; }
+    .fb-handle { grid-column: 2; margin-left: 0; }
+  }
   .toc-list { list-style: none; margin: 0; padding: 0; columns: 3 260px; column-gap: 44px; }
   .toc-row { display: grid; grid-template-columns: 26px 1fr; align-items: baseline; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); min-width: 0; break-inside: avoid; }
   .toc-n { font-family: var(--sans); font-size: 12px; letter-spacing: 0.1em; color: var(--gold); }
@@ -827,7 +837,7 @@
         <div class="bonus-main">
           <p class="tier-eyebrow">Előrendelői bónusz</p>
           <h3 class="tier-name">Zárt körű online felolvasóest</h3>
-          <p class="bonus-lead" id="bonus-lead">Élő, online írói est november 14-én, szombaton 18:05-kor, kizárólag a leggyorsabb előrendelőknek — összesen legfeljebb 70 meghívóval. Két helyről gyűlik össze:</p>
+          <p class="bonus-lead" id="bonus-lead">Élő, online írói est november 14-én, szombaton 18:05-kor, kizárólag a leggyorsabb előrendelőknek — összesen legfeljebb 70 meghívóval.<br>Két helyről gyűlik össze:</p>
           <ul class="tier-list bonus-list" id="bonus-list"><li><b>Minden dedikált példány vásárlója meghívót kap</b> — mind a 20 kötet gazdája, külön feltétel nélkül.</li><li><b>Plusz az első 50 normál előrendelő</b> — ezért is érdemes az elsők között lenni!</li><li><b>Egy megrendelés egy meghívó</b>. Akárhány példányt kérsz, egy meghívót kapsz.</li><li><b>A könyv árának az est előtti határidőig meg kell érkeznie</b> — utólag már nem pótolható, és a felolvasóest sem nézhető vissza.</li></ul>
         </div>
         <div class="bonus-side">
@@ -1067,7 +1077,12 @@
           <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">Kizárólag ennek a könyvnek az ügyében írok róla, legfeljebb háromszor a megjelenésig. Nem adom tovább, és minden levél alján ott a leiratkozás.</p>
         </div>
       </div>
-      <p id="footer-meta" style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 46px 0 0; padding-top: 16px; border-top: 1px solid var(--line); color: var(--ink-faint);">A pásztorbőrbe bújt farkas · Szőke Tamás · első kiadás, 2026</p>
+      <a class="fb-link" href="https://www.facebook.com/nemjopasztor" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.2 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21h3z"/></svg>
+        <span class="fb-text">Kövesd a könyv történetét a Facebookon</span>
+        <span class="fb-handle">facebook.com/nemjopasztor →</span>
+      </a>
+      <p id="footer-meta" style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 30px 0 0; padding-top: 16px; border-top: 1px solid var(--line); color: var(--ink-faint);">A pásztorbőrbe bújt farkas · Szőke Tamás · első kiadás, 2026</p>
       <p style="font-family: var(--sans); font-size: 12px; line-height: 2; margin: 14px 0 0; color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 0 18px;">
         <a href="aszf.html">Vásárlási feltételek és impresszum</a>
         <a href="adatkezeles.html">Adatkezelés</a>
@@ -1993,7 +2008,9 @@
     var lead = document.getElementById("bonus-lead");
     if (lead) {
       lead.textContent = "Élő, online írói est " + CONFIG.EVENT_TEXT + ", kizárólag a leggyorsabb előrendelőknek — összesen legfeljebb "
-        + maxSeats + " meghívóval. Két helyről gyűlik össze:";
+        + maxSeats + " meghívóval.";
+      lead.appendChild(document.createElement("br"));
+      lead.appendChild(document.createTextNode("Két helyről gyűlik össze:"));
     }
 
     var list = document.getElementById("bonus-list");

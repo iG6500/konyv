@@ -198,15 +198,15 @@
      "name": "Pszichológiai szakkönyv?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Nem klasszikus pszichológiai tankönyv, hanem ismeretterjesztő mű, amely a bibliai szempontokat, a pszichológiai ismereteket és a mindennapi élet tapasztalatait kapcsolja össze."
+      "text": "Nem klasszikus pszichológiai tankönyv, hanem ismeretterjesztő mű, amely a bibliai szempontokat, a pszichológiai ismereteket és a mindennapi élet tapasztalatait kapcsolja össze. A könyv 165 mm széles és 235 mm magas, bőven több mint 200 oldalas, feketével nyomott. Színes, fóliázott, puhatáblás borítóval, behajló fülekkel."
      }
     },
     {
      "@type": "Question",
-     "name": "Lesz utánnyomás?",
+     "name": "Hogyan kapom meg a könyvet?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Nem, egyetlen kiadás készül. A dedikált, számozott változatból pontosan húsz darab — ha az elfogy, csak a normál példány marad."
+      "text": "Attól függően, hogy mit választottál: személyes átvétellel vagy Foxpost-csomagautomatába. A postázásról, illetve a személyes átvétel lehetőségéről időben értesítelek. Külföldre egyelőre nem postázok."
      }
     },
     {
@@ -541,9 +541,19 @@
   .bonus-meter-cap { font-family: var(--sans); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); }
   .bonus-meter .tier-meter-count { color: var(--ink); font-size: clamp(17px, 1.6vw, 21px); }
   .bonus-meter .tier-meter-fill { background: var(--ink-soft); }
+  .bonus-side { display: grid; gap: 14px; justify-items: center; align-content: center; align-self: center; min-width: 190px; }
+  .bonus-tv { width: clamp(150px, 16vw, 200px); height: auto; color: var(--gold); opacity: 0.85; }
+  .bonus-tv-screen { fill: rgba(215,168,84,0.07); }
+  .bonus-tv-live { fill: var(--coral); animation: tv-live 2.4s ease-in-out infinite; }
+  @keyframes tv-live { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+  @media (prefers-reduced-motion: reduce) { .bonus-tv-live { animation: none; } }
+  .bonus-tv-cap { margin: 0; text-align: center; font-family: var(--sans); font-size: 11px; line-height: 1.8; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
+  .bonus-tv-cap span { color: var(--gold); }
   @media (max-width: 720px) {
     .bonus-card { grid-template-columns: 1fr; }
     .bonus-meter { min-width: 0; }
+    .bonus-side { min-width: 0; justify-items: stretch; }
+    .bonus-tv, .bonus-tv-cap { display: none; }
   }
 
   /* a dedikált kártya CTA-sora: gomb + halk átvezetés a jegyzékhez */
@@ -820,11 +830,27 @@
           <p class="bonus-lead" id="bonus-lead">Élő, online írói est november 14-én, szombaton 18:05-kor, kizárólag a leggyorsabb előrendelőknek — összesen legfeljebb 70 meghívóval. Két helyről gyűlik össze:</p>
           <ul class="tier-list bonus-list" id="bonus-list"><li><b>Minden dedikált példány vásárlója meghívót kap</b> — mind a 20 kötet gazdája, külön feltétel nélkül.</li><li><b>Plusz az első 50 normál előrendelő</b> — ezért is érdemes az elsők között lenni!</li><li><b>Egy megrendelés egy meghívó</b>. Akárhány példányt kérsz, egy meghívót kapsz.</li><li><b>A könyv árának az est előtti határidőig meg kell érkeznie</b> — utólag már nem pótolható, és a felolvasóest sem nézhető vissza.</li></ul>
         </div>
-        <div class="bonus-meter" id="bonus-meter">
-          <span class="bonus-meter-cap" id="bonus-meter-cap"></span>
-          <span class="tier-meter-count" id="bonus-meter-count"></span>
-          <span class="tier-meter-left" id="bonus-meter-left"></span>
-          <div class="tier-meter-bar"><i class="tier-meter-fill" id="bonus-meter-fill"></i></div>
+        <div class="bonus-side">
+          <svg class="bonus-tv" viewBox="0 0 200 160" role="img" aria-label="Élő online adás">
+            <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M100 30 L80 9 M100 30 L120 9"/>
+              <circle cx="80" cy="8" r="2.5"/><circle cx="120" cy="8" r="2.5"/>
+              <rect x="20" y="30" width="160" height="104" rx="14"/>
+              <rect x="34" y="44" width="108" height="76" rx="8" class="bonus-tv-screen"/>
+              <path d="M88 98 C79 92 69 91 60 95 L60 71 C69 67 79 68 88 74 Z M88 98 C97 92 107 91 116 95 L116 71 C107 67 97 68 88 74"/>
+              <circle cx="161" cy="60" r="7"/><circle cx="161" cy="84" r="5"/>
+              <path d="M153 104 H169 M153 110 H169 M153 116 H169"/>
+              <path d="M52 134 L44 149 M148 134 L156 149"/>
+            </g>
+            <circle cx="47" cy="56" r="3.5" class="bonus-tv-live"/>
+          </svg>
+          <p class="bonus-tv-cap"><span id="bonus-tv-date">nov. 14. 18:05</span><br>élő, online</p>
+          <div class="bonus-meter" id="bonus-meter">
+            <span class="bonus-meter-cap" id="bonus-meter-cap"></span>
+            <span class="tier-meter-count" id="bonus-meter-count"></span>
+            <span class="tier-meter-left" id="bonus-meter-left"></span>
+            <div class="tier-meter-bar"><i class="tier-meter-fill" id="bonus-meter-fill"></i></div>
+          </div>
         </div>
       </div>
     </section>
@@ -1006,15 +1032,15 @@
         </div>
         <div style="min-width: 0;">
           <h3 style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink); font-weight: 400;">Pszichológiai szakkönyv?</h3>
-          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">Nem klasszikus pszichológiai tankönyv, hanem ismeretterjesztő mű, amely a bibliai szempontokat, a pszichológiai ismereteket és a mindennapi élet tapasztalatait kapcsolja össze.</p>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">Nem klasszikus pszichológiai tankönyv, hanem ismeretterjesztő mű, amely a bibliai szempontokat, a pszichológiai ismereteket és a mindennapi élet tapasztalatait kapcsolja össze. A könyv 165 mm széles és 235 mm magas, bőven több mint 200 oldalas, feketével nyomott. Színes, fóliázott, puhatáblás borítóval, behajló fülekkel.</p>
         </div>
         <div style="min-width: 0;">
           <h3 style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink); font-weight: 400;">Mikor kapom meg?</h3>
           <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">A szállítás november 25-én indul Foxpost-csomagautomatába (<span data-shipping>1&nbsp;800&nbsp;Ft</span> rendelésenként), a sorrend az előrendelés sorrendje — tehát még Black Friday előtt a kezedben van. Személyesen is átveheted, ingyen: Budapesten, Szegeden vagy Baján, a szerzőnél.</p>
         </div>
         <div style="min-width: 0;">
-          <h3 style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink); font-weight: 400;">Lesz utánnyomás?</h3>
-          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">Nem, egyetlen kiadás készül. A dedikált, számozott változatból pontosan húsz darab — ha az elfogy, csak a normál példány marad.</p>
+          <h3 style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink); font-weight: 400;">Hogyan kapom meg a könyvet?</h3>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">Attól függően, hogy mit választottál: személyes átvétellel vagy Foxpost-csomagautomatába. A postázásról, illetve a személyes átvétel lehetőségéről időben értesítelek. Külföldre egyelőre nem postázok.</p>
         </div>
         <div style="min-width: 0;">
           <h3 style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink); font-weight: 400;">Most kell fizetnem?</h3>
@@ -1960,6 +1986,9 @@
       el.appendChild(document.createTextNode(tail));
       return el;
     }
+
+    var tvDate = document.getElementById("bonus-tv-date");
+    if (tvDate) tvDate.textContent = fmtHuOra(CONFIG.EVENT_ABOUT);
 
     var lead = document.getElementById("bonus-lead");
     if (lead) {

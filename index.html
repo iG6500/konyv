@@ -11,7 +11,7 @@
 <meta property="og:type" content="book">
 <meta property="og:locale" content="hu_HU">
 <meta property="og:title" content="A pásztorbőrbe bújt farkas — Szőke Tamás · 20 dedikált példány">
-<meta property="og:description" content="Nárcisztikus működés és lelki bántalmazás keresztény közösségekben. A nyilvános előrendelés október 26-án indul, a várólistások már 22-én, csütörtökön rendelhetnek és választanak először sorszámot.">
+<meta property="og:description" content="Nárcisztikus működés és lelki bántalmazás keresztény közösségekben. A nyilvános előrendelés október 26-án indul, a várólistások már 22-én, csütörtökön rendelhetnek.">
 <link rel="canonical" href="https://www.nemjopasztor.hu/">
 <meta property="og:url" content="https://www.nemjopasztor.hu/">
 <meta property="og:image" content="https://www.nemjopasztor.hu/og-borito.jpg">
@@ -631,7 +631,7 @@
 
           <p style="font-size: clamp(17px, 1.4vw, 20px); line-height: 1.55; color: var(--ink); margin: 0; max-width: 40ch;">Könyv a nárcisztikus működésről és a lelki bántalmazásról keresztény közösségekben — a felismerésről, a következményeiről és a lehetséges gyógyulás útjáról.</p>
 
-          <p style="font-size: clamp(15px, 1.2vw, 17px); line-height: 1.6; color: var(--ink-soft); margin: 0; max-width: 46ch;">A könyvből húsz, kézzel dedikált, számozott példány is készül — a többi normál kiadás. A nyilvános előrendelés október 26-án indul — <strong style="font-weight: 500; color: var(--ink);">a listán lévők már 22-én, csütörtökön rendelhetnek, és ők választanak először sorszámot</strong>, négy nappal mindenki más előtt.</p>
+          <p style="font-size: clamp(15px, 1.2vw, 17px); line-height: 1.6; color: var(--ink-soft); margin: 0; max-width: 46ch;">A könyvből húsz, kézzel dedikált, számozott példány is készül — a többi normál kiadás. A nyilvános előrendelés október 26-án indul — <strong style="font-weight: 500; color: var(--ink);">a listán lévők már 22-én, csütörtökön rendelhetnek</strong>, négy nappal mindenki más előtt. A sorszámok érkezési sorrendben kelnek el.</p>
 
           <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px;">
             <a href="#varolista" class="pill-btn pill-btn-primary" data-cta="1">Felkerülök a listára</a>
@@ -903,7 +903,7 @@
       <div style="border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--panel); padding: clamp(28px, 5vw, 56px); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(30px, 5vw, 68px); align-items: start;">
         <div style="min-width: 0;">
           <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin: 0 0 22px; color: var(--gold);">Elsőbbség a listán</p>
-          <h2 style="font-size: clamp(28px, 3.4vw, 48px); font-weight: 500; line-height: 1.05; margin: 0 0 20px;">Négy nappal a nyilvános nyitás előtt te már választhatsz sorszámot, így bizonyosan nem maradsz le.</h2>
+          <h2 style="font-size: clamp(28px, 3.4vw, 48px); font-weight: 500; line-height: 1.05; margin: 0 0 20px;">Négy nappal a nyilvános nyitás előtt te már választhatsz a szabad sorszámok közül.</h2>
           <p style="font-size: 17px; line-height: 1.65; max-width: 40ch; margin: 0 0 24px; color: var(--ink-soft);">A dedikált húsz példány jó eséllyel a feliratkozottak között fogy el. Október 22-én, csütörtökön küldöm a linket és vele a díjbekérőt a kiválasztott sorszámodra — a hosszú hétvége alatt nyugodtan rendezheted, a határidő hétfő reggel. Így nem kell versenyezned, csak rendezned. Most elég az e-mail címed: a feliratkozás ingyenes, és nem kötelez semmire — de ha nem várnál, már most is jelezheted, hogy normál vagy dedikált példányt szeretnél majd vásárolni.</p>
           <div class="trust-row" style="margin: 0 0 6px;">
             <span>Október 22-én, csütörtökön kapod a linket</span>
@@ -1714,7 +1714,7 @@
       pickBannerText.textContent = (isOne ? nums[0] + "-as példány" : nums.join(", ") + " számú példányok")
         + (preorderOpen
           ? " kiválasztva — a rendelésnél már szerepel."
-          : " bejelölve — a jelentkezésnél szerepel. Foglalni csak a nyitás után lehet.");
+          : " bejelölve — a jelentkezésnél szerepel. Foglalni a rendeléssel lehet — ha nem vársz a nyitásig, már most is.");
       chip.style.display = "flex";
       chipText.textContent = (isOne ? "Kiválasztott példány: " + nums[0] + "." : "Kiválasztott példányok: " + nums.join(", ") + ".");
       pickedLabelEl.textContent = "";
@@ -2124,8 +2124,8 @@
           ? "A " + nums[0] + " számú dedikált példányt a rendeléstől számított " + CONFIG.HOLD_HOURS + " óráig tartom fenn neked — eddig kell megérkeznie az utalásnak, különben a szám visszakerül a szabadok közé."
           : "A " + nums.join(", ") + " számú dedikált példányokat a rendeléstől számított " + CONFIG.HOLD_HOURS + " óráig tartom fenn neked — eddig kell megérkeznie az utalásnak, különben visszakerülnek a szabadok közé.")
         : (nums.length === 1
-          ? "A " + nums[0] + " számú példányt feljegyzem melletted. Ez még nem foglalás — a sorszám akkor lesz biztosan a tiéd, ha a nyitás után befut az utalás. A listásoké az elsőbbség."
-          : "A " + nums.join(", ") + " számú példányokat feljegyzem melletted. Ez még nem foglalás — a sorszámok akkor lesznek biztosan a tieid, ha a nyitás után befut az utalás. A listásoké az elsőbbség."))
+          ? "A " + nums[0] + " számú példányt feljegyzem melletted. Ez még nem foglalás: a sorszámok érkezési sorrendben kelnek el, és aki közben kifizeti, azé lesz."
+          : "A " + nums.join(", ") + " számú példányokat feljegyzem melletted. Ez még nem foglalás: a sorszámok érkezési sorrendben kelnek el, és aki közben kifizeti, azé lesz."))
       : variant === "dedikalt"
         ? "Dedikált, számozott példányt jelöltél be (" + CONFIG.PRICE_SIGNED + ") — a sorszámot a jegyzékből együtt választjuk ki."
         : "";

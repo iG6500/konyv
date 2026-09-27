@@ -59,7 +59,10 @@
   {
    "@type": "Person",
    "@id": "https://www.nemjopasztor.hu/#szerzo",
-   "name": "Szőke Tamás"
+   "name": "Szőke Tamás",
+   "birthDate": "1967",
+   "jobTitle": "okleveles coach, stressz- és kiégésspecialista",
+   "description": "Szőke Tamás (1967–) hívő keresztény. Okleveles coach, stressz- és kiégésspecialista. Az örök kíváncsi; notórius kérdező. Valamikor újságíróként dolgozott, de az utóbbi bő 30 évben vállalkozó, a média területén. Ehhez a könyvhöz évek óta gyűjtötte az anyagot, s az utóbbi két évben írta meg."
   },
   {
    "@type": [
@@ -215,6 +218,14 @@
      "acceptedAnswer": {
       "@type": "Answer",
       "text": "A dedikált, számozott változatnál az igénylésnél megadod, kinek szóljon az ajánlás — én írom bele kézzel, a csomagolás előtt. A normál példány dedikálás nélkül érkezik."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Az AI-nak volt szerepe a könyv írásában?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Igen. Az AI-t elsősorban kutatási és ellenőrzési eszközként használtam. Segítségével releváns pszichológiai és teológiai tartalmakat kerestem, valamint ellenőriztem egyes megfigyeléseim és meglátásaim szakmai megalapozottságát. A kézirat bizonyos részeinél pedig arra is használtam, hogy egy-egy szakasz olvasmányosabb, érthetőbb legyen. A könyv készítése során többfordulós pszichológiai és teológiai ellenőrzést is végeztem az AI segítségével. A könyv gondolataiért, állításaiért és végső szövegéért azonban én vállalom a felelősséget."
      }
     }
    ]
@@ -389,6 +400,10 @@
   .quote-wrap::before { transform: translate(0, 12px) rotate(-0.5deg); opacity: 0.35; }
   .quote-wrap::after { transform: translate(0, 6px) rotate(0.35deg); opacity: 0.6; }
 
+  .author { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: clamp(24px, 5vw, 64px); align-items: start; }
+  .author-bio { font-size: 17px; line-height: 1.7; margin: 0; color: var(--ink-soft); max-width: 62ch; border-left: 2px solid var(--gold); padding-left: 18px; }
+  .author-photo { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; margin-top: 24px; border-radius: var(--r-lg); border: 1px solid var(--line); }
+  @media (max-width: 720px) { .author { grid-template-columns: 1fr; } .author-photo { max-width: 240px; } }
   .quote-paper {
     position: relative; z-index: 1; overflow: hidden;
     margin: 0;   /* a blockquote alapértelmezett 40px-es oldalmargója kilátszatta a lapokat */
@@ -740,6 +755,18 @@
       -->
     </section>
 
+    <section data-sec="szerzo" id="szerzo" style="border-top: 1px solid var(--line); padding: clamp(40px, 5vw, 64px) 0;">
+      <div class="author">
+        <div class="author-head">
+          <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin: 0 0 14px;">Az íróról</p>
+          <h2 style="font-size: clamp(26px, 3vw, 42px); font-weight: 500; margin: 0; letter-spacing: -0.02em; line-height: 1.08;">Szőke Tamás</h2>
+          <!-- SZERZŐI FOTÓ: amint megvan (álló, 4:5, legalább 800×1000 px), ide jön:
+          <img class="author-photo" src="szerzo.webp" width="800" height="1000" loading="lazy" alt="Szőke Tamás portréja"> -->
+        </div>
+        <p class="author-bio">Szőke Tamás (1967–) hívő keresztény. Okleveles coach, stressz- és kiégésspecialista. Az örök kíváncsi; notórius kérdező. Valamikor újságíróként dolgozott, de az utóbbi bő 30 évben vállalkozó, a média területén. Ehhez a könyvhöz évek óta gyűjtötte az anyagot, s az utóbbi két évben írta meg.</p>
+      </div>
+    </section>
+
     <section data-sec="idovonal" style="border-top: 1px solid var(--line); padding: clamp(40px, 5vw, 64px) 0;">
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 34px;">
         <p style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin: 0; color: var(--ink);">Hol tart a kiadás</p>
@@ -1073,8 +1100,9 @@
           <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);" id="faq-foglalas">A sorszámodat a rendeléstől számított 24 óráig tartom fenn — a díjbekérő azonnal megy, tehát a teljes idő a tiéd. Ha nem érkezik meg addig az utalás, a szám magától visszakerül a szabadok közé. A nyitóhétvégén rendelt példányok határideje egységesen hétfő reggel jár le, akkor szabadulnak fel a ki nem fizetett számok.</p>
         </div>
         <div style="min-width: 0;">
-          <h3 style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink); font-weight: 400;">Mi lesz az e-mail címemmel?</h3>
-          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">Kizárólag ennek a könyvnek az ügyében írok róla, legfeljebb háromszor a megjelenésig. Nem adom tovább, és minden levél alján ott a leiratkozás.</p>
+          <h3 style="font-family: var(--sans); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; color: var(--ink); font-weight: 400;">Az AI-nak volt szerepe a könyv írásában?</h3>
+          <p style="font-size: 17px; line-height: 1.6; margin: 0; color: var(--ink-soft);">Igen. Az AI-t elsősorban kutatási és ellenőrzési eszközként használtam. Segítségével releváns pszichológiai és teológiai tartalmakat kerestem, valamint ellenőriztem egyes megfigyeléseim és meglátásaim szakmai megalapozottságát. A kézirat bizonyos részeinél pedig arra is használtam, hogy egy-egy szakasz olvasmányosabb, érthetőbb legyen.</p>
+          <p style="font-size: 17px; line-height: 1.6; margin: 12px 0 0; color: var(--ink-soft);">A könyv készítése során többfordulós pszichológiai és teológiai ellenőrzést is végeztem az AI segítségével. A könyv gondolataiért, állításaiért és végső szövegéért azonban én vállalom a felelősséget.</p>
         </div>
       </div>
       <a class="fb-link" href="https://www.facebook.com/nemjopasztor" target="_blank" rel="noopener">
@@ -1260,7 +1288,11 @@
        "[Ajánló neve]" jellegű placeholder ajánlás többet árt, mint használ.
        Formátum: { quote: "...", name: "Kovács Anna", role: "lelkigondozó" }
        Opcionálisan photo: "kep.jpg" — enélkül a név kezdőbetűje a monogram. */
-    TESTIMONIALS: [],
+    TESTIMONIALS: [
+      { quote: "Keveseknek adatott meg, hogy életük során annyi nagyszerű lelki vezetővel dolgozhassanak együtt, mint nekem. Többségükre hálával gondolok. Láttam azonban fájdalmas dolgokat is. Amíg akad pásztor, aki éppen oda üt, ahol a legjobban fáj, ez a könyv szomorúan aktuális marad.", name: "Varga Attila", role: "Tatabánya" },
+      { quote: "A könyv és a honlap címének első olvasásakor elkerekedett a szemem. A téma fontossága miatt bátorítom az olvasót, hogy érdeklődéssel, kíváncsisággal lapozza fel a kötetet. És ha ismerős érzésekkel, tapasztalatokkal találkozik közben, tudja, hogy nincs egyedül.", name: "Megyeri Éva", role: "Budapest" },
+      { quote: "Igaz lehet, hogy minden jó válaszhoz kell egy megfelelően feltett kérdés? Alighanem. Tamás ezt teszi ebben a kötetben: kérdez, azután igyekszik jó feleleteket találni. Közös útra hív, ahol együtt keressük a helyes irányt – gondolkodva, kritikusan, mégis hittel, támaszkodva az igére, a valódi jó pásztor, Jézus Krisztus ma is hallható hangjára.", name: "Kárpáti Jonatán", role: "Baja" }
+    ],
 
     /* >>> NYITÁS ELŐTT ÁLLÍTSD false-RA <<<
        Amíg true, a szekció demó ajánlásokkal jelenik meg, jól látható
@@ -2299,6 +2331,7 @@
     { id: "hero", label: "Címlap", href: "#" },
     { id: "tartalom", label: "Tartalom", href: "#" },
     { id: "konyv", label: "A könyvről", href: "#" },
+    { id: "szerzo", label: "Az íróról", href: "#szerzo" },
     { id: "idovonal", label: "Folyamat", href: "#" },
     { id: "jegyzek", label: "Jegyzék", href: "#jegyzek" },
     { id: "rendeles", label: "Rendelés", href: "#rendeles" },
@@ -2409,7 +2442,20 @@
     });
     if (single) dotsEl.style.display = "none";
 
-    render();
+    /* a kártya a leghosszabb ajánlás magasságát kapja, hogy lapozáskor ne ugráljon */
+    var card = quoteEl.parentNode;
+    function lockHeight() {
+      var keep = idx, max = 0;
+      card.style.minHeight = "";
+      for (idx = 0; idx < testiDefs.length; idx++) { render(); max = Math.max(max, card.offsetHeight); }
+      idx = keep;
+      card.style.minHeight = max + "px";
+      render();
+    }
+    lockHeight();
+    var lockT;
+    window.addEventListener("resize", function () { clearTimeout(lockT); lockT = setTimeout(lockHeight, 150); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(lockHeight);
   })();
 
   /* ---------- ragadós alsó sáv ----------

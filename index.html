@@ -10,7 +10,7 @@
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="book">
 <meta property="og:locale" content="hu_HU">
-<meta property="og:title" content="A pásztorbőrbe bújt farkas — Szőke Tamás · 20 dedikált példány">
+<meta property="og:title" content="A pásztorbőrbe bújt farkas — Segítség, nárcisztikus a lelkipásztorom?!">
 <meta property="og:description" content="Nárcisztikus működés és lelki bántalmazás keresztény közösségekben. A nyilvános előrendelés október 26-án indul, a várólistások már 22-én, csütörtökön rendelhetnek.">
 <link rel="canonical" href="https://www.nemjopasztor.hu/">
 <meta property="og:url" content="https://www.nemjopasztor.hu/">
@@ -1182,7 +1182,11 @@
       foxpost:    "foxpost",
       /* átvételi mód: "Foxpost csomagautomata" vagy "Személyes átvétel — …"
          — ÚJ MEZŐ, "atvetel" kulccsal (Text) */
-      atvetel:    "atvetel"
+      atvetel:    "atvetel",
+      /* a díjbekérő "Tétel" sora, kész mondatként (normál: "Normál példány,
+         2 db"; dedikált: sorszámmal és a dedikálással) — ÚJ MEZŐ, "tetel"
+         kulccsal (Text). Így egyetlen közös díjbekérő sablon elég. */
+      tetel:      "tetel"
     },
 
     /* AJÁNLOTT: ha az űrlap bármiért hibázna, a látogató erre a címre tud
@@ -1751,7 +1755,7 @@
       var nums = pickedList.map(function (n) { return String(n).padStart(3, "0"); });
       var isOne = nums.length === 1;
       pickBanner.classList.add("show");
-      pickBannerText.textContent = (isOne ? nums[0] + "-as példány" : nums.join(", ") + " számú példányok")
+      pickBannerText.textContent = (isOne ? "A " + nums[0] + " számú példány" : "A " + nums.join(", ") + " számú példányok")
         + (preorderOpen
           ? " kiválasztva — a rendelésnél már szerepel."
           : " bejelölve — a jelentkezésnél szerepel. Foglalni a rendeléssel lehet — ha nem vársz a nyitásig, már most is.");
@@ -1804,6 +1808,20 @@
 
   function currentPrice() {
     return variant === "dedikalt" ? CONFIG.PRICE_SIGNED : normalPrice;
+  }
+
+  /* A közös díjbekérő "Tétel" sora — a MailerLite sablon nem tud feltételt,
+     ezért itt áll össze kész szöveggé. */
+  function orderItemText() {
+    if (variant !== "dedikalt") {
+      return "Normál példány, " + (parseInt(dbInput && dbInput.value, 10) || 1) + " db";
+    }
+    var ded = (document.getElementById("f-ded") || {}).value || "";
+    var uz = (document.getElementById("f-ded-uzenet") || {}).value || "";
+    return "Dedikált, számozott példány, "
+      + (pickedList.length ? "sorszám: " + pad3(pickedList[0]) : "sorszám: a következő szabad szám (e-mailben megerősítem)")
+      + (ded.trim() ? " · Dedikálás: " + ded.trim() : "")
+      + (uz.trim() ? " · Üzenet: " + uz.trim() : "");
   }
 
   function orderTotal() {
@@ -2233,6 +2251,7 @@
        mennyiség mindig 1 (lásd a "db" mező zárolását), normálnál a
        ténylegesen beírt darabszám. */
     data.append("osszesen", formatHuf(orderTotal()));
+    data.append("tetel", orderItemText());
 
     var summaryLines = [];
     data.forEach(function (v, k) { if (k.charAt(0) !== "_" && v) summaryLines.push(k + ": " + v); });

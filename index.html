@@ -61,9 +61,8 @@
    "@id": "https://www.nemjopasztor.hu/#szerzo",
    "name": "Szőke Tamás",
    "image": "https://www.nemjopasztor.hu/szerzo.webp",
-   "birthDate": "1967",
    "jobTitle": "okleveles coach, stressz- és kiégésspecialista",
-   "description": "Szőke Tamás (1967–) hívő keresztény. Okleveles coach, stressz- és kiégésspecialista. Az örök kíváncsi; notórius kérdező. Valamikor újságíróként dolgozott, de az utóbbi bő 30 évben vállalkozó, a média területén. Ehhez a könyvhöz évek óta gyűjtötte az anyagot, s az utóbbi két évben írta meg."
+   "description": "Szőke Tamás nős, két leánygyermek édesapja, két unoka nagyapja, és nem utolsósorban hívő keresztény. Okleveles coach, stressz- és kiégésspecialista. Gyermekkora óta érdekli az emberi psziché és az, hogy mi mozgatja, formálja és változtatja az emberek működését. Örök kíváncsi, notórius kérdező. Valamikor újságíróként dolgozott, az elmúlt több mint harminc évben pedig vállalkozóként tevékenykedik a média területén. A kérdezés, a megfigyelés és az emberek történeteinek megismerése így mindig is közel állt hozzá. Eredetileg – több mint öt évvel ezelőtt – egy másik keresztény ismeretterjesztő könyv megírásába kezdett. A kéziratot azonban félretette, mert egy másik téma vált számára sürgetőbbé: mi történik akkor, amikor egy keresztény közösség vezetőjének személyiségében nárcisztikus vonások jelennek meg, ennek milyen hatása lehet a gyülekezetre és az egyes hívőkre, illetve milyen megoldási lehetőségek jöhetnek szóba. A pásztorbőrbe bújt farkas című könyvét 2024 őszén kezdte írni, és 2026 nyarára készült el vele. A könyv megjelenése 2026 novemberének végére várható."
   },
   {
    "@type": [
@@ -402,7 +401,10 @@
   .quote-wrap::after { transform: translate(0, 6px) rotate(0.35deg); opacity: 0.6; }
 
   .author { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: clamp(24px, 5vw, 64px); align-items: start; }
-  .author-bio { font-size: 17px; line-height: 1.7; margin: 0; color: var(--ink-soft); max-width: 62ch; border-left: 2px solid var(--gold); padding-left: 18px; }
+  .author-bio { font-size: 17px; line-height: 1.7; color: var(--ink-soft); max-width: 62ch; border-left: 2px solid var(--gold); padding-left: 18px; }
+  .author-bio p { margin: 0 0 14px; }
+  .author-bio p:last-child { margin-bottom: 0; }
+  .author-bio em { font-style: italic; color: var(--ink); }
   .author-photo { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; margin-top: 24px; border-radius: var(--r-lg); border: 1px solid var(--line); }
   @media (max-width: 720px) { .author { grid-template-columns: 1fr; } .author-photo { max-width: 240px; } }
   .quote-paper {
@@ -763,7 +765,13 @@
           <h2 style="font-size: clamp(26px, 3vw, 42px); font-weight: 500; margin: 0; letter-spacing: -0.02em; line-height: 1.08;">Szőke Tamás</h2>
           <img class="author-photo" src="szerzo.webp" srcset="szerzo-520.webp 520w, szerzo.webp 800w" sizes="(max-width: 720px) 240px, 260px" width="800" height="1000" loading="lazy" decoding="async" alt="Szőke Tamás portréja: ősz szakállas férfi zakóban, könyvek között, mosolyogva néz a kamerába">
         </div>
-        <p class="author-bio">Szőke Tamás (1967–) hívő keresztény. Okleveles coach, stressz- és kiégésspecialista. Az örök kíváncsi; notórius kérdező. Valamikor újságíróként dolgozott, de az utóbbi bő 30 évben vállalkozó, a média területén. Ehhez a könyvhöz évek óta gyűjtötte az anyagot, s az utóbbi két évben írta meg.</p>
+        <div class="author-bio">
+          <p>Szőke Tamás nős, két leánygyermek édesapja, két unoka nagyapja, és nem utolsósorban hívő keresztény.</p>
+          <p>Okleveles coach, stressz- és kiégésspecialista. Gyermekkora óta érdekli az emberi psziché és az, hogy mi mozgatja, formálja és változtatja az emberek működését. Örök kíváncsi, notórius kérdező.</p>
+          <p>Valamikor újságíróként dolgozott, az elmúlt több mint harminc évben pedig vállalkozóként tevékenykedik a média területén. A kérdezés, a megfigyelés és az emberek történeteinek megismerése így mindig is közel állt hozzá.</p>
+          <p>Eredetileg – több mint öt évvel ezelőtt – egy másik keresztény ismeretterjesztő könyv megírásába kezdett. A kéziratot azonban félretette, mert egy másik téma vált számára sürgetőbbé: mi történik akkor, amikor egy keresztény közösség vezetőjének személyiségében nárcisztikus vonások jelennek meg, ennek milyen hatása lehet a gyülekezetre és az egyes hívőkre, illetve milyen megoldási lehetőségek jöhetnek szóba.</p>
+          <p><em>A pásztorbőrbe bújt farkas</em> című könyvét 2024 őszén kezdte írni, és 2026 nyarára készült el vele. A könyv megjelenése 2026 novemberének végére várható.</p>
+        </div>
       </div>
     </section>
 

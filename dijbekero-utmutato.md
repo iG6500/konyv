@@ -31,37 +31,37 @@ leellenőrizni. Mielőtt élesíted:
 2. Minden egyéni mezőnél **másold ki onnan** a pontos címkét.
 3. Ha valamelyik eltér attól, amit a HTML-ben találsz, írd felül azzal.
 
-## 3. Automatizálás feltétele — EZ FONTOS
+## 3. A két csatorna és az automatizálások
 
-A bevált, leellenőrzött megoldás: **Subscribers → Segments** alatt hozz
-létre **egy** szegmenst, majd a szegmens lapján a **"Create automation"**
-gombbal indítsd az automatizálást — ez azt a triggert állítja be, hogy
-"amikor egy feliratkozó belép ebbe a szegmensbe". A szegmens feltételei
-("És"-sel összekötve):
+Az oldalon két külön csatorna van:
 
-```
-Fields → Mód                 Equals          elorendeles
-Fields → Sorszám várólista   Does not equal  igen
-```
+- **F1 — „Csak feliratkozom”:** név + e-mail, semmi kötelezettség. A `mod` mező értéke `varolista`.
+- **F2 — „Megrendelem”:** azonnali vásárlás, normál vagy dedikált példány. A `mod` mező értéke `elorendeles`.
 
-**Egy közös díjbekérő van** (`dijbekero.html`) a normál és a dedikált
-rendeléshez is — így az ingyenes csomag 3 automatizálása elég: köszöntő,
-díjbekérő, elállás. A különbséget a `tetel` mező hordozza, amit az oldal
-rendeléskor kész mondatként tölt ki:
+**Ajánlott felépítés: két MailerLite-űrlap, két csoport.** Forms →
+Embedded form → mindkettőhöz saját csoport; az űrlapok címét az
+`index.html` tetején a `FORM_ENDPOINT_F1` és `FORM_ENDPOINT_F2` kapja.
+Amíg a második űrlapot nem hozod létre, mindkét cím ugyanaz, és a két
+csatornát a `mod` mező választja szét (szegmensekkel) — ez is működik.
 
-- normál: `Normál példány, 2 db`
-- dedikált: `Dedikált, számozott példány, sorszám: 007 · Dedikálás: Annának · Üzenet: …`
-- dedikált, ha nem választott számot: `… sorszám: a következő szabad szám (e-mailben megerősítem) · …`
+Az ingyenes csomag **3 automatizálása** pont elég:
 
-A második feltétel azért kritikus, mert ha valaki dedikáltat kért, amikor
-épp nem volt szabad szám, ő csak **sorba állt**, nem kapott tényleges
-példányt. Ha erre is automatikusan kimenne a díjbekérő, pénzt kérnél egy
-könyvért, ami lehet, hogy nincs is neki.
+1. **F1-sorozat** (trigger: belép az F1 csoportba / a `Mód = varolista`
+   szegmensbe): azonnal a köszöntő (`koszonto-varolista.html`), 72 óra
+   múlva a részlet a könyvből, 168 óra múlva az önismereti felmérő és a
+   vásárlásra hívó levél — egyetlen automatizálásban, Delay lépésekkel.
+2. **F2 — díjbekérő** (trigger: belép az F2 csoportba / a `Mód =
+   elorendeles` szegmensbe): azonnal a `dijbekero.html`. Késleltetés nem
+   kell, és nincs szükség további feltételre sem: sorszám már nincs.
+3. **Elállás** (lásd 8. pont).
 
-**Késleltetés nem kell** az e-mail lépés elé: ha valaki dedikáltat kér
-konkrét sorszám nélkül, a díjbekérő azt írja, hogy a sorszámot e-mailben
-megerősíted. Ilyenkor nézd meg az adatlapján (üres a `peldany_szamok`),
-adj neki egy szabad számot, írd be, és válaszolj neki egy rövid levélben.
+A kifizetés utáni visszaigazolást (számlával) kézzel küldöd a Gmailből, a
+novemberi „postázunk” levelet pedig egy kézzel vezetett „Fizetett”
+csoportnak (a MailerLite nem tud csatolmányt küldeni, csak linket).
+
+Az F2-vásárlók az F1-leveleket is megkapják: ehhez a díjbekérő-automatizálás
+végére add hozzá őket az F1-sorozat csoportjához (vagy a sorozat
+triggerét állítsd úgy, hogy az F2-re is induljon).
 
 ## 4. A "csonka levél" hiba — MEGOLDVA, de tartsd szem előtt
 
@@ -92,72 +92,22 @@ helyett, ha a beillesztés magában is gyanúsan viselkedne — egyes
 gazdag szövegdobozok megpróbálják "értelmezni" a HTML-t beillesztéskor.
 A MailerLite ZIP-behúzást és URL-importálást is támogat alternatívaként.)
 
-## 5. Köszöntő e-mail a várólistának
+## 5. Köszöntő e-mail (F1 első levele)
 
-A `koszonto-varolista.html` ugyanúgy Custom HTML-ként megy be, saját
-automatizálásba:
+Fájl: `koszonto-varolista.html`. Ez az F1-sorozat első levele (lásd 3. pont).
 
-1. **Subscribers → Segments**: hozz létre egy szegmenst `Fields → Mód
-   Equals varolista` feltétellel (ez mindenkit befog, aki most iratkozik
-   fel, hiszen a `mod` mező `"varolista"` értékkel érkezik — lásd
-   `index.html` `MAILERLITE_FIELDS.mod`).
-2. A szegmens lapján **"Create automation"**, e-mail lépésben illeszd be
-   a `koszonto-varolista.html` teljes forráskódját.
-3. **Nincs szükség Delay/Wait lépésre** ennél — a köszöntő nem függ olyan
-   mezőtől, amit utólag neked kellene kitöltened (ellentétben a
-   díjbekérővel, ahol a `peldany_szamok` mező üres lehet). Mehet
-   azonnal, a szegmensbe kerüléskor.
-4. Csak `{$name}` személyre szabó címkét használ — nincs egyéni mező,
-   amit előbb ellenőrizni kellene.
+- Csak `{$name}` címkét használ — nincs egyéni mező.
+- **Két helykitöltő van benne, ezeket élesítés előtt ki kell cserélned:**
+  `[IDE KERÜL A KULISSZATITKOK SZÖVEGE]` és a kimutatás `[xx]%` értékei
+  (a sorok nevei átírhatók).
+- **Méretkorlát:** a fájl most ~5,6 KB, a MailerLite automatizálás-motorja
+  ~6,5 KB körül csonkolja a levelet (lásd 4. pont). A helykitöltők helyére
+  kb. 800 karakternyi szöveg fér még. Ha hosszabb a kulisszatitok-szöveg,
+  tedd külön oldalra az oldalon, és a levélben csak egy rövid ízelítő és
+  egy gomb legyen — szólj, és megcsinálom.
 
-Ez a levél **nem** a díjbekérő — nem kér fizetést, nem tartalmaz banki
-adatot. Csak megerősíti a feliratkozást, és felkészíti az embert arra,
-hogy október 22-én kap linket.
-
-## 6. Korai fizetési lehetőség a listásoknak
-
-Döntés: ez **csak a listásoknak** szól, nem mindenkinek. A nyilvánosság
-felé az oldal továbbra is "várólista" marad október 26-ig (hero, meta
-leírás, FAQ — semmi nem változott ezekben). A listásoknak viszont nem
-kell megvárniuk október 22-ét, ha fizetnének — ez most már az `index.html`
-kódjában is megvalósul, nem csak e-mail-küldéssel.
-
-### 6a. Azonnali "Fizetnék most" — ez az elsődleges út
-
-Amikor valaki beküldi a várólista-űrlapot, a visszaigazoló panelen
-("Felvéve a listára") megjelenik egy **"Fizetnék most →"** gomb
-(`#paynow-btn`, `index.html`). Erre kattintva a JS helyben átkapcsolja az
-oldalt előrendelés-módba (a `preorderOpen` változót igazra állítja,
-`applyMode()` + a kapcsolódó render-függvények újrafutnak) — a már
-kitöltött adatok (név, e-mail, választott változat, kiválasztott
-sorszám) megmaradnak, csak a szállítási cím mező bukkan elő és válik
-kötelezővé. A második beküldésnél a `mod` mező már `"elorendeles"`
-értékkel megy ki, tehát **ugyanaz** a 3. pontban leírt automatizálás
-(`Mód Equals elorendeles` szegmens → díjbekérő) kapja el — nem kell
-hozzá semmilyen új MailerLite-beállítás.
-
-Technikai megjegyzés, ha később hozzányúlsz a kódhoz: az `applyMode()`
-korábban `removeChild`-del **véglegesen kivette** a DOM-ból a
-`data-preorder-only` mezőket (pl. a szállítási címet), amíg nem nyitott
-az előrendelés. Ez összeférhetetlen lett volna a "Fizetnék most"
-funkcióval (a mező soha nem tudott volna visszakerülni), ezért ez most
-`style.display`-jal reverzibilis elrejtésre lett átírva.
-
-### 6b. Emlékeztető kampány október 22-én — kiegészítő, nem kötelező
-
-Aki nem kattintott a "Fizetnék most" gombra, annak érdemes egy
-**időzített, egyszeri kampányt** küldeni (MailerLite: Campaigns →
-Regular campaign, NEM Automation) a `CONFIG.PREORDER_OPEN` dátumára
-(jelenleg október 22. csütörtök 9:00 — ha ez a dátum változik, az
-ütemezést is told el vele együtt):
-
-1. Címzett: a várólista-szegmens (`Mód Equals varolista`).
-2. Tartalom: rövid emlékeztető + a live oldal linkje — ők ekkor már
-   automatikusan előrendelés-módban látják az oldalt, hiszen a
-   `CONFIG.PREORDER_OPEN` időpontja elérkezett.
-3. Ne hirdesd sehol máshol (poszt, hirdetés) október 26. előtt — a
-   nyilvánosság felé az oldal csak akkor vált látszólag is nyilvánosan
-   megnyitottá.
+A 72 órás (részlet) és a 168 órás (önismereti felmérő + vásárlás) levelek
+sablonját is megcsinálom, ha megvan a szövegük.
 
 ## 7. Új mezők (szállítás és elállás miatt) — hozd létre a MailerLite-ban
 
@@ -167,7 +117,7 @@ kulcsokkal:
 | Kulcs | Mire való |
 |---|---|
 | `osszesen` | a fizetendő végösszeg szállítással együtt, pl. `7 200 Ft` — **enélkül üres a díjbekérő „Fizetendő összesen” sávja és az „Összeg” sor** |
-| `tetel` | a díjbekérő „Tétel” sora kész szövegként (változat, darabszám vagy sorszám, dedikálás) — **enélkül üres a Tétel sor** |
+| `tetel` | a díjbekérő „Tétel” sora kész szövegként (változat, darabszám, dedikálás) — **enélkül üres a Tétel sor** |
 | `foxpost` | a választott Foxpost automata (a rendelés űrlapjáról) |
 | `atvetel` | az átvétel módja: „Foxpost csomagautomata” vagy „Személyes átvétel — Budapest / Szeged / Baja, a szerzőnél” |
 | `elallas_targy` | melyik rendelésről áll el a vevő (az elállási oldalról) |
